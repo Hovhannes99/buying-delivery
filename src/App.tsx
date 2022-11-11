@@ -1,13 +1,10 @@
 import React from 'react';
-import img from "./assets/images/g-logo.png"
-import './App.css';
+import Header from "./pages/Header";
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-          <img src={img} alt="ww"/>
-      </header>
+        <Header/>
     </div>
   );
 }

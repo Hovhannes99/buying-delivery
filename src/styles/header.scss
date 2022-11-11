@@ -1,0 +1,16 @@
+.header {
+  min-height: 100px;
+  background: #c8ad7e;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  &__logo {
+    height: 100px;
+  }
+  &__logo:hover{
+    cursor: pointer;
+  }
+  @media screen and (max-width: 600px){
+    flex-flow: column;
+  }
+}
