@@ -7,7 +7,7 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
 import MenuIcon from '@mui/icons-material/Menu';
-import {Telegram} from "@mui/icons-material";
+import Divider from '@mui/material/Divider';
 
 type Anchor = 'menu'
 
@@ -37,11 +37,12 @@ const MenuBar = () => {
             onClick={toggleDrawer(anchor, false)}
             onKeyDown={toggleDrawer(anchor, false)}
         >
-            <ListItemText primary={"Categories"}  sx={{padding:"10px 10px", color:"red", fontSize:"28px", fontFamily:"bold"}}/>
+            <p style={{padding:"10px 10px", color:"black", fontSize:"25px"}}>Categories</p>
+            <Divider style={{background:"red"}}/>
             <List>
                 {['Armatura', 'Katanka', 'Cement', 'Shiferner'].map((text, index) => (
                     <ListItem key={text} disablePadding>
-                        <ListItemButton color={"red"}  sx={{color:"red", fontSize:"20px", fontFamily:"bold"}}>
+                        <ListItemButton divider >
                             <ListItemText primary={text}/>
                         </ListItemButton>
                     </ListItem>

@@ -1,9 +1,28 @@
 @import "./styles/header";
 @import "styles/main";
+@import "src/components/atoms/animations/welcomeAnimation";
 
 
 
 * {
   margin: 0;
   padding: 0;
+}
+body{
+  background: rgb(0, 0, 0);
+}
+body::-webkit-scrollbar {
+  width: 11px;
+}
+body {
+  scrollbar-width: thin;
+  scrollbar-color:  black;
+}
+body::-webkit-scrollbar-track {
+  background:  #c8ad7e;
+}
+body::-webkit-scrollbar-thumb {
+  background-color:  #c8ad7e;
+  border-radius: 3px;
+  border: 3px solid black;
 }

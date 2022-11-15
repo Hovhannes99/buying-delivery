@@ -40,6 +40,7 @@ const Search = () => {
             transition: theme.transitions.create('width'),
             color: "red",
             width: '100%',
+            height:"30px",
             [theme.breakpoints.up('sm')]: {
                 width: '12ch',
                 '&:focus': {
