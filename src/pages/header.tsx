@@ -12,7 +12,7 @@ const Header = () => {
               <MenuBar/>
               <Logo/>
           </div>
-          {/*<WelcomeAnimation/>*/}
+          <WelcomeAnimation/>
           <div className={"header__search"}>
               <Search/>
               <SignIn/>

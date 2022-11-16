@@ -8,7 +8,7 @@ const ProductLists = () => {
         <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }}>
             {itemData.map((item,index) => (
                 <Grid item xs={2} sm={4} md={4} key={index}>
-                <Card sx={{maxWidth: 345, background:"#c8ad7e", borderRadius:"20px"}}>
+                <Card sx={{maxWidth: 345, background:"#c8ad7e", borderRadius:"7px"}}>
                     <CardMedia
                         component="img"
                         height="200px"

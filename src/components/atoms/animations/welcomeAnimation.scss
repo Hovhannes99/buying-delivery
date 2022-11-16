@@ -1,25 +1,63 @@
 
 
-#container {
-  position: absolute;
-  margin: auto;
-  width: 100vw;
-  height: 80pt;
-  top: 0;
-  bottom: 0;
-  filter: url('https://fonts.googleapis.com/css?family=Raleway:900&display=swap') blur(0.6px);
+.animation-container{
+  text-align:center;
+  color:#555;
+  font-family:'Roboto';
+  font-size:32px;
+  overflow:hidden;
+  -webkit-backface-visibility: hidden;
+  -webkit-perspective: 1000px;
+  -webkit-transform: translate3d(0,0,0);
+  div {
+    display:inline-block;
+    overflow:hidden;
+    white-space:nowrap;
+  }
+
+  &__title{
+    animation: showup 7s infinite;
+  }
+
+  &__subtitle {
+    width: 800px;
+    animation: reveal 7s infinite;
+    span {
+      margin-left:-355px;
+      animation: slidein 7s infinite;
+    }
+  }
+  p {
+    font-size:12px;
+    color:#999;
+    margin-top:200px;
+  }
+
+  @keyframes showup {
+    0% {opacity:0;}
+    20% {opacity:1;}
+    80% {opacity:1;}
+    100% {opacity:0;}
+  }
+
+  @keyframes slidein {
+    0% { margin-left:-800px; }
+    20% { margin-left:-800px; }
+    35% { margin-left:0px; }
+    100% { margin-left:0px; }
+  }
+
+  @keyframes reveal {
+    0% {opacity:0;width:0px;}
+    20% {opacity:1;width:0px;}
+    30% {width:355px;}
+    80% {opacity:1;}
+    100% {opacity:0;width:355px;}
+  }
 }
 
-#text1,
-#text2 {
-  position: absolute;
-  width: 100%;
-  display: inline-block;
-
-  font-family: "Raleway", sans-serif;
-  font-size: 80pt;
-
-  text-align: center;
-
-  user-select: none;
+@media screen and (max-width: 700px) {
+  .animation-container{
+    font-size: 20px;
+  }
 }
