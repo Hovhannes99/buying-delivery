@@ -1,0 +1,48 @@
+
+.details__wrapper {
+  background: $backgroundColor;
+  display: flex;
+  border-radius: 20px;
+  padding: 50px 50px 50px 50px;
+  &_product{
+    width: 50%;
+    & > img {
+      width: 100%;
+      border-radius: 10px;
+    }
+  }
+  &_title{
+    padding: 20px 0;
+    font-size: 30px;
+  }
+  &_order{
+    padding: 0 20px;
+    &_title{
+      font-size: 30px;
+    }
+  }
+}
+
+@media screen and (max-width: $mobileSize) {
+
+  .details__wrapper {
+    display: grid;
+    padding: 0;
+    &_product{
+      width: 100%;
+      & > img {
+        width: 100%;
+        padding: 0;
+        border-radius: 10px;
+      }
+    }
+    &_title{
+      padding: 10px 10px 0;
+      font-size: 20px;
+    }
+    &_description{
+      padding: 20px 10px 0;
+      font-size: 14px;
+    }
+  }
+}
