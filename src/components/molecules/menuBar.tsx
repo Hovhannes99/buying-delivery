@@ -40,7 +40,7 @@ const MenuBar = () => {
             <p style={{padding:"10px 10px", color:"black", fontSize:"25px"}}>Categories</p>
             <Divider style={{background:"red"}}/>
             <List>
-                {['Armatura', 'Katanka', 'Cement', 'Shiferner'].map((text, index) => (
+                {['Bolory', 'Manracax', 'Mecacax'].map((text, index) => (
                     <ListItem key={text} disablePadding>
                         <ListItemButton divider >
                             <ListItemText primary={text}/>
