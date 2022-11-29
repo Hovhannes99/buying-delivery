@@ -1,10 +1,12 @@
-import OrderCount from "../../molecules/orderCount/orderCount";
+import ShippingAddress from "../../molecules/shippingAddress/shippingAddress";
 
 
 const Payment = () => {
+
+
     return(
         <div className={"payment__wrapper"}>
-            <OrderCount/>
+            <ShippingAddress/>
         </div>
     )
 }
