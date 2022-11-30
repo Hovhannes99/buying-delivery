@@ -8,7 +8,9 @@ const OrderCount = () => {
      const [countOrder, setContOrder] = useState<number>(0)
 
     const addOrder = ()=>{
-        setContOrder(countOrder+1)
+        if (countOrder < 15) {
+            setContOrder(countOrder+1)
+        }
     }
     const loseOrder = () =>{
          if (countOrder > 0){

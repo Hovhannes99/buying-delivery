@@ -31,7 +31,7 @@ const Details = () => {
               <p className={"details__wrapper_description"}>{product?.description}</p>
           </div>
           <div className={"details__wrapper_order"}>
-              <p className={"details__wrapper_order_title"}>Patvirel</p>
+              <p className={"details__wrapper_order_title"}>Orders</p>
               <Payment/>
           </div>
       </div>
