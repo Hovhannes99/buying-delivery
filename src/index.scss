@@ -5,6 +5,8 @@
 @import "styles/details";
 @import "src/components/molecules/orderCount/orderCount";
 @import "src/components/organisms/payment/payment";
+@import "src/components/molecules/shippingAddress/shippingAddress";
+@import "src/components/organisms/login/login";
 
 
 
@@ -23,10 +25,9 @@ body {
   scrollbar-color:  black;
 }
 body::-webkit-scrollbar-track {
-  background:  $backgroundColor;
+  background:  black;
 }
 body::-webkit-scrollbar-thumb {
   background-color: $backgroundColor;
   border-radius: 3px;
-  border: 3px solid black;
 }

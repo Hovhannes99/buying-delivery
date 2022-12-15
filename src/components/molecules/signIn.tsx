@@ -8,10 +8,12 @@ import IconButton from '@mui/material/IconButton';
 import LoginIcon from '@mui/icons-material/Login';
 import Tooltip from '@mui/material/Tooltip';
 import Logout from '@mui/icons-material/Logout';
+import {useNavigate} from "react-router-dom";
 
 const  SignIn = () => {
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
+    const navigation = useNavigate()
     const handleClick = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorEl(event.currentTarget);
     };
@@ -72,17 +74,11 @@ const  SignIn = () => {
                 transformOrigin={{ horizontal: 'right', vertical: 'top' }}
                 anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
             >
-                <MenuItem>
+                <MenuItem onClick={()=>navigation("/login")}>
                     <ListItemIcon>
                         <LoginIcon fontSize="small" />
                     </ListItemIcon>
                     Sign In
-                </MenuItem>
-                <MenuItem>
-                    <ListItemIcon>
-                        <LoginIcon fontSize="small" />
-                    </ListItemIcon>
-                    Sign Up
                 </MenuItem>
                 <MenuItem>
                     <ListItemIcon>
