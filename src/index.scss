@@ -7,6 +7,7 @@
 @import "src/components/organisms/payment/payment";
 @import "src/components/molecules/shippingAddress/shippingAddress";
 @import "src/components/organisms/login/login";
+@import "src/components/organisms/orderLists/orderLists";
 
 
 
@@ -30,4 +31,32 @@ body::-webkit-scrollbar-track {
 body::-webkit-scrollbar-thumb {
   background-color: $backgroundColor;
   border-radius: 3px;
+}
+
+body .order-wrapper::-webkit-scrollbar {
+  width: 11px;
+}
+body .order-wrapper{
+  scrollbar-width: thin;
+  scrollbar-color:  black;
+}
+body .order-wrapper::-webkit-scrollbar-track {
+  background:  black;
+}
+body .order-wrapper::-webkit-scrollbar-thumb {
+  background-color: $backgroundColor;
+  border-radius: 3px;
+}
+
+.rotate {
+  animation: rotation 2s infinite linear;
+}
+
+@keyframes rotation {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
