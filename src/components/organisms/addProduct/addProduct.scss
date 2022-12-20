@@ -1,0 +1,14 @@
+
+
+.product-wrapper{
+  background: $backgroundColor;
+  &_title{
+    font-size: 18px;
+    font-weight: bold;
+    padding: 10px 20px;
+
+  }
+  &_fields{
+    padding: 20px 20px;
+  }
+}
