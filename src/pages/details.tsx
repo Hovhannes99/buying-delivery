@@ -20,7 +20,7 @@ const Details = () => {
             const result = itemData.find((item)=> item.id === +id);
             setProduct(result)
         }
-    },[])
+    },[id])
 
 
   return (
