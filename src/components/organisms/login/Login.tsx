@@ -9,6 +9,9 @@ import {CustomModal} from "../../atoms/modals/CustomModal";
 import Loading from "../../atoms/loading/loading";
 import validateEmail from "../../../utils/emailValidation";
 import ValidationModal from "../../atoms/modals/ValidationMoadl";
+import {Alert} from "@mui/material";
+import AlertTitle from '@mui/material/AlertTitle';
+import SuccessAlert from "../../atoms/modals/Success";
 
 
 const Login = () => {
@@ -21,8 +24,8 @@ const Login = () => {
     const [userName, setUserName] = useState<string>("");
     const [isNotCorrect, setIsNotCorrect] = useState(false);
     const [isLoaded, setIsLoaded] = useState<boolean>(false);
-    const [openValidationModal, setOpenValidationModal] = useState<boolean>(false)
-
+    const [openValidationModal, setOpenValidationModal] = useState<boolean>(false);
+    const [isRegistrated, setIsRegistrated] = useState<boolean>(false)
 
     const navigate = useNavigate()
 
@@ -52,7 +55,12 @@ const Login = () => {
                 />
             case 2:
                 setTitle("Forgot Password")
-                return <ForgotPass/>
+                return <ForgotPass
+                        error={!!error}
+                        email={email}
+                        setEmail={setEmail}
+
+                />
             default:
                 return <SignIn
                     error={isNotCorrect}
@@ -100,8 +108,10 @@ const Login = () => {
                 }
                 break;
             case 2:
-                setTitle("Forgot Password")
-                return <ForgotPass/>
+                   if (validateEmail(email)){
+                        set
+                   }
+                 break
             default:
                 return navigate("/")
         }
@@ -110,8 +120,16 @@ const Login = () => {
     return (
         <div className={"login-wrapper"}>
             <p className={"login-wrapper__title"}>{title}</p>
-            <CustomModal key={error} message={error} open={!!error} title={"Error"} handleClose={() => setError("")}/>
-            <ValidationModal key={email} email={email} open={openValidationModal} setOpenValidationModal={setOpenValidationModal} setErrorValidation={setError}/>
+            <SuccessAlert open={isRegistrated} message={"your registration is successfully"}/>
+            <CustomModal message={error} open={!!error} title={"Error"} handleClose={() => setError("")}/>
+            <ValidationModal
+                email={email}
+                open={openValidationModal}
+                setOpenValidationModal={setOpenValidationModal}
+                setErrorValidation={setError}
+                setStep={setSteps}
+                setIsRegistrated={setIsRegistrated}
+            />
             <Loading isLoading={isLoaded}/>
             <div className={"login-wrapper__fields"}>
                 {loginFields}

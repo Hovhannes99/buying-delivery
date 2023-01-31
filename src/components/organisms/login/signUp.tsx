@@ -31,7 +31,7 @@ const SignUp = ({name, email, setEmail, setPassword, password, setName, error, s
                 error={error}
                 value={email}
                 onChange={(e)=>setEmail(e.target.value)}
-                label={"mail"}
+                label={"Email"}
                 variant="filled"
             />
             <TextField

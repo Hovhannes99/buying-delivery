@@ -20,32 +20,33 @@ interface IValidation {
     email:string,
     setOpenValidationModal: Dispatch<SetStateAction<boolean>>
     setErrorValidation:Dispatch<SetStateAction<string>>
+    setStep: Dispatch<SetStateAction<number>>
+    setIsRegistrated: Dispatch<SetStateAction<boolean>>
 }
-const ValidationModal =({open, email, setOpenValidationModal, setErrorValidation}:IValidation)=> {
+const ValidationModal =({open, email, setOpenValidationModal, setErrorValidation, setStep, setIsRegistrated}:IValidation)=> {
     const [verifyNumber, setVerifyNumber] = useState<string>("");
     const [errorField, setErrorField] = useState<boolean>(false)
     const navigate = useNavigate()
     const handleClose = () => {
-        console.log('heree')
-        setOpenValidationModal(false)
+        // setOpenValidationModal(false)
     };
 
     const handleValidation = async () => {
         try {
             if (verifyNumber.length > 5){
-                const data = await AuthenticationsApi.verification({verificationCode:verifyNumber, email});
-                console.log(data)
-                // navigate("/")
-                setOpenValidationModal(true)
+                await AuthenticationsApi.verification({verificationCode:verifyNumber, email});
+                setOpenValidationModal(false)
+                navigate("/login")
+                setStep(0)
+                setIsRegistrated(true)
+                setTimeout(()=>setIsRegistrated(false), 1500)
             }else {
                 setErrorField(true)
             }
         }catch (e:any | Error){
-            console.log(e, "errorr")
-            setTimeout(()=>setErrorValidation(e.data.errors), 2000)
+           setErrorValidation(e.data.errors.token)
             setOpenValidationModal(false)
         }
-
     };
 
     return (
@@ -71,7 +72,6 @@ const ValidationModal =({open, email, setOpenValidationModal, setErrorValidation
                     />
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={handleClose}>Cancel</Button>
                     <Button onClick={handleValidation}>Submit</Button>
                 </DialogActions>
             </div>
