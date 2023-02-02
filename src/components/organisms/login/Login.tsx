@@ -1,4 +1,4 @@
-import {useMemo, useState} from "react";
+import {useEffect, useMemo, useState} from "react";
 import SignIn from "./signIn";
 import SignUp from "./signUp";
 import ForgotPass from "./forgotPass";
@@ -9,9 +9,8 @@ import {CustomModal} from "../../atoms/modals/CustomModal";
 import Loading from "../../atoms/loading/loading";
 import validateEmail from "../../../utils/emailValidation";
 import ValidationModal from "../../atoms/modals/ValidationMoadl";
-import {Alert} from "@mui/material";
-import AlertTitle from '@mui/material/AlertTitle';
 import SuccessAlert from "../../atoms/modals/Success";
+import {useLocalStorage} from "../../../hooks/useLocalStorage";
 
 
 const Login = () => {
@@ -25,7 +24,9 @@ const Login = () => {
     const [isNotCorrect, setIsNotCorrect] = useState(false);
     const [isLoaded, setIsLoaded] = useState<boolean>(false);
     const [openValidationModal, setOpenValidationModal] = useState<boolean>(false);
-    const [isRegistrated, setIsRegistrated] = useState<boolean>(false)
+    const [isRegistrated, setIsRegistrated] = useState<boolean>(false);
+    const [,setValue,] = useLocalStorage("email", "");
+    const [typeStep, setTypeStep] = useState<"signUp" | "forgotPass">("signUp")
 
     const navigate = useNavigate()
 
@@ -56,7 +57,7 @@ const Login = () => {
             case 2:
                 setTitle("Forgot Password")
                 return <ForgotPass
-                        error={!!error}
+                        error={isNotCorrect}
                         email={email}
                         setEmail={setEmail}
 
@@ -95,12 +96,13 @@ const Login = () => {
                     if (email.length > 6 && password.length > 6 && validateEmail(email) && (newPassword === password) && userName) {
                         setIsLoaded(true)
                         await AuthenticationsApi.signUp({username: userName, email, password});
+                        setTypeStep("signUp")
                         setIsLoaded(false)
                         setOpenValidationModal(true)
                     } else {
                         setIsNotCorrect(true)
                         setIsLoaded(false)
-                        setTimeout(() => setIsNotCorrect(false), 3000)
+                        setTimeout(() => setIsNotCorrect(false), 1500)
                     }
                 } catch (e: any) {
                     setError(e.data.message)
@@ -108,12 +110,24 @@ const Login = () => {
                 }
                 break;
             case 2:
-                   if (validateEmail(email)){
-                        set
-                   }
+                try {
+                    if (validateEmail(email)){
+                        setIsLoaded(true)
+                        const data = await AuthenticationsApi.forgotPass({email});
+                        if(data.data.message.emailSent){
+                            setIsLoaded(false);
+                            setTypeStep("forgotPass")
+                            setOpenValidationModal(true);
+                            setValue(email.toString())
+                        }
+                    }else {
+                        setIsNotCorrect(true)
+                    }
+                }catch (e:any){
+                    setError(e.data.message)
+                    setIsLoaded(false)
+                }
                  break
-            default:
-                return navigate("/")
         }
     }
 
@@ -123,6 +137,7 @@ const Login = () => {
             <SuccessAlert open={isRegistrated} message={"your registration is successfully"}/>
             <CustomModal message={error} open={!!error} title={"Error"} handleClose={() => setError("")}/>
             <ValidationModal
+                type={typeStep}
                 email={email}
                 open={openValidationModal}
                 setOpenValidationModal={setOpenValidationModal}

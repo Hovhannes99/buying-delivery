@@ -16,6 +16,7 @@ const style = {
 }
 
 interface IValidation {
+    type: "signUp" | "forgotPass"
     open:boolean,
     email:string,
     setOpenValidationModal: Dispatch<SetStateAction<boolean>>
@@ -23,20 +24,22 @@ interface IValidation {
     setStep: Dispatch<SetStateAction<number>>
     setIsRegistrated: Dispatch<SetStateAction<boolean>>
 }
-const ValidationModal =({open, email, setOpenValidationModal, setErrorValidation, setStep, setIsRegistrated}:IValidation)=> {
+const ValidationModal =({open, email, setOpenValidationModal, setErrorValidation, setStep, setIsRegistrated, type}:IValidation)=> {
     const [verifyNumber, setVerifyNumber] = useState<string>("");
     const [errorField, setErrorField] = useState<boolean>(false)
     const navigate = useNavigate()
-    const handleClose = () => {
-        // setOpenValidationModal(false)
-    };
 
     const handleValidation = async () => {
         try {
             if (verifyNumber.length > 5){
                 await AuthenticationsApi.verification({verificationCode:verifyNumber, email});
-                setOpenValidationModal(false)
-                navigate("/login")
+                setOpenValidationModal(false);
+                if (type === "signUp"){
+                    navigate("/login")
+
+                }else{
+                    navigate("/new-password")
+                }
                 setStep(0)
                 setIsRegistrated(true)
                 setTimeout(()=>setIsRegistrated(false), 1500)
@@ -51,7 +54,7 @@ const ValidationModal =({open, email, setOpenValidationModal, setErrorValidation
 
     return (
         <>
-            <Dialog  open={open} onClose={handleClose}>
+            <Dialog  open={open}>
             <div style={style}>
                 <DialogTitle>Verification</DialogTitle>
                 <DialogContent>

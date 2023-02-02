@@ -20,11 +20,17 @@ const forgotPass = async (value: {email:string})=>{
     return data
 }
 
+const changePassword = async (value: {email:string, newPassword:string}) =>{
+    const data = await axios.post("resetPass", value);
+    return data
+}
+
 const AuthenticationsApi = {
     signIn,
     signUp,
     verification,
-    forgotPass
+    forgotPass,
+    changePassword
 }
 
 export default AuthenticationsApi
