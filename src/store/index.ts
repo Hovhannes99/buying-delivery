@@ -1,9 +1,7 @@
 import {combineReducers, configureStore} from '@reduxjs/toolkit'
-// import countryReducer from "./slices/countrySlice"
-// import allRateReducer from "./slices/allRateSlice";
-// import convertReducer from "./slices/convertSlice";
+import userReducer from "./slices/userSlice"
 
-const reducer = combineReducers({})
+const reducer = combineReducers({userReducer})
 
 const store = configureStore({
     reducer,

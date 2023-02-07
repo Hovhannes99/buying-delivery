@@ -78,9 +78,10 @@ const Login = () => {
                 try {
                     if (email.length > 6 && password.length > 6 && validateEmail(email)) {
                         setIsLoaded(true)
-                        await AuthenticationsApi.signIn({email, password});
+                        const data =  await AuthenticationsApi.signIn({email, password});
+                        console.log(data, "data")
                         setIsLoaded(false)
-                        navigate("/")
+                        navigate("/");
                     } else {
                         setIsNotCorrect(true)
                         setIsLoaded(false)

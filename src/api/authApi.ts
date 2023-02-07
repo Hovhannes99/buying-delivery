@@ -25,12 +25,18 @@ const changePassword = async (value: {email:string, newPassword:string}) =>{
     return data
 }
 
+const getUser = async ()=>{
+    const data = await axios.get("/user");
+    return data;
+}
+
 const AuthenticationsApi = {
     signIn,
     signUp,
     verification,
     forgotPass,
-    changePassword
+    changePassword,
+    getUser
 }
 
 export default AuthenticationsApi
