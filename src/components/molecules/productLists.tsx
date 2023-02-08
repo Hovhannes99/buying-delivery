@@ -5,7 +5,7 @@ import {useNavigate} from "react-router-dom";
 import {itemData} from "../../data/lists";
 
 const ProductLists = () => {
-    const navigation  = useNavigate()
+    const navigation  = useNavigate();
 
     return (
         <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }}>
