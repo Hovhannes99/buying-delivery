@@ -26,7 +26,8 @@ const Login = () => {
     const [openValidationModal, setOpenValidationModal] = useState<boolean>(false);
     const [isRegistrated, setIsRegistrated] = useState<boolean>(false);
     const [,setValue,] = useLocalStorage("email", "");
-    const [typeStep, setTypeStep] = useState<"signUp" | "forgotPass">("signUp")
+    const [typeStep, setTypeStep] = useState<"signUp" | "forgotPass">("signUp");
+    const [,setStoredValue] = useLocalStorage("token")
 
     const navigate = useNavigate()
 
@@ -78,8 +79,8 @@ const Login = () => {
                 try {
                     if (email.length > 6 && password.length > 6 && validateEmail(email)) {
                         setIsLoaded(true)
-                        const data =  await AuthenticationsApi.signIn({email, password});
-                        console.log(data, "data")
+                        const {data} =  await AuthenticationsApi.signIn({email, password});
+                        setStoredValue(data.token)
                         setIsLoaded(false)
                         navigate("/");
                     } else {

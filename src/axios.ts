@@ -2,15 +2,12 @@ import axios from 'axios'
 
 const instance = axios.create({
     baseURL: process.env.REACT_APP_BASE_URL,
-    headers: {
-        'Content-Type': 'text/json',
-    },
 })
 
 instance.interceptors.request.use((config) => {
-    const token = localStorage.accessToken
+    const token = JSON.parse(localStorage.token);
     if (config.headers) {
-        config.headers.Authorization = `Bearer ${token}` || ''
+        config.headers.token = `Bearer ${token}` || ''
     }
     return config
 })

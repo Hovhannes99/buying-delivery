@@ -2,8 +2,20 @@
 import video from "../assets/videos/construction.mp4"
 import Routers from "../routes/routes";
 import {Container} from "@mui/material"
+import {useLocalStorage} from "../hooks/useLocalStorage";
+import {useAppDispatch} from "../hooks/useAppDispatch";
+import {useEffect} from "react";
+import getUserThunk from "../store/middlewares/getUser";
 
 const Main = () => {
+    const [storedValue] = useLocalStorage("token");
+    const dispatch = useAppDispatch();
+    useEffect(()=>{
+        if (storedValue) {
+            dispatch(getUserThunk());
+        }
+    },[dispatch, storedValue]);
+
 
     return (
         <div className={"main"}>
@@ -19,5 +31,6 @@ const Main = () => {
         </div>
     );
 }
+
 
 export default Main
