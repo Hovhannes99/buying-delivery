@@ -47,7 +47,7 @@ const SignIn = () => {
                         aria-haspopup="true"
                         aria-expanded={open ? 'true' : undefined}
                     >
-                         <Avatar sx={{background: "#870209"}} alt="Cindy Baker"> {user.username ? user.username[0] : <AccountCircleIcon/>}</Avatar>
+                         <Avatar sx={{background: "#df6600"}} alt="Cindy Baker"> {user.username ? user.username[0] : <AccountCircleIcon/>}</Avatar>
                     </IconButton>
                 </Tooltip>
             </Box>

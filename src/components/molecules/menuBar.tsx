@@ -38,7 +38,7 @@ const MenuBar = () => {
             onKeyDown={toggleDrawer(anchor, false)}
         >
             <p className={"menu-title"}>Categories</p>
-            <Divider style={{background:"#870209"}}/>
+            <Divider style={{background:"#df6600"}}/>
             <List>
                 {['Bolory', 'Manracax', 'Mecacax'].map((text, index) => (
                     <ListItem key={text} disablePadding>
@@ -52,7 +52,7 @@ const MenuBar = () => {
     );
     return (
         <div style={{ paddingLeft:"12px"}}>
-            <Button onClick={toggleDrawer("menu", true)}  size={"small"} style={{border:"1px solid #870209"}}><MenuIcon style={{color:'#870209'}}/></Button>
+            <Button onClick={toggleDrawer("menu", true)}  size={"small"} style={{border:"1px solid #df6600"}}><MenuIcon style={{color:'#df6600'}}/></Button>
             <Drawer
                 anchor={"left"}
                 open={state["menu"]}
