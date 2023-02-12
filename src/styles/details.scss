@@ -4,6 +4,7 @@
   display: flex;
   border-radius: 20px;
   padding: 50px 50px 50px 50px;
+  color: $textGrayColor;
   &_product{
     width: 50%;
     & > img {

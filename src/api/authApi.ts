@@ -1,7 +1,9 @@
 import axios from '../axios'
 
 const signIn = async (value: {email: string; password: string}) => {
-    const data = await axios.post('signIn',value)
+    console.log(value, "valuee")
+    const data = await axios.post('signIn',value);
+    console.log(data, "dataaa")
     return data
 }
 
@@ -27,8 +29,8 @@ const changePassword = async (value: {email:string, newPassword:string}) =>{
 
 const getUser = async ()=>{
     try {
-        const data = await axios.get("/user");
-        return data;
+        const {data} = await axios.get("/user");
+        return data.user;
     }catch (e){
         return e
     }

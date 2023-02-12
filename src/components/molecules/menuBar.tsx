@@ -32,18 +32,18 @@ const MenuBar = () => {
 
     const list = (anchor: Anchor) => (
         <Box
-            sx={{width: 250, height:"100%", background: "#c8ad7e"}}
+            sx={{width: 250, height:"100%", background: "#242526"}}
             role="presentation"
             onClick={toggleDrawer(anchor, false)}
             onKeyDown={toggleDrawer(anchor, false)}
         >
-            <p style={{padding:"10px 10px", color:"black", fontSize:"25px"}}>Categories</p>
-            <Divider style={{background:"red"}}/>
+            <p className={"menu-title"}>Categories</p>
+            <Divider style={{background:"#870209"}}/>
             <List>
                 {['Bolory', 'Manracax', 'Mecacax'].map((text, index) => (
                     <ListItem key={text} disablePadding>
                         <ListItemButton divider >
-                            <ListItemText primary={text}/>
+                            <ListItemText sx={{color:"#aba4a4"}} primary={text}/>
                         </ListItemButton>
                     </ListItem>
                 ))}
@@ -51,8 +51,8 @@ const MenuBar = () => {
         </Box>
     );
     return (
-        <div>
-            <Button onClick={toggleDrawer("menu", true)}  size={"small"} style={{border:"1px solid red"}}><MenuIcon color={"error"}/></Button>
+        <div style={{ paddingLeft:"12px"}}>
+            <Button onClick={toggleDrawer("menu", true)}  size={"small"} style={{border:"1px solid #870209"}}><MenuIcon style={{color:'#870209'}}/></Button>
             <Drawer
                 anchor={"left"}
                 open={state["menu"]}

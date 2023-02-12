@@ -24,7 +24,7 @@ const Main = () => {
             </video>
             <div className="component"></div>
             <div className={"main__productsList"}>
-                <Container maxWidth={"xl"} sx={{paddingTop: "30px", paddingBottom: "30px"}}>
+                <Container  sx={{paddingTop: "150px", paddingBottom: "30px"}}>
                     <Routers/>
                 </Container>
             </div>

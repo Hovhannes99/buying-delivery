@@ -11,9 +11,16 @@ import Logout from '@mui/icons-material/Logout';
 import {useNavigate} from "react-router-dom";
 import LocalShippingIcon from '@mui/icons-material/LocalShipping';
 import AddToPhotosIcon from '@mui/icons-material/AddToPhotos';
+import {useAppSelector} from "../../hooks/useAppSelector";
+import Loading from "../atoms/loading/loading";
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import {ROLE_USER} from "../../constants/user";
+import {Texture} from "@mui/icons-material";
 
 const SignIn = () => {
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+    const {user, error, loading} = useAppSelector(store => store.userReducer);
+
     const open = Boolean(anchorEl);
     const navigation = useNavigate()
     const handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -22,9 +29,15 @@ const SignIn = () => {
     const handleClose = () => {
         setAnchorEl(null);
     };
+    if (error){
+        return <div>Error....</div>
+    }
+    if (loading) {
+        return <Loading isLoading={true}/>
+    }
     return (
         <React.Fragment>
-            <Box sx={{display: 'flex', alignItems: 'center', textAlign: 'center'}}>
+            <Box sx={{display: 'flex', alignItems: 'center', textAlign: 'center',  paddingRight:"12px"}}>
                 <Tooltip title="Account settings">
                     <IconButton
                         onClick={handleClick}
@@ -34,7 +47,7 @@ const SignIn = () => {
                         aria-haspopup="true"
                         aria-expanded={open ? 'true' : undefined}
                     >
-                        <Avatar alt="Cindy Baker"/>
+                         <Avatar sx={{background: "#870209"}} alt="Cindy Baker"> {user.username ? user.username[0] : <AccountCircleIcon/>}</Avatar>
                     </IconButton>
                 </Tooltip>
             </Box>
@@ -50,13 +63,13 @@ const SignIn = () => {
                         overflow: 'visible',
                         filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
                         mt: 1.5,
-                        background: "#c8ad7e",
+                        background: "#242526",
                         '& .MuiAvatar-root': {
                             width: 32,
                             height: 32,
                             ml: -0.5,
                             mr: 1,
-                            background: "#c8ad7e",
+                            background: "#242526",
                         },
                         '&:before': {
                             content: '""',
@@ -69,37 +82,39 @@ const SignIn = () => {
                             bgcolor: 'background.paper',
                             transform: 'translateY(-50%) rotate(45deg)',
                             zIndex: 0,
-                            background: "#c8ad7e",
+                            background: "#242526",
                         },
                     },
                 }}
                 transformOrigin={{horizontal: 'right', vertical: 'top'}}
                 anchorOrigin={{horizontal: 'right', vertical: 'bottom'}}
             >
-                <MenuItem onClick={() => navigation("/orders")}>
-                    <ListItemIcon>
-                        <LocalShippingIcon fontSize="small"/>
-                    </ListItemIcon>
-                    Orders
-                </MenuItem>
-                <MenuItem onClick={() => navigation("/orders")}>
-                    <ListItemIcon>
-                        <AddToPhotosIcon fontSize="small"/>
-                    </ListItemIcon>
-                    Add product
-                </MenuItem>
-                <MenuItem onClick={() => navigation("/login")}>
-                    <ListItemIcon>
-                        <LoginIcon fontSize="small"/>
-                    </ListItemIcon>
-                    Sign In
-                </MenuItem>
-                <MenuItem>
-                    <ListItemIcon>
-                        <Logout fontSize="small"/>
-                    </ListItemIcon>
-                    Logout
-                </MenuItem>
+                {user.isVerified && <div>
+                    {user.role === ROLE_USER ? <MenuItem onClick={() => navigation("/orders")} >
+                            <ListItemIcon  className={"menu-item"}>
+                                <LocalShippingIcon className={"icon"} fontSize="small"/>
+                            </ListItemIcon>
+                           <p className={"menu-item"}>Orders</p>
+                        </MenuItem>
+                        : <MenuItem onClick={() => navigation("/orders")} className={"menu-item"}>
+                            <ListItemIcon>
+                                <AddToPhotosIcon fontSize="small"/>
+                            </ListItemIcon>
+                            Add product
+                        </MenuItem>}
+                </div>}
+                {!user.isVerified ? <MenuItem onClick={() => navigation("/login")} className={"menu-item"}>
+                        <ListItemIcon className={"menu-item"}>
+                            <LoginIcon className={"icon"} fontSize="small"/>
+                        </ListItemIcon>
+                       <p className={"menu-item"}>Sign In</p>
+                    </MenuItem> :
+                    <MenuItem >
+                        <ListItemIcon className={"menu-item"}>
+                            <Logout className={"icon"} fontSize="small"/>
+                        </ListItemIcon>
+                        <p className={"menu-item"}>Logout</p>
+                    </MenuItem>}
             </Menu>
         </React.Fragment>
     );

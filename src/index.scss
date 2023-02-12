@@ -11,7 +11,10 @@
 @import "src/components/organisms/orderLists/orderLists";
 @import "src/components/organisms/addProduct/addProduct";
 @import "src/components/atoms/uploadImage/uploadImage";
-
+@import "src/components/atoms/logo";
+@import "src/components/molecules/productList";
+@import "src/components/molecules/signIn";
+@import "src/components/molecules/menuBar";
 
 
 * {
@@ -26,7 +29,7 @@ body::-webkit-scrollbar {
 }
 body {
   scrollbar-width: thin;
-  scrollbar-color:  black;
+  scrollbar-color: black;
 }
 body::-webkit-scrollbar-track {
   background:  black;

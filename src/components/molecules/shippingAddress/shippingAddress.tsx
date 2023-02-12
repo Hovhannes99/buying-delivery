@@ -29,8 +29,8 @@ const ShippingAddress = () => {
                 ))}
             </Grid>}
             <div className={"button-wrapper"}>
-                <Button type={"submit"}  sx={{color:"black"}} onClick={handleOrder}> Order online <LanguageIcon/></Button>
-                <Button type={"submit"} sx={{color:"black"}}>Order with call <CallIcon/></Button>
+                <Button type={"submit"} sx={{color:'#aba4a4',background:"#0e0b10"}}  onClick={handleOrder}> Order online <LanguageIcon/></Button>
+                <Button type={"submit"} sx={{color:'#aba4a4', background:"#0e0b10"}} >Order with call <CallIcon/></Button>
             </div>
         </Box>
     )

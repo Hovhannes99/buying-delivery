@@ -12,7 +12,7 @@ import {CustomModal} from "./CustomModal";
 import {useNavigate} from "react-router-dom";
 
 const style = {
-    background:'#c8ad7e'
+    background:'#242526'
 }
 
 interface IValidation {

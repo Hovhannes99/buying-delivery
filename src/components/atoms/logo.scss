@@ -1,0 +1,24 @@
+
+.logo{
+  font-size: 60px;
+  color: $textWhiteColor;
+  cursor: pointer;
+  padding-left: 24px;
+  font-family: 'Roboto', sans-serif;
+  display: flex;
+  align-items: center;
+  .icon {
+    font-size: 30px;
+  }
+}
+
+
+@media screen and (max-width: $mobileSize) {
+   .logo{
+     font-size: 40px;
+     margin-right: 10px;
+     .icon {
+       font-size: 20px;
+     }
+   }
+}

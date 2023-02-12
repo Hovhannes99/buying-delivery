@@ -1,10 +1,12 @@
 .header {
   min-height: 100px;
-  background: $backgroundColor;
+  background: $backgroundHeaderColor;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 20px 0 20px;
+  position: fixed;
+  width: 100%;
+  z-index: 5;
   &__menu {
     display: flex;
     justify-content: space-between;

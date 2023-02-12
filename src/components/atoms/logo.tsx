@@ -1,11 +1,11 @@
-import img from "../../assets/images/g-logo.png";
 import React from "react";
 import {Link} from "react-router-dom";
+import HandymanIcon from '@mui/icons-material/Handyman';
 
 
 const Logo = () => (
-    <Link to={"/"}>
-        <img src={img} className={"header__logo"} alt=""/>
+    <Link style={{textDecoration:"none"}} to={"/"}>
+        <div className={'logo'}>G<HandymanIcon sx={{color:"#870209"}} className={"icon"}/>Group</div>
     </Link>
 
 )

@@ -20,7 +20,7 @@ const style = {
     height: 100,
     minWidth: 250,
     borderRadius: "20px",
-    background: "#c8ad7e",
+    background: "#242526",
     boxShadow: 24,
     p: 4,
 };
