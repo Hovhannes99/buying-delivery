@@ -2,14 +2,29 @@
 
 .list-wrapper{
   .card{
-    background:$backgroundDescription
+    background:$backgroundDescription;
+    .title-wrapper{
+      width: 100%;
+      display: flex;
+    }
   }
   .title{
-    color: $textWhiteColor
+    color: $textWhiteColor;
+    padding-right: 5px;
   }
   .description{
     color: $textGrayColor;
-
   }
 }
 
+
+@media screen and (max-width: $mobileSize){
+  .list-wrapper {
+    .title {
+      font-size: 15px;
+    }
+    .description{
+     font-size: 12px;
+    }
+  }
+}

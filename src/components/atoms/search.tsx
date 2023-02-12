@@ -13,8 +13,7 @@ const Search = () => {
             backgroundColor: alpha(theme.palette.common.white, 0.25),
         },
         marginLeft: 0,
-        width: '100%',
-        [theme.breakpoints.up('sm')]: {
+        [theme.breakpoints.down(680)]: {
             marginLeft: theme.spacing(1),
             width: 'auto',
         },
@@ -41,8 +40,8 @@ const Search = () => {
             color: "#aba4a4",
             width: '100%',
             height:"30px",
-            [theme.breakpoints.up('sm')]: {
-                width: '12ch',
+            [theme.breakpoints.up(680)]: {
+                width: '9ch',
                 '&:focus': {
                     width: '20ch',
                 },
@@ -52,7 +51,7 @@ const Search = () => {
 
   return(
       <Search>
-          <SearchIconWrapper>
+          <SearchIconWrapper sx={{background:'#df6600', borderTopLeftRadius:"50px", borderBottomLeftRadius:'50px', width:'10px'}}>
               <SearchIcon />
           </SearchIconWrapper>
           <StyledInputBase

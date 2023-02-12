@@ -29,8 +29,13 @@ const ProductLists = () => {
                             onClick={() => navigation(`/details/${item.id}`)}
                         />
                         <CardContent className={"card"}>
-                            <Typography className={"title"} gutterBottom variant="h5" component="div">
-                                {item.title}
+                            <Typography className={"title-wrapper"}>
+                                <Typography className={"title"} gutterBottom variant="h5" component="div">
+                                    {item.title}
+                                </Typography>
+                                <Typography className={"title"} gutterBottom variant="h5" component="div">
+                                    300$
+                                </Typography>
                             </Typography>
                             <Typography variant="body2" className={"description"}>
                                 {item.description.split(" ").slice(0, 5).join(' ')}...
@@ -38,15 +43,10 @@ const ProductLists = () => {
                         </CardContent>
                         <CardActions sx={{display: "flex", justifyContent: "space-between"}}>
                             <Button onClick={() => navigation(`/details/${item.id}`)}
-                                    style={{color: "#aba4a4", background: "#0e0b10"}}
+                                    style={{color: "#aba4a4", background: "#df6600"}}
                                     size="small"
-                                    type={"submit"}
-                            >Learn More</Button>
-                            <Button
-                                type={"submit"}
-                                style={{color: "#aba4a4", background: "#0e0b10"}}
-                                size="small"
-                            >Add to card</Button>
+                                    type={"reset"}
+                            >Buy</Button>
                         </CardActions>
                     </Card>
                 </Grid>
