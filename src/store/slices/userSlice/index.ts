@@ -1,19 +1,8 @@
 import {createSlice} from "@reduxjs/toolkit";
 import getUserThunk from "../../middlewares/getUser";
+import {CountriesState, IUser} from "../../../types/user";
 
-interface IUser {
-  _id: string,
-  username: string,
-  email: string,
-  password: string,
-  isVerified: boolean,
-  role: string,
-}
-export interface CountriesState {
-  user: IUser,
-  loading: boolean,
-  error: string
-}
+
 
 const initialState : CountriesState = {
   user: {} as IUser,
