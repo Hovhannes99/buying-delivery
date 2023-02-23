@@ -1,5 +1,7 @@
 import {TextField} from "@mui/material";
 import {Dispatch, SetStateAction} from "react";
+import {inputStyle} from "../../../constants/styleInput";
+import {backgroundDescription} from "../../../constants/colors";
 
 
 interface ISignInProps {
@@ -22,6 +24,7 @@ const SignIn = ({email, setEmail, password, setPassword, error}:ISignInProps) =>
                 label={"mail"}
                 variant="filled"
                 onChange={(e)=>setEmail(e.target.value)}
+                style={inputStyle}
             />
             <TextField
                 required
@@ -32,6 +35,7 @@ const SignIn = ({email, setEmail, password, setPassword, error}:ISignInProps) =>
                 variant="filled"
                 type={"password"}
                 onChange={(e)=>setPassword(e.target.value)}
+                style={inputStyle}
             />
         </>
     )

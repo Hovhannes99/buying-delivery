@@ -4,6 +4,7 @@ import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
+import {backgroundColor} from "../../../constants/colors";
 
 interface ICustomModal  {
     open: boolean,
@@ -15,7 +16,7 @@ const style = {
     left: '50%',
     transform: 'translate(  -50%, -50%)',
     borderRadius: "20px",
-    background: "#242526",
+    background:backgroundColor,
     boxShadow: 24,
     display: "grid",
     justifyItems:"center",

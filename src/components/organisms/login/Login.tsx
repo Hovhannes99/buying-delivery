@@ -11,6 +11,10 @@ import validateEmail from "../../../utils/emailValidation";
 import ValidationModal from "../../atoms/modals/ValidationMoadl";
 import SuccessAlert from "../../atoms/modals/Success";
 import {useLocalStorage} from "../../../hooks/useLocalStorage";
+import getUserThunk from "../../../store/middlewares/getUser";
+import {useAppDispatch} from "../../../hooks/useAppDispatch";
+import {primaryButtonStyle} from "../../../constants/primaryButtonStyle";
+import {textGrayColor} from "../../../constants/colors";
 
 
 const Login = () => {
@@ -135,7 +139,7 @@ const Login = () => {
 
     return (
         <div className={"login-wrapper"}>
-            <p className={"login-wrapper__title"}>{title}</p>
+            <p className={"login-wrapper__title"} style={{color: textGrayColor}}>{title}</p>
             <SuccessAlert open={isRegistrated} message={"your registration is successfully"}/>
             <CustomModal message={error} open={!!error} title={"Error"} handleClose={() => setError("")}/>
             <ValidationModal
@@ -150,11 +154,11 @@ const Login = () => {
             <Loading isLoading={isLoaded}/>
             <div className={"login-wrapper__fields"}>
                 {loginFields}
-                <Button type={"submit"} sx={{color: "white", background: "black"}} onClick={onRegistration}>Enter</Button>
+                <Button type={"submit"} sx={primaryButtonStyle} onClick={onRegistration}>Enter</Button>
             </div>
             <div className={"login-wrapper__footer"}>
-                <p onClick={() => setSteps(steps !== 1 ? 1 : 0)}>{steps !== 1 ? "Sign up" : "Sign in"}</p>
-                <p onClick={() => setSteps(2)}>Forgot Password ?</p>
+                <p onClick={() => setSteps(steps !== 1 ? 1 : 0)} style={{color: textGrayColor}}>{steps !== 1 ? "Sign up" : "Sign in"}</p>
+                <p onClick={() => setSteps(2)} style={{color: textGrayColor}}>Forgot Password ?</p>
             </div>
         </div>
     )

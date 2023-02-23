@@ -1,5 +1,6 @@
 import {TextField} from "@mui/material";
 import {Dispatch, SetStateAction} from "react";
+import {inputStyle} from "../../../constants/styleInput";
 
 interface IForgotPassword {
   email:string;
@@ -18,6 +19,7 @@ const ForgotPass = ({email, error, setEmail}: IForgotPassword) => {
           onChange={(e)=>setEmail(e.target.value)}
           label={"Email"}
           variant="filled"
+          style={inputStyle}
       />
   )
 }
