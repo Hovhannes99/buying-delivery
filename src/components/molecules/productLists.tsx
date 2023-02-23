@@ -2,7 +2,6 @@ import * as React from 'react';
 import {Card, CardActions, CardContent, CardMedia, Grid, Typography} from "@mui/material";
 import Button from "@mui/material/Button";
 import {useNavigate} from "react-router-dom";
-import {itemData} from "../../data/lists";
 import {backgroundColor} from "../../constants/colors";
 import {primaryButtonStyle} from "../../constants/primaryButtonStyle";
 import {useAppSelector} from "../../hooks/useAppSelector";
@@ -10,13 +9,13 @@ import Loading from "../atoms/loading/loading";
 
 const ProductLists = () => {
     const navigation = useNavigate();
-    const  {products, error, loading}  = useAppSelector((state)=>state.products)
+    const  {products, loading}  = useAppSelector((state)=>state.products)
 
 
     if (loading){
         return <Loading isLoading/>
     }
-    console.log(products.data, "sss")
+
     return (
         <Grid className={"list-wrapper"} container spacing={{xs: 2, md: 3}} columns={{xs: 4, sm: 8, md: 12}}>
             {products.data?.map((item, index) => (
@@ -52,7 +51,7 @@ const ProductLists = () => {
                             </Typography>
                         </CardContent>
                         <CardActions sx={{display: "flex", justifyContent: "space-between"}}>
-                            <Button onClick={() => navigation(`/details/${item.id}`)}
+                            <Button onClick={() => navigation(`/details/${item._id}`)}
                                     style={primaryButtonStyle}
                                     size="small"
                                     type={"reset"}

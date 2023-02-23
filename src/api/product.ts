@@ -7,7 +7,7 @@ const createProduct = async (value: ICreateProduct) => {
     return data
 }
 
-const getProductId = async (value: {id:string}) => {
+const getProductId = async (value: {_id:string}) => {
     const data = await axios.get('product', {headers:value})
     return data
 }
@@ -18,7 +18,7 @@ const getAllProducts =  async (value:{variant:'MEC'|'POQR'|undefined}) => {
 }
 
 const editProduct = async (value: IEditProduct)=>{
-    const data = await axios.put("edit", {}, {headers: value});
+    const data = await axios.put("edit",  value);
     return data
 }
 
