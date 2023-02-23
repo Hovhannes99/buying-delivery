@@ -3,6 +3,7 @@ import LanguageIcon from '@mui/icons-material/Language';
 import CallIcon from '@mui/icons-material/Call';
 import {useState} from "react";
 import {useNavigate} from "react-router-dom";
+import {primaryButtonStyle} from "../../../constants/primaryButtonStyle";
 
 
 const ShippingAddress = () => {
@@ -29,8 +30,8 @@ const ShippingAddress = () => {
                 ))}
             </Grid>}
             <div className={"button-wrapper"}>
-                <Button type={"submit"} sx={{color:'#aba4a4',background:"#0e0b10"}}  onClick={handleOrder}> Order online <LanguageIcon/></Button>
-                <Button type={"submit"} sx={{color:'#aba4a4', background:"#0e0b10"}} >Order with call <CallIcon/></Button>
+                <Button type={"submit"} sx={primaryButtonStyle}  onClick={handleOrder}> Order online <LanguageIcon/></Button>
+                <Button type={"submit"} sx={primaryButtonStyle} >Order with call <CallIcon/></Button>
             </div>
         </Box>
     )

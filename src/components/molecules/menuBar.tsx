@@ -8,6 +8,7 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
 import MenuIcon from '@mui/icons-material/Menu';
 import Divider from '@mui/material/Divider';
+import {backgroundColor, orangeColor, textGrayColor} from "../../constants/colors";
 
 type Anchor = 'menu'
 
@@ -32,18 +33,18 @@ const MenuBar = () => {
 
     const list = (anchor: Anchor) => (
         <Box
-            sx={{width: 250, height:"100%", background: "#242526"}}
+            sx={{width: 250, height:"100%", background: backgroundColor}}
             role="presentation"
             onClick={toggleDrawer(anchor, false)}
             onKeyDown={toggleDrawer(anchor, false)}
         >
             <p className={"menu-title"}>Categories</p>
-            <Divider style={{background:"#df6600"}}/>
+            <Divider style={{background:orangeColor}}/>
             <List>
                 {['Bolory', 'Manracax', 'Mecacax'].map((text, index) => (
                     <ListItem key={text} disablePadding>
                         <ListItemButton divider >
-                            <ListItemText sx={{color:"#aba4a4"}} primary={text}/>
+                            <ListItemText sx={{color:textGrayColor}} primary={text}/>
                         </ListItemButton>
                     </ListItem>
                 ))}
@@ -52,7 +53,7 @@ const MenuBar = () => {
     );
     return (
         <div style={{ paddingLeft:"12px"}}>
-            <Button onClick={toggleDrawer("menu", true)}  size={"small"} style={{border:"1px solid #df6600"}}><MenuIcon style={{color:'#df6600'}}/></Button>
+            <Button onClick={toggleDrawer("menu", true)}  size={"small"} style={{border:`1px solid ${orangeColor}`}}><MenuIcon style={{color:'#df6600'}}/></Button>
             <Drawer
                 anchor={"left"}
                 open={state["menu"]}

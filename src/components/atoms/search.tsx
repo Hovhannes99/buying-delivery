@@ -2,6 +2,7 @@ import React from "react";
 import SearchIcon from '@mui/icons-material/Search';
 import { styled, alpha } from '@mui/material/styles';
 import InputBase from '@mui/material/InputBase';
+import {orangeColor, textGrayColor} from "../../constants/colors";
 
 const Search = () => {
 
@@ -27,7 +28,7 @@ const Search = () => {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        color: "#aba4a4"
+        color: textGrayColor
     }));
 
     const StyledInputBase = styled(InputBase)(({ theme }) => ({
@@ -37,7 +38,7 @@ const Search = () => {
             // vertical padding + font size from searchIcon
             paddingLeft: `calc(1em + ${theme.spacing(4)})`,
             transition: theme.transitions.create('width'),
-            color: "#aba4a4",
+            color: textGrayColor,
             width: '100%',
             height:"30px",
             [theme.breakpoints.up(680)]: {
@@ -51,7 +52,7 @@ const Search = () => {
 
   return(
       <Search>
-          <SearchIconWrapper sx={{background:'#df6600', borderTopLeftRadius:"50px", borderBottomLeftRadius:'50px', width:'10px'}}>
+          <SearchIconWrapper sx={{background:orangeColor, borderTopLeftRadius:"7px", borderBottomLeftRadius:'7px', width:'10px'}}>
               <SearchIcon />
           </SearchIconWrapper>
           <StyledInputBase

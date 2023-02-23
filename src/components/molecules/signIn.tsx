@@ -16,10 +16,13 @@ import Loading from "../atoms/loading/loading";
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import {ROLE_USER} from "../../constants/user";
 import {Texture} from "@mui/icons-material";
+import {useEffect, useState} from "react";
+import {backgroundColor, orangeColor} from "../../constants/colors";
 
 const SignIn = () => {
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const {user, error, loading} = useAppSelector(store => store.userReducer);
+    const [userName, setUserName] = useState<string>()
 
     const open = Boolean(anchorEl);
     const navigation = useNavigate()
@@ -29,6 +32,13 @@ const SignIn = () => {
     const handleClose = () => {
         setAnchorEl(null);
     };
+    useEffect(()=>{
+        if (user.username) {
+            setUserName(user.username[0])
+        }else {
+            setUserName("")
+        }
+    })
     if (error){
         return <div>Error....</div>
     }
@@ -47,7 +57,7 @@ const SignIn = () => {
                         aria-haspopup="true"
                         aria-expanded={open ? 'true' : undefined}
                     >
-                         <Avatar sx={{background: "#df6600"}} alt="Cindy Baker"> {user.username ? user.username[0] : <AccountCircleIcon/>}</Avatar>
+                         <Avatar sx={{background: orangeColor}} alt="Cindy Baker"> {userName? userName : <AccountCircleIcon/>}</Avatar>
                     </IconButton>
                 </Tooltip>
             </Box>
@@ -63,13 +73,13 @@ const SignIn = () => {
                         overflow: 'visible',
                         filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
                         mt: 1.5,
-                        background: "#242526",
+                        background: backgroundColor,
                         '& .MuiAvatar-root': {
                             width: 32,
                             height: 32,
                             ml: -0.5,
                             mr: 1,
-                            background: "#242526",
+                            background: backgroundColor,
                         },
                         '&:before': {
                             content: '""',
@@ -82,7 +92,7 @@ const SignIn = () => {
                             bgcolor: 'background.paper',
                             transform: 'translateY(-50%) rotate(45deg)',
                             zIndex: 0,
-                            background: "#242526",
+                            background: backgroundColor,
                         },
                     },
                 }}
@@ -98,9 +108,9 @@ const SignIn = () => {
                         </MenuItem>
                         : <MenuItem onClick={() => navigation("/orders")} className={"menu-item"}>
                             <ListItemIcon>
-                                <AddToPhotosIcon fontSize="small"/>
+                                <AddToPhotosIcon className={"icon"}  fontSize="small"/>
                             </ListItemIcon>
-                            Add product
+                            <p className={"menu-item"}> Add product</p>
                         </MenuItem>}
                 </div>}
                 {!user.isVerified ? <MenuItem onClick={() => navigation("/login")} className={"menu-item"}>

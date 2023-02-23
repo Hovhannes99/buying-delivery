@@ -8,11 +8,11 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import {Dispatch, SetStateAction, useState} from "react";
 import AuthenticationsApi from "../../../api/authApi";
-import {CustomModal} from "./CustomModal";
 import {useNavigate} from "react-router-dom";
+import {backgroundColor} from "../../../constants/colors";
 
 const style = {
-    background:'#242526'
+    background:backgroundColor
 }
 
 interface IValidation {

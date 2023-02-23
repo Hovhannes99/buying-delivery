@@ -3,6 +3,8 @@ import AddBusinessIcon from '@mui/icons-material/AddBusiness';
 import CancelIcon from '@mui/icons-material/Cancel';
 import UploadImage from "../../atoms/uploadImage/UploadImage";
 import {useNavigate} from "react-router-dom";
+import {inputStyle} from "../../../constants/styleInput";
+import {primaryButtonStyle} from "../../../constants/primaryButtonStyle";
 
 const AddProduct = () => {
 
@@ -27,11 +29,12 @@ const AddProduct = () => {
                                   label={item.label}
                                   variant="filled"
                                   type={item.type}
+                                  style={inputStyle}
                               />
                           </Grid>
                       ))}
                        <Grid item xs={4} sm={6} md={6}>
-                           <FormControl fullWidth>
+                           <FormControl fullWidth style={inputStyle}>
                                <InputLabel id="demo-simple-select-label">Type</InputLabel>
                                <Select
                                    labelId="demo-simple-select-label"
@@ -48,8 +51,8 @@ const AddProduct = () => {
                        </Grid>
                    </Grid>
                   <div className={"button-wrapper"}>
-                      <Button type={"submit"}  sx={{color:"black"}} onClick={onSaveProduct}>add Order<AddBusinessIcon/></Button>
-                      <Button type={"submit"} sx={{color:"black"}}>Cancel<CancelIcon/></Button>
+                      <Button type={"submit"}  sx={primaryButtonStyle} onClick={onSaveProduct}>add Order<AddBusinessIcon /></Button>
+                      <Button type={"submit"} sx={primaryButtonStyle}>Cancel<CancelIcon/></Button>
                   </div>
               </Box>
           </div>

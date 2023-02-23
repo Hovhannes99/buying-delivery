@@ -3,6 +3,8 @@ import {Card, CardActions, CardContent, CardMedia, Grid, Typography} from "@mui/
 import Button from "@mui/material/Button";
 import {useNavigate} from "react-router-dom";
 import {itemData} from "../../data/lists";
+import {backgroundColor} from "../../constants/colors";
+import {primaryButtonStyle} from "../../constants/primaryButtonStyle";
 
 const ProductLists = () => {
     const navigation = useNavigate();
@@ -13,7 +15,7 @@ const ProductLists = () => {
                 <Grid item xs={2} sm={4} md={4} key={index}>
                     <Card sx={{
                         maxWidth: 345,
-                        background: "#242526",
+                        background: backgroundColor,
                         borderRadius: "7px",
                     }}
                     >
@@ -43,7 +45,7 @@ const ProductLists = () => {
                         </CardContent>
                         <CardActions sx={{display: "flex", justifyContent: "space-between"}}>
                             <Button onClick={() => navigation(`/details/${item.id}`)}
-                                    style={{color: "#aba4a4", background: "#df6600"}}
+                                    style={primaryButtonStyle}
                                     size="small"
                                     type={"reset"}
                             >Buy</Button>
