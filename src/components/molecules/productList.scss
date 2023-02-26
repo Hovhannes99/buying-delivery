@@ -13,6 +13,9 @@
     padding-right: 5px;
   }
   .description{
+    text-overflow: ellipsis;
+    white-space: nowrap; /* keeps the text in a single line */
+    overflow: hidden;
     color: $textGrayColor;
   }
 }

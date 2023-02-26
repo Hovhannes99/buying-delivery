@@ -9,17 +9,37 @@ import {backgroundColor, colorSuccess, warningColor, whitForInputs} from "../../
 import EditIcon from "@mui/icons-material/Edit";
 import {inputStyle} from "../../../constants/styleInput";
 import {primaryButtonStyle} from "../../../constants/primaryButtonStyle";
-import {useState} from "react";
+import {Dispatch, SetStateAction, useState} from "react";
 import ProductApi from "../../../api/product";
 import {useParams} from "react-router-dom";
+import FormControl from '@mui/material/FormControl';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
+import MenuItem from '@mui/material/MenuItem';
+import {IDetails} from "../../../types/product";
+import Loading from "../../atoms/loading/loading";
 
-
-export default function EditModal() {
-    const { id } =  useParams()
+interface IEditModal {
+    defaultTitle: string,
+    defaultPrice:string,
+    defaultDescription:string,
+    defaultIsAvailable: boolean
+    setProduct: Dispatch<SetStateAction<IDetails>>
+}
+export default function EditModal({defaultTitle, defaultPrice, defaultDescription, defaultIsAvailable, setProduct}:IEditModal) {
+    const {id} = useParams()
     const [open, setOpen] = React.useState(false);
-    const [description, setDescription] = useState<string>()
-    const [title, setTitle] = useState<string>()
-    const [price, setPrice] = useState<string>()
+    const [description, setDescription] = useState<string>(defaultDescription)
+    const [title, setTitle] = useState<string>(defaultTitle)
+    const [price, setPrice] = useState<string>(String(defaultPrice))
+    const [hasProduct, setHasProduct] = useState<number>(Number(defaultIsAvailable));
+    const [isAvailable, setIsAvailable] = useState<boolean>(defaultIsAvailable);
+    const [loading, setLoading] = useState<boolean>(false)
+
+    const handleChange = (event: SelectChangeEvent) => {
+        setIsAvailable(Boolean(event.target.value))
+        setHasProduct(Number(event.target.value))
+    };
+
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -28,17 +48,24 @@ export default function EditModal() {
     const handleClose = () => {
         setOpen(false);
     };
-    const handleEditProduct =async ()  => {
+    const handleEditProduct = async () => {
         if (title && description && price && id) {
             try {
-                const result = await ProductApi.editProduct({id, title, description, price:Number(price)})
-                console.log(result, "resultt")
+                setLoading(true)
+                const { data } = await ProductApi.editProduct({id, title, description, price: Number(price), isAvailable});
+                setLoading(false)
+                setProduct(data)
                 setOpen(false);
 
             } catch (e) {
-                  alert(e)
+                alert(e);
+                setLoading(false)
+
             }
         }
+    }
+    if (loading) {
+        return <Loading isLoading/>
     }
 
     return (
@@ -81,8 +108,20 @@ export default function EditModal() {
                         onChange={(e) => setPrice(e.target.value)}
                         style={inputStyle}
                     />
+                    <FormControl fullWidth>
+                        <Select
+                            labelId="demo-simple-select-label"
+                            id="demo-simple-select"
+                            value={String(hasProduct)}
+                            onChange={handleChange}
+                            style={{...inputStyle, marginTop: '10px'}}
+                        >
+                            <MenuItem value={1}>Arka</MenuItem>
+                            <MenuItem value={0}>Arka che</MenuItem>
+                        </Select>
+                    </FormControl>
                     <DialogActions>
-                        <Button onClick={handleClose} style={{color: warningColor}}>Cancel</Button>
+                        <Button onClick={handleClose} style={{background: warningColor}}>Cancel</Button>
                         <Button onClick={handleEditProduct} style={primaryButtonStyle}>Ok</Button>
                     </DialogActions>
                 </DialogContent>

@@ -5,6 +5,6 @@ export const orangeColor = '#df6600';
 export const textGrayColor = '#aba4a4';
 export const backgroundDescription = '#16121a'
 export const whitForInputs = '#d5d5d5'
-export const warningColor = '#ff1f2e'
+export const warningColor = '#91000e'
 
-export const colorSuccess = '#028f00'
+export const colorSuccess = '#016400'

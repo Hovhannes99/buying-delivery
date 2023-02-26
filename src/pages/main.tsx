@@ -15,7 +15,6 @@ const Main = () => {
         if (storedValue) {
             dispatch(getUserThunk());
         }
-        dispatch(getAllProducts({variant: undefined}))
     },[dispatch, storedValue]);
 
 
