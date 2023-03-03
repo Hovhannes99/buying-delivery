@@ -18,7 +18,17 @@
   }
   &_price{
     font-size: 25px;
-    padding-left: 100px;
+    white-space: nowrap;
+  }
+  &_country{
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+  }
+  &_description{
+    width: 100px;
+    padding: 20px 10px 0;
+    font-size: 14px;
   }
   &_order{
     width: 50%;

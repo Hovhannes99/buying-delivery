@@ -32,13 +32,17 @@ const SignIn = () => {
     const handleClose = () => {
         setAnchorEl(null);
     };
+    const logOut = ()=>{
+        localStorage.removeItem('token')
+        navigation('/')
+    }
     useEffect(()=>{
-        if (user.username) {
+        if (user?.username) {
             setUserName(user.username[0])
         }else {
             setUserName("")
         }
-    })
+    }, [user?.username])
     if (error){
         return <div>Error....</div>
     }
@@ -99,7 +103,7 @@ const SignIn = () => {
                 transformOrigin={{horizontal: 'right', vertical: 'top'}}
                 anchorOrigin={{horizontal: 'right', vertical: 'bottom'}}
             >
-                {user.isVerified && <div>
+                {user?.isVerified && <div>
                     {user.role === ROLE_USER ? <MenuItem onClick={() => navigation("/orders")} >
                             <ListItemIcon  className={"menu-item"}>
                                 <LocalShippingIcon className={"icon"} fontSize="small"/>
@@ -113,7 +117,7 @@ const SignIn = () => {
                             <p className={"menu-item"}> Add product</p>
                         </MenuItem>}
                 </div>}
-                {!user.isVerified ? <MenuItem onClick={() => navigation("/login")} className={"menu-item"}>
+                {!user?.isVerified ? <MenuItem onClick={() => navigation("/login")} className={"menu-item"}>
                         <ListItemIcon className={"menu-item"}>
                             <LoginIcon className={"icon"} fontSize="small"/>
                         </ListItemIcon>
@@ -123,7 +127,7 @@ const SignIn = () => {
                         <ListItemIcon className={"menu-item"}>
                             <Logout className={"icon"} fontSize="small"/>
                         </ListItemIcon>
-                        <p className={"menu-item"}>Logout</p>
+                        <p className={"menu-item"} onClick={logOut}>Logout</p>
                     </MenuItem>}
             </Menu>
         </React.Fragment>

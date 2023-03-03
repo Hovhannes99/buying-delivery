@@ -9,13 +9,13 @@ import Loading from "../atoms/loading/loading";
 import {useEffect} from "react";
 import getAllProducts from "../../store/middlewares/allProducts";
 import {useAppDispatch} from "../../hooks/useAppDispatch";
-import EventAvailableIcon from "@mui/icons-material/EventAvailable";
-import EventBusyIcon from "@mui/icons-material/EventBusy";
+import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
+import RemoveShoppingCartIcon from '@mui/icons-material/RemoveShoppingCart';
 
 const ProductLists = () => {
     const navigation = useNavigate();
     const dispatch = useAppDispatch();
-    const {products, loading} = useAppSelector((state) => state.products)
+    const {products, loading} = useAppSelector((state) => state.products);
 
 
     useEffect(() => {
@@ -57,14 +57,19 @@ const ProductLists = () => {
                                         {item.title}
                                     </Typography>
                                     <Typography className={"title"} gutterBottom variant="h5" component="div">
-                                        {item.price}dram
+                                        {item.price} ֏
                                     </Typography>
                                 </Typography>
-                                <Typography variant="body2" className={"description"} >
-                                    {item.isAvailable ?
-                                        <Typography style={{display:"flex", alignItems:"center"}}><EventAvailableIcon sx={{color: colorSuccess}}/>Arcka e </Typography>
-                                        : <Typography style={{display:"flex", alignItems:"center"}}><EventBusyIcon sx={{color:warningColor}}/> Arka  che</Typography>}
-                                </Typography>
+                                <div className={"title-wrapper-subtitle"}>
+                                    <Typography variant="body2" className={"description"} >
+                                        {item.isAvailable ?
+                                            <Typography style={{display:"flex", alignItems:"center"}}><AddShoppingCartIcon sx={{color: colorSuccess}}/>Arcka e </Typography>
+                                            : <Typography style={{display:"flex", alignItems:"center"}}><RemoveShoppingCartIcon sx={{color:warningColor}}/> Arka  che</Typography>}
+                                    </Typography>
+                                    <Typography variant="body2" className={"description"} >
+                                        Made in {item.country} <img width={20} src={item.flag} srcSet={item.flag} alt="flag"/>
+                                    </Typography>
+                                </div>
                             </CardContent>
                             <CardActions sx={{display: "flex", justifyContent: "space-between"}}>
                                 <Button onClick={() => navigation(`/details/${item._id}`)}

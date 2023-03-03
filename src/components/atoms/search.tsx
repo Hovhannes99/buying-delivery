@@ -52,7 +52,7 @@ const Search = () => {
 
   return(
       <Search>
-          <SearchIconWrapper sx={{background:orangeColor, borderTopLeftRadius:"7px", borderBottomLeftRadius:'7px', width:'10px'}}>
+          <SearchIconWrapper sx={{background:orangeColor, borderTopLeftRadius:"50px", borderBottomLeftRadius:'50px', width:'10px'}}>
               <SearchIcon />
           </SearchIconWrapper>
           <StyledInputBase

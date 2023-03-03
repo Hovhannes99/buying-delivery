@@ -100,7 +100,7 @@ const ShippingAddress = ({product, setProduct}: {product: IDetails, setProduct: 
                         </Grid>
                     </Grid>}
                 <>
-                    {user.role === ROLE_USER ? <div className={"button-wrapper"}>
+                    {user.role === ROLE_USER || !user._id ? <div className={"button-wrapper"}>
                             <Button type={"submit"} sx={primaryButtonStyle} onClick={handleOrder}> Order
                                 online <LanguageIcon/></Button>
                             <Button type={"submit"} sx={primaryButtonStyle}>Order with call <CallIcon/></Button>

@@ -52,7 +52,9 @@ export default function EditModal({defaultTitle, defaultPrice, defaultDescriptio
         if (title && description && price && id) {
             try {
                 setLoading(true)
-                const { data } = await ProductApi.editProduct({id, title, description, price: Number(price), isAvailable});
+                console.log(id, title, description, Number(price), isAvailable)
+                const { data } = await ProductApi.editProduct({id, title, description, price: Number(price), isAvailable: isAvailable.toString()});
+
                 setLoading(false)
                 setProduct(data)
                 setOpen(false);

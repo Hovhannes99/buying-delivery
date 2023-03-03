@@ -28,7 +28,9 @@ const AddProduct = () => {
     const [variant, setVariant] = useState<'MEC' | 'POQR'  | undefined | string>('');
     const [error, setError] = useState<any>();
     const [open, setOpen] = useState<boolean>(false);
-    const [countries, setCountries] = useState([])
+    const [countries, setCountries] = useState([]);
+    const [ country, setCountry] = useState<string>('');
+    const [flag, setFlag] = useState<string>("")
 
 
 
@@ -45,9 +47,9 @@ const AddProduct = () => {
     },[])
 
     const onSaveProduct = async ()=>{
-        if(title && description && price && file && variant){
+        if(title && description && price && file && variant && country){
              try {
-                 const {data} = await ProductApi.createProduct({title, description, isAvailable, price:Number(price), variant, imagesSrc: file} );
+                 const {data} = await ProductApi.createProduct({title, description, isAvailable, price:Number(price), variant, imagesSrc: file, country, flag} );
                  if(data.data.isCreated){
                      setOpen(true)
                      setTimeout(()=>{
@@ -115,24 +117,33 @@ const AddProduct = () => {
                                   sx={{...inputStyle, marginTop:"12px"}}
                                   options={countries}
                                   autoHighlight
-                                  getOptionLabel={(option:any) => option?.name?.common}
-                                  renderOption={(props, option) => (
-                                          <Box component="li" sx={{ '& > img': { mr: 2, flexShrink: 0 } }} {...props}>
-                                              <img width={30} src={`https://flagcdn.com/w320/${option.flag}.png`} srcSet={`https://flagcdn.com/w320/${option.flag}.png`} alt="flag"/>
+                                  getOptionLabel={(option:any) => {
+                                      setFlag(option.flags.png)
+                                      return option?.name?.common
+                                  }}
+                                  renderOption={(props, option) => {
+                                      return (
+                                          <Box component="li" sx={{ '& > img': { mr: 2, flexShrink: 0 } }} {...props} >
+                                              <img width={20} src={option.flags.png} srcSet={option.flags.png} alt="flag"/>
                                               {option?.name?.common}
                                           </Box>
                                       )
                                   }
-                                  renderInput={(params) => (
-                                      <TextField
-                                          {...params}
-                                          label="Choose a country"
-                                          inputProps={{
-                                              ...params.inputProps,
-                                              autoComplete: 'new-password', // disable autocomplete and autofill
-                                          }}
-                                      />
-                                  )}
+                                  }
+                                  renderInput={(params) => {
+                                      console.log(params, "paramss")
+                                      setCountry(params.inputProps.value as string)
+                                      return (
+                                          <TextField
+                                              {...params}
+                                              label="Choose a country"
+                                              inputProps={{
+                                                  ...params.inputProps,
+                                                  autoComplete: 'new-password', // disable autocomplete and autofill
+                                              }}
+                                          />
+                                      )
+                                  }}
                               />
                               <FormControl fullWidth>
                                   <Select

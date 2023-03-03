@@ -3,10 +3,11 @@ import {useParams} from "react-router-dom";
 import Payment from "../components/organisms/payment/payment";
 import ProductApi from "../api/product";
 import Loading from "../components/atoms/loading/loading";
-import EventAvailableIcon from '@mui/icons-material/EventAvailable';
-import EventBusyIcon from '@mui/icons-material/EventBusy';
+import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
+import RemoveShoppingCartIcon from '@mui/icons-material/RemoveShoppingCart';
 import {colorSuccess, warningColor} from "../constants/colors";
 import {IDetails} from "../types/product";
+import * as React from "react";
 
 
 const Details = () => {
@@ -17,11 +18,12 @@ const Details = () => {
         _id:"",
         description: "",
         price: "",
-        isAvailable: false
+        isAvailable: false,
+        country: "",
+        flag: ""
     });
     const [loading, setLoading]= useState<boolean>(false);
     const [img, setImg] = useState("")
-    console.log(product?.img,)
 
 
 
@@ -55,8 +57,11 @@ const Details = () => {
               <img  src={`http://localhost:3001/${img}`} alt={"product"}/>
               <div style={{display:"flex", justifyContent:"space-between", alignItems:"center"}}>
                   <p className={"details__wrapper_title"}>{product?.title}</p>
-                  <p className={"details__wrapper_price"}>{product?.price}</p>
-                  {product?.isAvailable ? <EventAvailableIcon sx={{color:colorSuccess}}/>:<EventBusyIcon sx={{color:warningColor}}/>}
+                  <p className={"details__wrapper_price"}>{product?.price} ֏ </p>
+                  {product?.isAvailable ? <span><AddShoppingCartIcon sx={{color:colorSuccess}}/> Arcka e</span> : <span><RemoveShoppingCartIcon sx={{color:warningColor}}/> Arcka che</span>}
+                  <div className={"details__wrapper_country"} >
+                      <p className={"details__wrapper_price"}>made in {product.country}</p>
+                      <img width={30} src={product.flag} srcSet={product.flag} alt="flag"/></div>
               </div>
               <p className={"details__wrapper_description"}>{product?.description}</p>
           </div>
