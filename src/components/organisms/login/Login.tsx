@@ -86,9 +86,7 @@ const Login = () => {
                         setIsLoaded(true)
                         const {data} =  await AuthenticationsApi.signIn({email, password});
                         setStoredValue(data.token)
-                        localStorage.setItem("token", data.token)
                         setIsLoaded(false);
-                        dispatch(getUserThunk());
                         navigate("/");
                     } else {
                         setIsNotCorrect(true)

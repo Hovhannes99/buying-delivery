@@ -22,7 +22,7 @@ const MenuBar = () => {
     });
 
     const handleTypeProduct = (type: string | undefined)=>{
-        dispatch(getAllProducts({variant: type as 'MEC' | 'POQR' | undefined  }))
+        dispatch(getAllProducts({variant: type as 'MEC' | 'POQR' | undefined, searchValue: undefined }))
     }
 
     const toggleDrawer = (anchor: Anchor, open: boolean) =>

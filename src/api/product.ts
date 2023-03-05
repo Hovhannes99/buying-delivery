@@ -17,7 +17,7 @@ const getProductId = async (value: {_id:string}) => {
     return data
 }
 
-const getAllProducts =  async (value:{variant:'MEC'|'POQR'|undefined}) => {
+const getAllProducts =  async (value:{variant:'MEC'|'POQR'|undefined, searchValue: string|undefined }) => {
     const data = await axios.post("products", value);
     return data
 }

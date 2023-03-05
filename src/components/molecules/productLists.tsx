@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Card, CardActions, CardContent, CardMedia, Grid, Typography} from "@mui/material";
+import {Card, CardActions, CardContent, Grid, Typography} from "@mui/material";
 import Button from "@mui/material/Button";
 import {useNavigate} from "react-router-dom";
 import {backgroundColor, colorSuccess, warningColor} from "../../constants/colors";
@@ -11,6 +11,7 @@ import getAllProducts from "../../store/middlewares/allProducts";
 import {useAppDispatch} from "../../hooks/useAppDispatch";
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import RemoveShoppingCartIcon from '@mui/icons-material/RemoveShoppingCart';
+import NoData from "../atoms/noData/noData";
 
 const ProductLists = () => {
     const navigation = useNavigate();
@@ -19,7 +20,8 @@ const ProductLists = () => {
 
 
     useEffect(() => {
-        dispatch(getAllProducts({variant: undefined}))
+        console.log('listt')
+        dispatch(getAllProducts({variant: undefined, searchValue:undefined}))
     }, [dispatch]);
 
     if (loading) {
@@ -82,6 +84,7 @@ const ProductLists = () => {
                     </Grid>
                 )
             })}
+            {!products?.data?.length && <NoData/>}
         </Grid>
 );
 }

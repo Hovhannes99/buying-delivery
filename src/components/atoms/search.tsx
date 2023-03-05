@@ -1,29 +1,21 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import SearchIcon from '@mui/icons-material/Search';
 import { styled, alpha } from '@mui/material/styles';
 import InputBase from '@mui/material/InputBase';
 import {orangeColor, textGrayColor} from "../../constants/colors";
+import getAllProducts from "../../store/middlewares/allProducts";
+import {useAppDispatch} from "../../hooks/useAppDispatch";
+
 
 const Search = () => {
+    const [searchValue, setSearchValue] = useState<string>('');
+    const dispatch = useAppDispatch()
 
-    const Search = styled('div')(({ theme }) => ({
-        position: 'relative',
-        borderRadius: "50px",
-        backgroundColor: alpha(theme.palette.common.white, 0.15),
-        '&:hover': {
-            backgroundColor: alpha(theme.palette.common.white, 0.25),
-        },
-        marginLeft: 0,
-        [theme.breakpoints.down(680)]: {
-            marginLeft: theme.spacing(1),
-            width: 'auto',
-        },
-    }));
 
     const SearchIconWrapper = styled('div')(({ theme }) => ({
         padding: theme.spacing(0, 2),
         height: '100%',
-        position: 'absolute',
+        position: 'relative',
         pointerEvents: 'none',
         display: 'flex',
         alignItems: 'center',
@@ -31,35 +23,38 @@ const Search = () => {
         color: textGrayColor
     }));
 
-    const StyledInputBase = styled(InputBase)(({ theme }) => ({
-        color: 'inherit',
-        '& .MuiInputBase-input': {
-            padding: theme.spacing(1, 1, 1, 0),
-            // vertical padding + font size from searchIcon
-            paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-            transition: theme.transitions.create('width'),
-            color: textGrayColor,
-            width: '100%',
-            height:"30px",
-            [theme.breakpoints.up(680)]: {
-                width: '9ch',
-                '&:focus': {
-                    width: '20ch',
-                },
-            },
-        },
-    }));
+    const handleSearch = (value:string) =>{
+        setSearchValue(value);
+        if (!value){
+            dispatch(getAllProducts({variant: undefined, searchValue:undefined}))
+        }
+    }
+
+    const searchProduct = (key:string)=>{
+        if (key === 'Enter'){
+            if  (searchValue){
+                dispatch(getAllProducts({variant: undefined, searchValue:searchValue}))
+            }else {
+                dispatch(getAllProducts({variant: undefined, searchValue:undefined}))
+            }
+        }
+    }
+
+
 
   return(
-      <Search>
+      <div className={"search-wrapper"}>
           <SearchIconWrapper sx={{background:orangeColor, borderTopLeftRadius:"50px", borderBottomLeftRadius:'50px', width:'10px'}}>
               <SearchIcon />
           </SearchIconWrapper>
-          <StyledInputBase
+          <input
               placeholder="Search…"
-              inputProps={{ 'aria-label': 'search' }}
+              value={searchValue}
+              className={"search-wrapper_searchInput"}
+              onChange={(e)=>{handleSearch(e.target.value)}}
+              onKeyDown={(e)=>searchProduct(e.key)}
           />
-      </Search>
+      </div>
   )
 }
 

@@ -40,8 +40,7 @@ const AddProduct = () => {
     };
     useEffect(()=>{
         (async ()=>{
-          const {data } = await axios.get('https://restcountries.com/v3.1/all');
-            console.log(data, "result");
+          const {data } = await axios.get('https://restcountries.com/v3.1/all')
             setCountries(data)
         })()
     },[])
@@ -131,7 +130,6 @@ const AddProduct = () => {
                                   }
                                   }
                                   renderInput={(params) => {
-                                      console.log(params, "paramss")
                                       setCountry(params.inputProps.value as string)
                                       return (
                                           <TextField
@@ -188,38 +186,4 @@ const AddProduct = () => {
   )
 }
 
-export default AddProduct
-
-
-const columns = [
-    {
-        label: "Name",
-        id: 1,
-        type: "string"
-    },
-    {
-        label: "Title",
-        id: 2,
-        type: "string"
-    },
-    {
-        label: "Description",
-        id: 3,
-        type: "string"
-    },
-    {
-        label: "Price",
-        id: 4,
-        type: "string"
-    },
-    {
-        label: "Count",
-        id: 4,
-        type: "number"
-    },
-    {
-        label: "Status",
-        id: 5,
-        type: "string"
-    },
-]
+export default AddProduct;
