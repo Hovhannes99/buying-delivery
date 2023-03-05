@@ -1,7 +1,7 @@
-import {useState} from "react";
+import {Dispatch, SetStateAction, useEffect, useState} from "react";
 
 
-const UploadImage = () => {
+const UploadImage = ({setFile}:{setFile:Dispatch<SetStateAction<File | undefined>>}) => {
     const [highlight, setHighlight] = useState(false);
     const [preview, setPreview] = useState("");
     const [drop, setDrop] = useState(false);
@@ -28,6 +28,7 @@ const UploadImage = () => {
     const handleUpload = (e:Event | any) => {
         e.preventDefault();
         e.stopPropagation();
+        setFile(e.target.files[0])
 
         setHighlight(false);
         setDrop(true);

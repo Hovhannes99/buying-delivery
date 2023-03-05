@@ -1,4 +1,4 @@
-import {useEffect, useMemo, useState} from "react";
+import { useMemo, useState} from "react";
 import SignIn from "./signIn";
 import SignUp from "./signUp";
 import ForgotPass from "./forgotPass";
@@ -11,10 +11,10 @@ import validateEmail from "../../../utils/emailValidation";
 import ValidationModal from "../../atoms/modals/ValidationMoadl";
 import SuccessAlert from "../../atoms/modals/Success";
 import {useLocalStorage} from "../../../hooks/useLocalStorage";
-import getUserThunk from "../../../store/middlewares/getUser";
-import {useAppDispatch} from "../../../hooks/useAppDispatch";
 import {primaryButtonStyle} from "../../../constants/primaryButtonStyle";
 import {textGrayColor} from "../../../constants/colors";
+import getUserThunk from "../../../store/middlewares/getUser";
+import {useAppDispatch} from "../../../hooks/useAppDispatch";
 
 
 const Login = () => {
@@ -31,7 +31,8 @@ const Login = () => {
     const [isRegistrated, setIsRegistrated] = useState<boolean>(false);
     const [,setValue,] = useLocalStorage("email", "");
     const [typeStep, setTypeStep] = useState<"signUp" | "forgotPass">("signUp");
-    const [,setStoredValue] = useLocalStorage("token")
+    const [,setStoredValue] = useLocalStorage("token");
+    const dispatch = useAppDispatch()
 
     const navigate = useNavigate()
 
@@ -85,7 +86,7 @@ const Login = () => {
                         setIsLoaded(true)
                         const {data} =  await AuthenticationsApi.signIn({email, password});
                         setStoredValue(data.token)
-                        setIsLoaded(false)
+                        setIsLoaded(false);
                         navigate("/");
                     } else {
                         setIsNotCorrect(true)

@@ -4,12 +4,16 @@ export interface ICreateProduct {
         description: string,
         price:number,
         isAvailable:boolean,
-        variant: 'MEC' | 'POQR',
-        imagesSrc:File
+        variant: 'MEC' | 'POQR' | undefined | string,
+        imagesSrc:File | undefined,
+        country: string,
+        flag: string
 }
 
 export interface IAllProducts {
     data:{
+        country: string,
+        flag: string | undefined,
         description: string,
         imagesSrc: string,
         isAvailable: boolean,
@@ -26,6 +30,18 @@ export type IEditProduct = {
     title:string,
     description: string,
     price:number,
+    isAvailable: string
+}
+
+export interface IDetails  {
+         title: string,
+        img: string,
+        _id:string,
+        description: string,
+        price: string,
+        isAvailable:boolean,
+        flag: string,
+        country: string
 }
 
 export interface IProduct {

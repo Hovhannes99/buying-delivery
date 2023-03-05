@@ -6,7 +6,6 @@ import {useLocalStorage} from "../hooks/useLocalStorage";
 import {useAppDispatch} from "../hooks/useAppDispatch";
 import {useEffect} from "react";
 import getUserThunk from "../store/middlewares/getUser";
-import getAllProducts from "../store/middlewares/allProducts";
 
 const Main = () => {
     const [storedValue] = useLocalStorage("token");
@@ -15,7 +14,6 @@ const Main = () => {
         if (storedValue) {
             dispatch(getUserThunk());
         }
-        dispatch(getAllProducts({variant: undefined}))
     },[dispatch, storedValue]);
 
 

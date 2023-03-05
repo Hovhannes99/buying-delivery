@@ -9,14 +9,21 @@ import ListItemText from '@mui/material/ListItemText';
 import MenuIcon from '@mui/icons-material/Menu';
 import Divider from '@mui/material/Divider';
 import {backgroundColor, orangeColor, textGrayColor} from "../../constants/colors";
+import getAllProducts from "../../store/middlewares/allProducts";
+import {useAppDispatch} from "../../hooks/useAppDispatch";
 
 type Anchor = 'menu'
 
 
 const MenuBar = () => {
+    const dispatch = useAppDispatch()
     const [state, setState] = React.useState({
         menu: false,
     });
+
+    const handleTypeProduct = (type: string | undefined)=>{
+        dispatch(getAllProducts({variant: type as 'MEC' | 'POQR' | undefined, searchValue: undefined }))
+    }
 
     const toggleDrawer = (anchor: Anchor, open: boolean) =>
         (event: React.KeyboardEvent | React.MouseEvent) => {
@@ -41,10 +48,10 @@ const MenuBar = () => {
             <p className={"menu-title"}>Categories</p>
             <Divider style={{background:orangeColor}}/>
             <List>
-                {['Bolory', 'Manracax', 'Mecacax'].map((text, index) => (
-                    <ListItem key={text} disablePadding>
-                        <ListItemButton divider >
-                            <ListItemText sx={{color:textGrayColor}} primary={text}/>
+                {[{name:'Bolory', value: undefined}, {name:'Manracax', value:'POQR'}, {name:'Mecacax', value:"MEC"}].map((item, index) => (
+                    <ListItem key={item.name+ index} disablePadding>
+                        <ListItemButton divider onClick={()=>handleTypeProduct(item.value)} >
+                            <ListItemText sx={{color:textGrayColor}} primary={item.name}/>
                         </ListItemButton>
                     </ListItem>
                 ))}

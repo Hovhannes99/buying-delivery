@@ -6,6 +6,11 @@
     .title-wrapper{
       width: 100%;
       display: flex;
+      &-subtitle{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
     }
   }
   .title{
@@ -13,6 +18,9 @@
     padding-right: 5px;
   }
   .description{
+    text-overflow: ellipsis;
+    white-space: nowrap; /* keeps the text in a single line */
+    overflow: hidden;
     color: $textGrayColor;
   }
 }

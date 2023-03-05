@@ -1,0 +1,19 @@
+
+.search-wrapper{
+  display: flex;
+  align-items: center;
+  &_searchInput {
+    height: 100%;
+    border-top-right-Radius: 50px;
+    border-bottom-right-radius: 50px;
+    border:none;
+    background: $backgroundColor;
+    color: $textGrayColor;
+    font-size: 16px;
+    padding-left: 10px;
+    &:focus-visible{
+      outline: none;
+    }
+  }
+
+}

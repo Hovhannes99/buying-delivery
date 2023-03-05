@@ -1,9 +1,7 @@
 import axios from '../axios'
 
 const signIn = async (value: {email: string; password: string}) => {
-    console.log(value, "valuee")
     const data = await axios.post('signIn',value);
-    console.log(data, "dataaa")
     return data
 }
 
