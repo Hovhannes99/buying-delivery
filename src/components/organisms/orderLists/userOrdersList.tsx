@@ -1,28 +1,81 @@
-import {itemData} from "../../../data/lists";
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import AutorenewIcon from '@mui/icons-material/Autorenew';
 import VerifiedIcon from '@mui/icons-material/Verified';
+import {useAppSelector} from "../../../hooks/useAppSelector";
+import NoData from "../../atoms/noData/noData";
+import imageSpliter from "../../../utils/imageSpliter";
+import {useAppDispatch} from "../../../hooks/useAppDispatch";
+import {useEffect} from "react";
+import getOrders from "../../../store/middlewares/getOrders";
+import Loading from "../../atoms/loading/loading";
+import {backgroundColor, colorSuccess, warningColor} from "../../../constants/colors";
+import {Card, CardActions, CardContent, Grid, Typography} from "@mui/material";
+import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
+import RemoveShoppingCartIcon from "@mui/icons-material/RemoveShoppingCart";
+import * as React from "react";
+import Button from "@mui/material/Button";
+import {primaryButtonStyle} from "../../../constants/primaryButtonStyle";
 
 
-const UserOrdersList = () => {
+const UserOrdersList = ({id}:{id: string| undefined}) => {
+    const {orders, loading}  = useAppSelector(state => state.orders);
+    const dispatch = useAppDispatch();
+
+    useEffect(()=>{
+        if (id){
+            dispatch(getOrders({id}))
+        }
+    },[dispatch, id]);
+
+    if (loading){
+        return <Loading isLoading={true}/>
+    }
+
     return(
-        <div className={"order-wrapper"}>
-            <p className={"order-wrapper__title"}>Orders-{itemData.length}</p>
-            {itemData.map((order)=>{
-                return <div className={"order-wrapper__row"}>
-                    <div className={"order-wrapper__row-item"}>
-                        <p>{order.id}</p>
-                        <p>{order.title}</p>
-                        <img src={order.img} alt={order.title}/>
-                    </div>
-                    <div>
-                        <VerifiedIcon color={"success"}/>
-                        <AutorenewIcon className={"rotate"} color={"info"}/>
-                        <DeleteForeverIcon color={"error"} cursor={"pointer"}/>
-                    </div>
-                </div>
-            })}
-        </div>
+        <Grid className={"list-wrapper"} container spacing={{xs: 2, md: 3}} columns={{xs: 4, sm: 8, md: 12}}>
+            {orders.length ? orders.map((order)=>{
+                return (
+                    <Grid item xs={2} sm={4} md={4} key={order._id}>
+                        <Card sx={{
+                            maxWidth: 345,
+                            maxHeight: 400,
+                            background: backgroundColor,
+                            borderRadius: "7px",
+                        }}>
+                        <img
+                            style={{
+                                cursor: 'pointer',
+                                opacity: 0.9,
+                                width: '100%',
+                                height: 230,
+                                objectFit: "cover"
+                            }}
+                            src={`http://localhost:3001/${imageSpliter(order.product.imagesSrc)}`}
+                            alt={order.product.title}
+                        />
+                            <CardContent className={"card"}>
+                                <Typography className={"title-wrapper"}>
+                                    <Typography className={"title"} gutterBottom variant="h5" component="div">
+                                        {order.product.title}
+                                    </Typography>
+                                </Typography>
+                                <div className={"title-wrapper-subtitle"}>
+                                    <Typography variant="body2" className={"description"} >
+                                        Made in {order.product.country} <img width={20} src={order.product.flag} srcSet={order.product.flag} alt={order.product.flag}/>
+                                    </Typography>
+                                </div>
+                            </CardContent>
+                            <CardActions sx={{display: "flex", justifyContent: "space-between"}}>
+                                <Button
+                                        style={primaryButtonStyle}
+                                        size="small"
+                                        type={"reset"}
+                                >About order</Button>
+                            </CardActions>
+                    </Card>
+                </Grid>)
+            }): <NoData/>}
+        </Grid>
     )
 }
 

@@ -13,16 +13,43 @@ import EditModal from "../editModal";
 import {IDetails} from "../../../types/product";
 import ProductApi from "../../../api/product";
 import ConfirmModal from "../confirmModal";
+import OrderApi from "../../../api/order";
+import SuccessAlert from "../../atoms/modals/Success";
+import * as React from "react";
 
 const ShippingAddress = ({product, setProduct}: {product: IDetails, setProduct: Dispatch<SetStateAction<IDetails>> }) => {
-    const [isLogin, setIsLogin] = useState(false);
-    const [open, setOpen] = useState(false)
+    const [open, setOpen] = useState(false);
+    const [count, setCount] = useState<string>("");
+    const [phone, setPhone] = useState<string>("")
+    const [city, setCity] = useState<string>("");
+    const [address, setAddress] = useState<string>("");
+    const [isComplete, setIsComplete] = useState<boolean>(false)
     const { id } = useParams()
     const {user} = useAppSelector(state => state.userReducer)
-    const navigate = useNavigate()
-    const handleOrder = () => {
-        if (user._id) {
+    const navigate = useNavigate();
+    const [success, setSuccess] = useState<boolean>(false);
+    const [openAddOrder, setAddOrder] = useState(false)
 
+    const addOrder = async () => {
+        try {
+            const {data} = await OrderApi.createOrder({id:user._id, address,phone:Number(phone), city,count:Number(count), productId: product._id, email: user.email});
+            if (data.isCreated){
+                setSuccess(true)
+                setTimeout(()=> navigate('/orders'), 1500)
+            }
+        }catch (e){
+            alert(e)
+        }
+
+    }
+    const handleOrder = async () => {
+        if (user._id) {
+            console.log("+" + phone, "phone")
+            if (count && city && phone && address && /^((\+374)|0)\d{8}$/.test(phone)) {
+                setAddOrder(true)
+            }else{
+                setIsComplete(true)
+            }
         } else {
             navigate("/login")
         }
@@ -48,26 +75,26 @@ const ShippingAddress = ({product, setProduct}: {product: IDetails, setProduct: 
                           title={"Are you sure ?"}
                           message={"Do  you want to remove this item ?"}
             />
-            <Box sx={{width: '100%', paddingBottom: "15px"}}>
+            <SuccessAlert open={success} message={""}/>
+            <ConfirmModal isOpen={openAddOrder}
+                          handelOk={addOrder}
+                          handleCancel={()=>setAddOrder(false)}
+                          title={"Are you sure ?"}
+                          message={`Your Order price is ${Number(count) * Number(product.price)} ֏`}
+            />
+            <Box sx={{paddingBottom: "15px"}}>
                 {(user._id && user.role !== ROLE_ADMIN) &&
-                    <Grid container spacing={{xs: 1, md: 2}} columns={{xs: 4, sm: 8, md: 12}}>
-                        <Grid item xs={4} sm={6} md={6}>
+                    <div className={"field-wrapper"}>
                             <TextField
                                 required
-                                id='name'
+                                id='city'
                                 fullWidth
-                                label="Name"
+                                label={'City'}
                                 variant="filled"
                                 type='string'
-                                style={inputStyle}
-                            />
-                            <TextField
-                                required
-                                id='secoundName'
-                                fullWidth
-                                label={'Second Name'}
-                                variant="filled"
-                                type='string'
+                                value={city}
+                                error={isComplete ? !city : false}
+                                onChange={(e)=>setCity(e.target.value)}
                                 style={inputStyle}
                             />
                             <TextField
@@ -77,6 +104,9 @@ const ShippingAddress = ({product, setProduct}: {product: IDetails, setProduct: 
                                 label='Address'
                                 variant="filled"
                                 type='string'
+                                value={address}
+                                error={isComplete ? !address : false}
+                                onChange={(e)=> setAddress(e.target.value)}
                                 style={inputStyle}
                             />
                             <TextField
@@ -85,7 +115,9 @@ const ShippingAddress = ({product, setProduct}: {product: IDetails, setProduct: 
                                 fullWidth
                                 label='Phone Number'
                                 variant="filled"
-                                type='number'
+                                value={phone}
+                                error={isComplete ? (!phone || !/^((\+374)|0)\d{8}$/.test(phone)): false}
+                                onChange={(e)=>setPhone(e.target.value)}
                                 style={inputStyle}
                             />
                             <TextField
@@ -94,14 +126,16 @@ const ShippingAddress = ({product, setProduct}: {product: IDetails, setProduct: 
                                 fullWidth
                                 label='Count'
                                 variant="filled"
+                                value={count}
+                                error={isComplete ? !count : false}
+                                onChange={(e)=>setCount(e.target.value)}
                                 type='number'
                                 style={inputStyle}
                             />
-                        </Grid>
-                    </Grid>}
+                    </div>}
                 <>
                     {user.role === ROLE_USER || !user._id ? <div className={"button-wrapper"}>
-                            <Button type={"submit"} sx={primaryButtonStyle} onClick={handleOrder}> Order
+                            <Button type={"submit"} sx={primaryButtonStyle} onClick={handleOrder} disabled={!product.isAvailable}> Order
                                 online <LanguageIcon/></Button>
                             <Button type={"submit"} sx={primaryButtonStyle}>Order with call <CallIcon/></Button>
                         </div>

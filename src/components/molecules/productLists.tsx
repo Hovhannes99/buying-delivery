@@ -12,6 +12,7 @@ import {useAppDispatch} from "../../hooks/useAppDispatch";
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import RemoveShoppingCartIcon from '@mui/icons-material/RemoveShoppingCart';
 import NoData from "../atoms/noData/noData";
+import imageSpliter from "../../utils/imageSpliter";
 
 const ProductLists = () => {
     const navigation = useNavigate();
@@ -31,7 +32,7 @@ const ProductLists = () => {
     return (
         <Grid className={"list-wrapper"} container spacing={{xs: 2, md: 3}} columns={{xs: 4, sm: 8, md: 12}}>
             {products.data?.map((item, index) => {
-                const img = item?.imagesSrc?.split("assets").length > 0 ? item?.imagesSrc?.split("assets")[1] : item?.imagesSrc?.split("assets")[0]
+                const img = imageSpliter(item?.imagesSrc)
                 return (
                     <Grid item xs={2} sm={4} md={4} key={index}>
                         <Card sx={{

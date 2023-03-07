@@ -19,7 +19,6 @@ const userSlice = createSlice({
       state.loading = true
     },
     [getUserThunk.fulfilled.type] : (state,action) => {
-      console.log(action.payload, "statee")
       state.user = action.payload
       state.loading = false
     },

@@ -1,5 +1,4 @@
 export interface ICreateProduct {
-
         title:string,
         description: string,
         price:number,
@@ -8,6 +7,16 @@ export interface ICreateProduct {
         imagesSrc:File | undefined,
         country: string,
         flag: string
+}
+
+export interface ICreateOrder {
+    city: string,
+    phone: number,
+    count: number,
+    address: string,
+    id: string,
+    productId: string,
+    email:string
 }
 
 export interface IAllProducts {
@@ -23,6 +32,18 @@ export interface IAllProducts {
         __v: number,
         _id:string
     }[]
+}
+
+export interface IAllOrders {
+    __v: number,
+    _id:string,
+    id:string,
+    product:IOrderDetails,
+    address: string,
+    city: string,
+    count: number,
+    phone: number,
+    status: string,
 }
 
 export type IEditProduct = {
@@ -44,8 +65,27 @@ export interface IDetails  {
         country: string
 }
 
+export interface IOrderDetails {
+    title: string,
+    imageSrc: string,
+    _id:string,
+    description: string,
+    price: string,
+    isAvailable:boolean,
+    flag: string,
+    country: string,
+    imagesSrc: string,
+}
+
+
+
 export interface IProduct {
     products: IAllProducts,
+    loading: boolean,
+    error: string
+}
+export interface IOrder {
+    orders: IAllOrders[],
     loading: boolean,
     error: string
 }

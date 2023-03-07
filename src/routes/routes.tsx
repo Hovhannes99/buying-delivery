@@ -7,17 +7,20 @@ import AddProduct from "../components/organisms/addProduct/addProduct";
 import {NewPassword} from "../components/organisms/login/newPassword";
 import {useAppSelector} from "../hooks/useAppSelector";
 import {ROLE_ADMIN} from "../constants/user";
+import {useEffect} from "react";
+import getOrders from "../store/middlewares/getOrders";
+import {useAppDispatch} from "../hooks/useAppDispatch";
 
 
 const Routers = () => {
-     const {user} = useAppSelector(state => state.userReducer)
+     const {user} = useAppSelector(state => state.userReducer);
     return (
             <Routes>
                     <Route path="/" element={<ProductLists/>}/>
                     <Route path="/details/:id" element={<Details/>}/>
                     <Route path="/login" element={<Login/>}/>
                     <Route path="/new-password" element={<NewPassword/>}/>
-                    <Route path="/orders" element={user.role ===  ROLE_ADMIN ? <AddProduct/> : <UserOrdersList/>}/>
+                    <Route path="/orders" element={user.role ===  ROLE_ADMIN ? <AddProduct/> : <UserOrdersList id={user._id}/>}/>
             </Routes>
     )
 }

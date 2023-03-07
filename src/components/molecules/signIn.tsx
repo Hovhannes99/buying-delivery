@@ -123,11 +123,11 @@ const SignIn = () => {
                         </ListItemIcon>
                        <p className={"menu-item"}>Sign In</p>
                     </MenuItem> :
-                    <MenuItem >
+                    <MenuItem  onClick={logOut}>
                         <ListItemIcon className={"menu-item"}>
                             <Logout className={"icon"} fontSize="small"/>
                         </ListItemIcon>
-                        <p className={"menu-item"} onClick={logOut}>Logout</p>
+                        <p className={"menu-item"}>Logout</p>
                     </MenuItem>}
             </Menu>
         </React.Fragment>

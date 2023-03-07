@@ -8,6 +8,7 @@ import RemoveShoppingCartIcon from '@mui/icons-material/RemoveShoppingCart';
 import {colorSuccess, warningColor} from "../constants/colors";
 import {IDetails} from "../types/product";
 import * as React from "react";
+import imageSpliter from "../utils/imageSpliter";
 
 
 const Details = () => {
@@ -34,7 +35,7 @@ const Details = () => {
             try {
                 setLoading(true)
                 const {data} = await ProductApi.getProductId({ _id:id});
-                const img = data?.imagesSrc?.split("assets").length > 1 ? data?.imagesSrc?.split("assets")[1] : data?.imagesSrc?.split("assets")[0]
+                const img = imageSpliter(data.imagesSrc)
                 setProduct(data);
                 setImg(img);
                 setLoading(false)

@@ -13,7 +13,8 @@ import SuccessAlert from "../../atoms/modals/Success";
 import {useLocalStorage} from "../../../hooks/useLocalStorage";
 import {primaryButtonStyle} from "../../../constants/primaryButtonStyle";
 import {textGrayColor} from "../../../constants/colors";
-import getUserThunk from "../../../store/middlewares/getUser";
+
+
 import {useAppDispatch} from "../../../hooks/useAppDispatch";
 
 
@@ -94,7 +95,7 @@ const Login = () => {
                         setTimeout(() => setIsNotCorrect(false), 3000)
                     }
                 } catch (e: any) {
-                    setError(e.data.errors.message)
+                    setError(e?.data?.errors.message)
                     setIsLoaded(false)
                 }
                 break;
