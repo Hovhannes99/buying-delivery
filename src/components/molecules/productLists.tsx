@@ -21,7 +21,6 @@ const ProductLists = () => {
 
 
     useEffect(() => {
-        console.log('listt')
         dispatch(getAllProducts({variant: undefined, searchValue:undefined}))
     }, [dispatch]);
 
@@ -37,7 +36,7 @@ const ProductLists = () => {
                     <Grid item xs={2} sm={4} md={4} key={index}>
                         <Card sx={{
                             maxWidth: 345,
-                            maxHeight: 400,
+                            maxHeight: 420,
                             background: backgroundColor,
                             borderRadius: "7px",
                         }}
@@ -59,7 +58,7 @@ const ProductLists = () => {
                                     <Typography className={"title"} gutterBottom variant="h5" component="div">
                                         {item.title}
                                     </Typography>
-                                    <Typography className={"title"} gutterBottom variant="h5" component="div">
+                                    <Typography className={"title"} variant="h6" component="div">
                                         {item.price} ֏
                                     </Typography>
                                 </Typography>

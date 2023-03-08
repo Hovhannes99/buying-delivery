@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from "react";
 import SearchIcon from '@mui/icons-material/Search';
 import { styled, alpha } from '@mui/material/styles';
-import InputBase from '@mui/material/InputBase';
 import {orangeColor, textGrayColor} from "../../constants/colors";
 import getAllProducts from "../../store/middlewares/allProducts";
 import {useAppDispatch} from "../../hooks/useAppDispatch";

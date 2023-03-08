@@ -55,8 +55,13 @@ const Details = () => {
   return (
       <div className={"details__wrapper"}>
           <div className={"details__wrapper_product"}>
-              <img  src={`http://localhost:3001/${img}`} alt={"product"}/>
-              <div style={{display:"flex", justifyContent:"space-between", alignItems:"center"}}>
+              <img style={{
+                  cursor: "pointer",
+                  opacity: 0.9,
+                  width: '100%',
+                  objectFit: "cover"
+              }} src={`http://localhost:3001/${img}`} alt={"product"}/>
+              <div>
                   <p className={"details__wrapper_title"}>{product?.title}</p>
                   <p className={"details__wrapper_price"}>{product?.price} ֏ </p>
                   {product?.isAvailable ? <span><AddShoppingCartIcon sx={{color:colorSuccess}}/> Arcka e</span> : <span><RemoveShoppingCartIcon sx={{color:warningColor}}/> Arcka che</span>}

@@ -32,7 +32,7 @@ const ShippingAddress = ({product, setProduct}: {product: IDetails, setProduct: 
 
     const addOrder = async () => {
         try {
-            const {data} = await OrderApi.createOrder({id:user._id, address,phone:Number(phone), city,count:Number(count), productId: product._id, email: user.email});
+            const {data} = await OrderApi.createOrder({id:user._id, address,phone:Number(phone), city,count:Number(count), totalPrice: Number(count)* Number(product.price), productId: product._id, email: user.email});
             if (data.isCreated){
                 setSuccess(true)
                 setTimeout(()=> navigate('/orders'), 1500)
@@ -44,8 +44,7 @@ const ShippingAddress = ({product, setProduct}: {product: IDetails, setProduct: 
     }
     const handleOrder = async () => {
         if (user._id) {
-            console.log("+" + phone, "phone")
-            if (count && city && phone && address && /^((\+374)|0)\d{8}$/.test(phone)) {
+            if (count && city && phone &&  count >= "0" && address && /^((\+374)|0)\d{8}$/.test(phone)) {
                 setAddOrder(true)
             }else{
                 setIsComplete(true)
@@ -127,7 +126,7 @@ const ShippingAddress = ({product, setProduct}: {product: IDetails, setProduct: 
                                 label='Count'
                                 variant="filled"
                                 value={count}
-                                error={isComplete ? !count : false}
+                                error={isComplete ? (!count || count <= "0") : false}
                                 onChange={(e)=>setCount(e.target.value)}
                                 type='number'
                                 style={inputStyle}

@@ -16,7 +16,8 @@ export interface ICreateOrder {
     address: string,
     id: string,
     productId: string,
-    email:string
+    email:string,
+    totalPrice:number
 }
 
 export interface IAllProducts {
@@ -44,6 +45,7 @@ export interface IAllOrders {
     count: number,
     phone: number,
     status: string,
+    totalPrice:number
 }
 
 export type IEditProduct = {

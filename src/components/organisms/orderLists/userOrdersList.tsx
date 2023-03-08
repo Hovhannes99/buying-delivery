@@ -1,6 +1,3 @@
-import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
-import AutorenewIcon from '@mui/icons-material/Autorenew';
-import VerifiedIcon from '@mui/icons-material/Verified';
 import {useAppSelector} from "../../../hooks/useAppSelector";
 import NoData from "../../atoms/noData/noData";
 import imageSpliter from "../../../utils/imageSpliter";
@@ -8,18 +5,18 @@ import {useAppDispatch} from "../../../hooks/useAppDispatch";
 import {useEffect} from "react";
 import getOrders from "../../../store/middlewares/getOrders";
 import Loading from "../../atoms/loading/loading";
-import {backgroundColor, colorSuccess, warningColor} from "../../../constants/colors";
+import {backgroundColor} from "../../../constants/colors";
 import {Card, CardActions, CardContent, Grid, Typography} from "@mui/material";
-import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
-import RemoveShoppingCartIcon from "@mui/icons-material/RemoveShoppingCart";
 import * as React from "react";
 import Button from "@mui/material/Button";
 import {primaryButtonStyle} from "../../../constants/primaryButtonStyle";
+import {useNavigate} from "react-router-dom";
 
 
 const UserOrdersList = ({id}:{id: string| undefined}) => {
     const {orders, loading}  = useAppSelector(state => state.orders);
     const dispatch = useAppDispatch();
+    const navigate = useNavigate()
 
     useEffect(()=>{
         if (id){
@@ -50,6 +47,7 @@ const UserOrdersList = ({id}:{id: string| undefined}) => {
                                 height: 230,
                                 objectFit: "cover"
                             }}
+                            onClick={()=>navigate(`/order-details/${order._id}`)}
                             src={`http://localhost:3001/${imageSpliter(order.product.imagesSrc)}`}
                             alt={order.product.title}
                         />
@@ -64,9 +62,13 @@ const UserOrdersList = ({id}:{id: string| undefined}) => {
                                         Made in {order.product.country} <img width={20} src={order.product.flag} srcSet={order.product.flag} alt={order.product.flag}/>
                                     </Typography>
                                 </div>
+                                <Typography variant="body2" className={"description"} >
+                                    total price - {order.totalPrice} ֏
+                                </Typography>
                             </CardContent>
                             <CardActions sx={{display: "flex", justifyContent: "space-between"}}>
                                 <Button
+                                        onClick={()=>navigate(`/order-details/${order._id}`)}
                                         style={primaryButtonStyle}
                                         size="small"
                                         type={"reset"}
