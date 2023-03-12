@@ -3,7 +3,7 @@ import {Card, CardActions, CardContent, Grid, Typography} from "@mui/material";
 import Button from "@mui/material/Button";
 import {useNavigate} from "react-router-dom";
 import {backgroundColor, colorSuccess, warningColor} from "../../constants/colors";
-import {primaryButtonStyle} from "../../constants/primaryButtonStyle";
+import {buttonStyle} from "../../constants/buttonStyle";
 import {useAppSelector} from "../../hooks/useAppSelector";
 import Loading from "../atoms/loading/loading";
 import {useEffect} from "react";
@@ -42,13 +42,7 @@ const ProductLists = () => {
                         }}
                         >
                             <img
-                                style={{
-                                    cursor: "pointer",
-                                    opacity: 0.9,
-                                    width: '100%',
-                                    height: 230,
-                                    objectFit: "cover"
-                                }}
+                                className='list-wrapper_image'
                                 src={`http://localhost:3001/${img}`}
                                 alt={item.title}
                                 onClick={() => navigation(`/details/${item._id}`)}
@@ -74,11 +68,9 @@ const ProductLists = () => {
                                 </div>
                             </CardContent>
                             <CardActions sx={{display: "flex", justifyContent: "space-between"}}>
-                                <Button onClick={() => navigation(`/details/${item._id}`)}
-                                        style={primaryButtonStyle}
-                                        size="small"
+                                <button className='primary-button' onClick={() => navigation(`/details/${item._id}`)}
                                         type={"reset"}
-                                >Buy</Button>
+                                >Buy</button>
                             </CardActions>
                         </Card>
                     </Grid>

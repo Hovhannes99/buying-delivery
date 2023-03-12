@@ -11,13 +11,14 @@ export interface ICreateProduct {
 
 export interface ICreateOrder {
     city: string,
-    phone: number,
+    phone: string,
     count: number,
     address: string,
     id: string,
     productId: string,
     email:string,
-    totalPrice:number
+    totalPrice:number,
+    username:string
 }
 
 export interface IAllProducts {
@@ -43,9 +44,11 @@ export interface IAllOrders {
     address: string,
     city: string,
     count: number,
-    phone: number,
+    phone: string,
     status: string,
-    totalPrice:number
+    totalPrice:number,
+    username: string,
+    email:string,
 }
 
 export type IEditProduct = {

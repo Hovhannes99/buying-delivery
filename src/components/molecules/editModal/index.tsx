@@ -8,7 +8,7 @@ import {TextareaAutosize} from '@mui/base';
 import {backgroundColor, colorSuccess, warningColor, whitForInputs} from "../../../constants/colors";
 import EditIcon from "@mui/icons-material/Edit";
 import {inputStyle} from "../../../constants/styleInput";
-import {primaryButtonStyle} from "../../../constants/primaryButtonStyle";
+import {buttonStyle, successButtonStyle} from "../../../constants/buttonStyle";
 import {Dispatch, SetStateAction, useState} from "react";
 import ProductApi from "../../../api/product";
 import {useParams} from "react-router-dom";
@@ -52,9 +52,7 @@ export default function EditModal({defaultTitle, defaultPrice, defaultDescriptio
         if (title && description && price && id) {
             try {
                 setLoading(true)
-                console.log(id, title, description, Number(price), isAvailable)
                 const { data } = await ProductApi.editProduct({id, title, description, price: Number(price), isAvailable: isAvailable.toString()});
-
                 setLoading(false)
                 setProduct(data)
                 setOpen(false);
@@ -72,8 +70,7 @@ export default function EditModal({defaultTitle, defaultPrice, defaultDescriptio
 
     return (
         <>
-            <Button type={"submit"} onClick={handleClickOpen} sx={{background: colorSuccess, color: whitForInputs}}>Edit
-                product <EditIcon/></Button>
+            <Button type={"submit"} onClick={handleClickOpen} sx={successButtonStyle}>Edit product <EditIcon/></Button>
             <Dialog open={open} onClose={handleClose}>
                 <DialogContent style={{background: backgroundColor}}>
                     <TextField
@@ -124,7 +121,7 @@ export default function EditModal({defaultTitle, defaultPrice, defaultDescriptio
                     </FormControl>
                     <DialogActions>
                         <Button onClick={handleClose} style={{background: warningColor}}>Cancel</Button>
-                        <Button onClick={handleEditProduct} style={primaryButtonStyle}>Ok</Button>
+                        <Button onClick={handleEditProduct} style={buttonStyle}>Ok</Button>
                     </DialogActions>
                 </DialogContent>
 

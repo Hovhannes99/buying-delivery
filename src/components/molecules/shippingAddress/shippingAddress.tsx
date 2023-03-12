@@ -3,7 +3,7 @@ import LanguageIcon from '@mui/icons-material/Language';
 import CallIcon from '@mui/icons-material/Call';
 import {Dispatch, SetStateAction, useState} from "react";
 import {useNavigate, useParams} from "react-router-dom";
-import {primaryButtonStyle} from "../../../constants/primaryButtonStyle";
+import {buttonStyle, warningButtonStyle} from "../../../constants/buttonStyle";
 import {useAppSelector} from "../../../hooks/useAppSelector";
 import {inputStyle} from "../../../constants/styleInput";
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
@@ -32,7 +32,16 @@ const ShippingAddress = ({product, setProduct}: {product: IDetails, setProduct: 
 
     const addOrder = async () => {
         try {
-            const {data} = await OrderApi.createOrder({id:user._id, address,phone:Number(phone), city,count:Number(count), totalPrice: Number(count)* Number(product.price), productId: product._id, email: user.email});
+            const {data} = await OrderApi.createOrder({
+                    id:user._id,
+                    address,
+                    phone,
+                    city,count:Number(count),
+                    totalPrice: Number(count)* Number(product.price),
+                    productId: product._id,
+                    email: user.email,
+                    username: user.username
+                });
             if (data.isCreated){
                 setSuccess(true)
                 setTimeout(()=> navigate('/orders'), 1500)
@@ -134,13 +143,12 @@ const ShippingAddress = ({product, setProduct}: {product: IDetails, setProduct: 
                     </div>}
                 <>
                     {user.role === ROLE_USER || !user._id ? <div className={"button-wrapper"}>
-                            <Button type={"submit"} sx={primaryButtonStyle} onClick={handleOrder} disabled={!product.isAvailable}> Order
-                                online <LanguageIcon/></Button>
-                            <Button type={"submit"} sx={primaryButtonStyle}>Order with call <CallIcon/></Button>
+                            <button className={`${!product.isAvailable ? "disabled":"primary-button"}`} onClick={handleOrder}> Order online <LanguageIcon/></button>
+                            <button className="primary-button">Order with call <CallIcon/></button>
                         </div>
                         :
                         <div className={"button-wrapper"}>
-                            <Button type={"submit"} sx={{background:warningColor, color:whitForInputs}} onClick={()=>setOpen(true)}> Delete Product <DeleteForeverIcon/></Button>
+                            <Button type={"submit"} sx={warningButtonStyle} onClick={()=>setOpen(true)}> Delete Product <DeleteForeverIcon/></Button>
                             <EditModal  defaultTitle={product.title}
                                         defaultPrice={product.price}
                                         defaultDescription={product.description}

@@ -4,18 +4,20 @@ import { styled, alpha } from '@mui/material/styles';
 import {orangeColor, textGrayColor} from "../../constants/colors";
 import getAllProducts from "../../store/middlewares/allProducts";
 import {useAppDispatch} from "../../hooks/useAppDispatch";
+import {useNavigate} from "react-router-dom";
 
 
 const Search = () => {
     const [searchValue, setSearchValue] = useState<string>('');
-    const dispatch = useAppDispatch()
+    const dispatch = useAppDispatch();
+    const navigate = useNavigate()
+
 
 
     const SearchIconWrapper = styled('div')(({ theme }) => ({
         padding: theme.spacing(0, 2),
         height: '100%',
         position: 'relative',
-        pointerEvents: 'none',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
@@ -38,12 +40,17 @@ const Search = () => {
             }
         }
     }
+    const onSearch = () =>{
+        if(searchValue){
+            dispatch(getAllProducts({variant: undefined, searchValue:searchValue}))
+        }
+    }
 
 
 
   return(
       <div className={"search-wrapper"}>
-          <SearchIconWrapper sx={{background:orangeColor, borderTopLeftRadius:"50px", borderBottomLeftRadius:'50px', width:'10px'}}>
+          <SearchIconWrapper className="search-wrapper_button" onClick={onSearch}>
               <SearchIcon />
           </SearchIconWrapper>
           <input
@@ -53,6 +60,7 @@ const Search = () => {
               onChange={(e)=>{handleSearch(e.target.value)}}
               onKeyDown={(e)=>searchProduct(e.key)}
           />
+
       </div>
   )
 }

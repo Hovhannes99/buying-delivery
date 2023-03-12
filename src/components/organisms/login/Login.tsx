@@ -11,7 +11,7 @@ import validateEmail from "../../../utils/emailValidation";
 import ValidationModal from "../../atoms/modals/ValidationMoadl";
 import SuccessAlert from "../../atoms/modals/Success";
 import {useLocalStorage} from "../../../hooks/useLocalStorage";
-import {primaryButtonStyle} from "../../../constants/primaryButtonStyle";
+import {buttonStyle} from "../../../constants/buttonStyle";
 import {textGrayColor} from "../../../constants/colors";
 
 
@@ -156,7 +156,7 @@ const Login = () => {
             <Loading isLoading={isLoaded}/>
             <div className={"login-wrapper__fields"}>
                 {loginFields}
-                <Button type={"submit"} sx={primaryButtonStyle} onClick={onRegistration}>Enter</Button>
+                <Button type={"submit"} sx={buttonStyle} onClick={onRegistration}>Enter</Button>
             </div>
             <div className={"login-wrapper__footer"}>
                 <p onClick={() => setSteps(steps !== 1 ? 1 : 0)} style={{color: textGrayColor}}>{steps !== 1 ? "Sign up" : "Sign in"}</p>

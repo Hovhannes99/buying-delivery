@@ -9,18 +9,18 @@ import {backgroundColor} from "../../../constants/colors";
 import {Card, CardActions, CardContent, Grid, Typography} from "@mui/material";
 import * as React from "react";
 import Button from "@mui/material/Button";
-import {primaryButtonStyle} from "../../../constants/primaryButtonStyle";
+import {buttonStyle} from "../../../constants/buttonStyle";
 import {useNavigate} from "react-router-dom";
 
 
-const UserOrdersList = ({id}:{id: string| undefined}) => {
+const UserOrdersList = ({id, role}:{id: string| undefined, role:string}) => {
     const {orders, loading}  = useAppSelector(state => state.orders);
     const dispatch = useAppDispatch();
     const navigate = useNavigate()
 
     useEffect(()=>{
         if (id){
-            dispatch(getOrders({id}))
+            dispatch(getOrders({id, role }))
         }
     },[dispatch, id]);
 
@@ -67,12 +67,11 @@ const UserOrdersList = ({id}:{id: string| undefined}) => {
                                 </Typography>
                             </CardContent>
                             <CardActions sx={{display: "flex", justifyContent: "space-between"}}>
-                                <Button
+                                <button
                                         onClick={()=>navigate(`/order-details/${order._id}`)}
-                                        style={primaryButtonStyle}
-                                        size="small"
+                                         className="primary-button"
                                         type={"reset"}
-                                >About order</Button>
+                                >About order</button>
                             </CardActions>
                     </Card>
                 </Grid>)

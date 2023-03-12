@@ -4,7 +4,7 @@ import CancelIcon from '@mui/icons-material/Cancel';
 import UploadImage from "../../atoms/uploadImage/UploadImage";
 import {useNavigate} from "react-router-dom";
 import {inputStyle} from "../../../constants/styleInput";
-import {primaryButtonStyle} from "../../../constants/primaryButtonStyle";
+import {buttonStyle} from "../../../constants/buttonStyle";
 import {whitForInputs} from "../../../constants/colors";
 import {TextareaAutosize} from "@mui/base";
 import {useEffect, useState} from "react";
@@ -16,6 +16,7 @@ import {AxiosError} from "axios";
 import SuccessAlert from "../../atoms/modals/Success";
 import Autocomplete from '@mui/material/Autocomplete';
 import axios from "../../../axios";
+import {useAppSelector} from "../../../hooks/useAppSelector";
 
 const AddProduct = () => {
     const navigate = useNavigate();
@@ -177,8 +178,8 @@ const AddProduct = () => {
                        </Grid>
                    </Grid>
                   <div className={"button-wrapper"}>
-                      <Button type={"submit"}  sx={primaryButtonStyle} onClick={onSaveProduct}>add Order<AddBusinessIcon /></Button>
-                      <Button type={"submit"} sx={primaryButtonStyle}>Cancel<CancelIcon/></Button>
+                      <Button type={"submit"} sx={buttonStyle} onClick={onSaveProduct}>add Order<AddBusinessIcon /></Button>
+                      <Button type={"submit"} sx={buttonStyle}>Cancel<CancelIcon/></Button>
                   </div>
               </Box>
           </div>

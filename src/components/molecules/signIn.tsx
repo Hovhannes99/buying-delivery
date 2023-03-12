@@ -110,12 +110,22 @@ const SignIn = () => {
                             </ListItemIcon>
                            <p className={"menu-item"}>Orders</p>
                         </MenuItem>
-                        : <MenuItem onClick={() => navigation("/orders")} className={"menu-item"}>
-                            <ListItemIcon>
-                                <AddToPhotosIcon className={"icon"}  fontSize="small"/>
-                            </ListItemIcon>
-                            <p className={"menu-item"}> Add product</p>
-                        </MenuItem>}
+                        :
+                        <>
+                            <MenuItem onClick={() => navigation("/orders")} >
+                                <ListItemIcon  className={"menu-item"}>
+                                    <LocalShippingIcon className={"icon"} fontSize="small"/>
+                                </ListItemIcon>
+                                <p className={"menu-item"}>Orders</p>
+                            </MenuItem>
+                            <MenuItem onClick={() => navigation("/add-product")} className={"menu-item"}>
+                                <ListItemIcon>
+                                    <AddToPhotosIcon className={"icon"}  fontSize="small"/>
+                                </ListItemIcon>
+                                <p className={"menu-item"}> Add product</p>
+                            </MenuItem>
+                        </>
+                        }
                 </div>}
                 {!user?.isVerified ? <MenuItem onClick={() => navigation("/login")} className={"menu-item"}>
                         <ListItemIcon className={"menu-item"}>

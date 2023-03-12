@@ -7,7 +7,7 @@ const createOrder = async (value: ICreateOrder) => {
     return data
 }
 
-const getOrders = async (value: {id:string}) => {
+const getOrders = async (value: {id:string, role:string}) => {
     const {data} = await axios.post("orders", value);
 
     return data

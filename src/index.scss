@@ -17,6 +17,7 @@
 @import "src/components/molecules/menuBar";
 @import "src/components/atoms/search";
 @import "src/components/atoms/noData/noData";
+@import "components/molecules/userInfo/index";
 
 
 * {
@@ -46,7 +47,7 @@ body .order-wrapper::-webkit-scrollbar {
 }
 body .order-wrapper{
   scrollbar-width: thin;
-  scrollbar-color:  black;
+  scrollbar-color: black;
 }
 body .order-wrapper::-webkit-scrollbar-track {
   background:  black;
