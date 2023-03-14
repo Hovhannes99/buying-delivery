@@ -7,6 +7,7 @@ import {useState} from "react";
 import {CustomModal} from "../../atoms/modals/CustomModal";
 import {useNavigate} from "react-router-dom";
 import SuccessAlert from "../../atoms/modals/Success";
+import {inputStyle} from "../../../constants/styleInput";
 
 
 export const NewPassword = () => {
@@ -49,6 +50,7 @@ export const NewPassword = () => {
           label={"Password"}
           variant="filled"
           type={"password"}
+          sx={inputStyle}
         />
         <TextField
           required
@@ -59,6 +61,7 @@ export const NewPassword = () => {
           label={"Confirm password"}
           variant="filled"
           type={"password"}
+          sx={inputStyle}
         />
         <Button type={"submit"} sx={{color: "white", background: "black"}} onClick={changeNewPassword}>Enter</Button>
         <SuccessAlert open={isChanged} message={"your password is changed"}/>

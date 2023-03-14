@@ -70,7 +70,7 @@ const ValidationModal =({open, email, setOpenValidationModal, setErrorValidation
                         type="number"
                         fullWidth
                         error={errorField}
-                        variant="standard"
+                        variant="filled"
                         onChange={(e)=>setVerifyNumber(e.target.value)}
                     />
                 </DialogContent>

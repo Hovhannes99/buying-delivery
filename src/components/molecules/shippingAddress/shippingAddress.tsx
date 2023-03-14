@@ -144,7 +144,7 @@ const ShippingAddress = ({product, setProduct}: {product: IDetails, setProduct: 
                 <>
                     {user.role === ROLE_USER || !user._id ? <div className={"button-wrapper"}>
                             <button className={`${!product.isAvailable ? "disabled":"primary-button"}`} onClick={handleOrder}> Order online <LanguageIcon/></button>
-                            <button className="primary-button">Order with call <CallIcon/></button>
+                            <a href={"tel:+37498284828"} className="primary-button"> Order with call <CallIcon/></a>
                         </div>
                         :
                         <div className={"button-wrapper"}>

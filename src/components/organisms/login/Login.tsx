@@ -156,7 +156,7 @@ const Login = () => {
             <Loading isLoading={isLoaded}/>
             <div className={"login-wrapper__fields"}>
                 {loginFields}
-                <Button type={"submit"} sx={buttonStyle} onClick={onRegistration}>Enter</Button>
+                <button  className={"primary-button"} onClick={onRegistration}>Enter</button>
             </div>
             <div className={"login-wrapper__footer"}>
                 <p onClick={() => setSteps(steps !== 1 ? 1 : 0)} style={{color: textGrayColor}}>{steps !== 1 ? "Sign up" : "Sign in"}</p>

@@ -1,11 +1,10 @@
-import {Box, Button, Grid, TextField, FormControl,InputLabel,MenuItem,Select} from "@mui/material";
+import {Box,    Grid, TextField, FormControl,InputLabel,MenuItem,Select} from "@mui/material";
 import AddBusinessIcon from '@mui/icons-material/AddBusiness';
 import CancelIcon from '@mui/icons-material/Cancel';
 import UploadImage from "../../atoms/uploadImage/UploadImage";
 import {useNavigate} from "react-router-dom";
 import {inputStyle} from "../../../constants/styleInput";
-import {buttonStyle} from "../../../constants/buttonStyle";
-import {whitForInputs} from "../../../constants/colors";
+import {inputBackground} from "../../../constants/colors";
 import {TextareaAutosize} from "@mui/base";
 import {useEffect, useState} from "react";
 import * as React from "react";
@@ -16,7 +15,6 @@ import {AxiosError} from "axios";
 import SuccessAlert from "../../atoms/modals/Success";
 import Autocomplete from '@mui/material/Autocomplete';
 import axios from "../../../axios";
-import {useAppSelector} from "../../../hooks/useAppSelector";
 
 const AddProduct = () => {
     const navigate = useNavigate();
@@ -95,7 +93,7 @@ const AddProduct = () => {
                                   style={{
                                       width: '100%',
                                       marginTop: "10px",
-                                      background: whitForInputs,
+                                      background: inputBackground,
                                       borderRadius: "5px",
                                       marginBottom: '10px'
                                   }}
@@ -135,6 +133,7 @@ const AddProduct = () => {
                                       return (
                                           <TextField
                                               {...params}
+                                              variant="filled"
                                               label="Choose a country"
                                               inputProps={{
                                                   ...params.inputProps,
@@ -152,8 +151,8 @@ const AddProduct = () => {
                                       onChange={handleChange}
                                       style={{...inputStyle, marginTop: '10px'}}
                                   >
-                                      <MenuItem value={1}>Arka</MenuItem>
-                                      <MenuItem value={0}>Arka che</MenuItem>
+                                      <MenuItem  value={1}>Arka</MenuItem>
+                                      <MenuItem  value={0}>Arka che</MenuItem>
                                   </Select>
                               </FormControl>
 
@@ -178,8 +177,8 @@ const AddProduct = () => {
                        </Grid>
                    </Grid>
                   <div className={"button-wrapper"}>
-                      <Button type={"submit"} sx={buttonStyle} onClick={onSaveProduct}>add Order<AddBusinessIcon /></Button>
-                      <Button type={"submit"} sx={buttonStyle}>Cancel<CancelIcon/></Button>
+                      <button className={"primary-button"} onClick={onSaveProduct}>add Order<AddBusinessIcon /></button>
+                      <button className={"primary-button"} onClick={()=>navigate("/")}>Cancel<CancelIcon/></button>
                   </div>
               </Box>
           </div>

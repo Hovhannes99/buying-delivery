@@ -6,5 +6,5 @@ export const textGrayColor = '#aba4a4';
 export const backgroundDescription = '#16121a'
 export const whitForInputs = '#d5d5d5'
 export const warningColor = '#91000e'
-
+export const inputBackground = '#8d8d8d'
 export const colorSuccess = '#016400'

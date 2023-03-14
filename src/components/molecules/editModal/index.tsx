@@ -77,6 +77,7 @@ export default function EditModal({defaultTitle, defaultPrice, defaultDescriptio
                         id="title"
                         label="title"
                         type="string"
+                        variant="filled"
                         fullWidth
                         error={!title}
                         value={title}
@@ -90,17 +91,19 @@ export default function EditModal({defaultTitle, defaultPrice, defaultDescriptio
                         value={description}
                         onChange={(e) => setDescription(e.target.value)}
                         style={{
+                            ...inputStyle,
                             width: '100%',
                             marginTop: "10px",
-                            background: whitForInputs,
                             borderRadius: "5px",
                             marginBottom: '10px'
                         }}
+
                     />
                     <TextField
                         id="name"
                         label="Price"
                         type="number"
+                        variant="filled"
                         fullWidth
                         error={!price}
                         value={price}
@@ -124,7 +127,6 @@ export default function EditModal({defaultTitle, defaultPrice, defaultDescriptio
                         <Button onClick={handleEditProduct} style={buttonStyle}>Ok</Button>
                     </DialogActions>
                 </DialogContent>
-
             </Dialog>
         </>
     );

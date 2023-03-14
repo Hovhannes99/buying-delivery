@@ -3,18 +3,24 @@
   color: $backgroundDescription;
   background:$orangeColor;
   border: none;
-  padding: 5px;
+  padding: 5px 1rem;
   transition: background 0.5s;
   border-radius: 5px;
   font-size: 16px;
   display: flex;
   align-items: center;
   justify-content: center;
-
+  text-decoration: none;
 }
+.primary-button:hover {
+  cursor: pointer;
+  background: $backgroundDescription;
+  color: $orangeColor;
+}
+
 .disabled{
   border: none;
-  padding: 5px;
+  padding: 5px 1rem;
   background-color: dimgrey;
   color: linen;
   opacity: 1;
@@ -24,11 +30,6 @@
   align-items: center;
   justify-content: center;
   pointer-events: none;
-}
-.primary-button:hover {
-  cursor: pointer;
-  background: $backgroundDescription;
-  color: $orangeColor;
 }
 
 .main {
