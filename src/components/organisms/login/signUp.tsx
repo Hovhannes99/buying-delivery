@@ -1,6 +1,7 @@
 import {TextField} from "@mui/material";
 import {Dispatch, SetStateAction} from "react";
 import {inputStyle} from "../../../constants/styleInput";
+import {useTranslation} from "react-i18next";
 
 interface ISignUpProps {
     email:string,
@@ -15,7 +16,10 @@ interface ISignUpProps {
 
 }
 
-const SignUp = ({name, email, setEmail, setPassword, password, setName, error, setNewPassword, newPassword}:ISignUpProps) => (
+const SignUp = ({name, email, setEmail, setPassword, password, setName, error, setNewPassword, newPassword}:ISignUpProps) => {
+    const {t} = useTranslation()
+
+    return(
         <>
             <TextField
                 required
@@ -23,7 +27,7 @@ const SignUp = ({name, email, setEmail, setPassword, password, setName, error, s
                 error={error}
                 value={name}
                 onChange={(e)=>setName(e.target.value)}
-                label={"Name"}
+                label={t("user.name")}
                 variant="filled"
                 style={inputStyle}
             />
@@ -33,7 +37,7 @@ const SignUp = ({name, email, setEmail, setPassword, password, setName, error, s
                 error={error}
                 value={email}
                 onChange={(e)=>setEmail(e.target.value)}
-                label={"Email"}
+                label={t("order.mail")}
                 variant="filled"
                 style={inputStyle}
             />
@@ -43,7 +47,7 @@ const SignUp = ({name, email, setEmail, setPassword, password, setName, error, s
                 error={error}
                 value={password}
                 onChange={(e)=>setPassword(e.target.value)}
-                label={"Password"}
+                label={t("user.password")}
                 variant="filled"
                 type={"password"}
                 style={inputStyle}
@@ -54,12 +58,13 @@ const SignUp = ({name, email, setEmail, setPassword, password, setName, error, s
                 error={error || newPassword !== password}
                 value={newPassword}
                 onChange={(e)=>setNewPassword(e.target.value)}
-                label={"Confirm password"}
+                label={t("user.confirm-password")}
                 variant="filled"
                 type={"password"}
                 style={inputStyle}
             />
         </>
     )
+}
 
 export default SignUp

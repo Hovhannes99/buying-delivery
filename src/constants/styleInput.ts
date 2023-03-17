@@ -1,8 +1,8 @@
-import {backgroundColor, backgroundHeaderColor, inputBackground, textGrayColor, whitForInputs} from "./colors";
+import {backgroundColor, textGrayColor, whitForInputs} from "./colors";
 
 
 export const inputStyle = {
-    background: inputBackground,
+    background: whitForInputs,
     borderRadius: "5px",
 }
 export const searchInput = {

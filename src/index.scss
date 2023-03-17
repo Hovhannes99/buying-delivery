@@ -18,7 +18,7 @@
 @import "src/components/atoms/search";
 @import "src/components/atoms/noData/noData";
 @import "components/molecules/userInfo/index";
-@import "components/organisms/slider/index.scss";
+@import "components/organisms/swiper/index.scss";
 
 
 * {
@@ -32,11 +32,17 @@ body{
 .MuiFilledInput-root.MuiFilledInput-underline:after {
   border-bottom:3px solid $orangeColor !important;
 }
-.MuiList-root.MuiMenu-list{
-  background: $inputBackground !important;
+.MuiFormLabel-root.MuiInputLabel-root.Mui-focused {
+  color: $labelColor !important;
 }
+//.MuiList-root.MuiMenu-list{
+//  background: $inputBackground !important;
+//}
 .MuiButtonBase-root.MuiMenuItem-root.Mui-selected{
   background-color: rgba($orangeColor, 0.5) !important;
+}
+.MuiOutlinedInput-notchedOutline{
+  border-color: $inputBackground !important;
 }
 
 body::-webkit-scrollbar {

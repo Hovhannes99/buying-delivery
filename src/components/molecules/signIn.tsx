@@ -14,15 +14,16 @@ import AddToPhotosIcon from '@mui/icons-material/AddToPhotos';
 import {useAppSelector} from "../../hooks/useAppSelector";
 import Loading from "../atoms/loading/loading";
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import {ROLE_USER} from "../../constants/user";
+import {ROLE_ADMIN, ROLE_USER} from "../../constants/user";
 import {useEffect, useState} from "react";
 import {backgroundColor, orangeColor} from "../../constants/colors";
+import {useTranslation} from "react-i18next";
 
 const SignIn = () => {
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const {user, error, loading} = useAppSelector(store => store.userReducer);
-    const [userName, setUserName] = useState<string>()
-
+    const [userName, setUserName] = useState<string>();
+    const {t} = useTranslation()
     const open = Boolean(anchorEl);
     const navigation = useNavigate()
     const handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -103,40 +104,30 @@ const SignIn = () => {
                 anchorOrigin={{horizontal: 'right', vertical: 'bottom'}}
             >
                 {user?.isVerified && <div>
-                    {user.role === ROLE_USER ? <MenuItem onClick={() => navigation("/orders")} >
+                     <MenuItem onClick={() => navigation("/orders")} >
                             <ListItemIcon  className={"menu-item"}>
                                 <LocalShippingIcon className={"icon"} fontSize="small"/>
                             </ListItemIcon>
-                           <p className={"menu-item"}>Orders</p>
+                           <p className={"menu-item"}>{t("menu.orders")}</p>
                         </MenuItem>
-                        :
-                        <>
-                            <MenuItem onClick={() => navigation("/orders")} >
-                                <ListItemIcon  className={"menu-item"}>
-                                    <LocalShippingIcon className={"icon"} fontSize="small"/>
-                                </ListItemIcon>
-                                <p className={"menu-item"}>Orders</p>
-                            </MenuItem>
-                            <MenuItem onClick={() => navigation("/add-product")} className={"menu-item"}>
+                    {user.role === ROLE_ADMIN && <MenuItem onClick={() => navigation("/add-product")} className={"menu-item"}>
                                 <ListItemIcon>
                                     <AddToPhotosIcon className={"icon"}  fontSize="small"/>
                                 </ListItemIcon>
-                                <p className={"menu-item"}> Add product</p>
-                            </MenuItem>
-                        </>
-                        }
+                                <p className={"menu-item"}>{t("product.add-product")}</p>
+                            </MenuItem>}
                 </div>}
                 {!user?.isVerified ? <MenuItem onClick={() => navigation("/login")} className={"menu-item"}>
                         <ListItemIcon className={"menu-item"}>
                             <LoginIcon className={"icon"} fontSize="small"/>
                         </ListItemIcon>
-                       <p className={"menu-item"}>Sign In</p>
+                       <p className={"menu-item"}>{t("menu.sign-in")}</p>
                     </MenuItem> :
                     <MenuItem  onClick={logOut}>
                         <ListItemIcon className={"menu-item"}>
                             <Logout className={"icon"} fontSize="small"/>
                         </ListItemIcon>
-                        <p className={"menu-item"}>Logout</p>
+                        <p className={"menu-item"}>{t("menu.logout")}</p>
                     </MenuItem>}
             </Menu>
         </React.Fragment>

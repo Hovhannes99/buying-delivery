@@ -8,23 +8,24 @@ import {CustomModal} from "../../atoms/modals/CustomModal";
 import {useNavigate} from "react-router-dom";
 import SuccessAlert from "../../atoms/modals/Success";
 import {inputStyle} from "../../../constants/styleInput";
+import {useTranslation} from "react-i18next";
 
 
 export const NewPassword = () => {
+  const navigate = useNavigate();
+  const {t} = useTranslation()
   const [storedValue, ,removeItem] = useLocalStorage("email", "");
   const [password, setPassword] = useState<string>("");
   const [confirmPassword, setConfirmPassword] = useState<string>("");
   const [error, setError] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>("");
   const [isChanged, setIsChanged] = useState<boolean>(false)
-  const navigate = useNavigate()
   const changeNewPassword = async ()=>{
     removeItem("email")
 
      try {
        if(password.length > 6){
-         const data = await AuthenticationsApi.changePassword({email:storedValue, newPassword:password});
-         console.log(data)
+         await AuthenticationsApi.changePassword({email:storedValue, newPassword:password});
          setIsChanged(true);
          setTimeout(()=>navigate("/login"), 1500);
          setTimeout(()=>setIsChanged(false),1000);
@@ -47,7 +48,7 @@ export const NewPassword = () => {
           error={error}
           value={password}
           onChange={(e)=>setPassword(e.target.value)}
-          label={"Password"}
+          label={t("user.password")}
           variant="filled"
           type={"password"}
           sx={inputStyle}
@@ -58,12 +59,12 @@ export const NewPassword = () => {
           error={error || confirmPassword !== password}
           value={confirmPassword}
           onChange={(e)=>setConfirmPassword(e.target.value)}
-          label={"Confirm password"}
+          label={t("user.confirm-password")}
           variant="filled"
           type={"password"}
           sx={inputStyle}
         />
-        <Button type={"submit"} sx={{color: "white", background: "black"}} onClick={changeNewPassword}>Enter</Button>
+        <button className={"primary-button"}  onClick={changeNewPassword}>{t("menu.sign-in")}</button>
         <SuccessAlert open={isChanged} message={"your password is changed"}/>
         <CustomModal open={!!errorMessage} title={"Error"} message={errorMessage} handleClose={()=>setErrorMessage("")}/>
       </div>

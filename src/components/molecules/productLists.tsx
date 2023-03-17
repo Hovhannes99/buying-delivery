@@ -1,9 +1,7 @@
 import * as React from 'react';
 import {Card, CardActions, CardContent, Grid, Typography} from "@mui/material";
-import Button from "@mui/material/Button";
 import {useNavigate} from "react-router-dom";
 import {backgroundColor, colorSuccess, warningColor} from "../../constants/colors";
-import {buttonStyle} from "../../constants/buttonStyle";
 import {useAppSelector} from "../../hooks/useAppSelector";
 import Loading from "../atoms/loading/loading";
 import {useEffect} from "react";
@@ -13,12 +11,14 @@ import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import RemoveShoppingCartIcon from '@mui/icons-material/RemoveShoppingCart';
 import NoData from "../atoms/noData/noData";
 import imageSpliter from "../../utils/imageSpliter";
-import Slider from "../organisms/slider";
+import SwiperWrapper from "../organisms/swiper";
+import {useTranslation} from "react-i18next";
 
 const ProductLists = () => {
     const navigation = useNavigate();
     const dispatch = useAppDispatch();
     const {products, loading} = useAppSelector((state) => state.products);
+    const {t} = useTranslation()
 
 
     useEffect(() => {
@@ -31,7 +31,7 @@ const ProductLists = () => {
 
     return (
         <>
-            <Slider/>
+            <SwiperWrapper/>
             <Grid className={"list-wrapper"} container spacing={{xs: 2, md: 3}} columns={{xs: 4, sm: 8, md: 12}}>
                 {products.data?.map((item, index) => {
                     const img = imageSpliter(item?.imagesSrc)
@@ -62,18 +62,18 @@ const ProductLists = () => {
                                     <div className={"title-wrapper-subtitle"}>
                                         <Typography variant="body2" className={"description"} >
                                             {item.isAvailable ?
-                                                <Typography style={{display:"flex", alignItems:"center"}}><AddShoppingCartIcon sx={{color: colorSuccess}}/>Arcka e </Typography>
-                                                : <Typography style={{display:"flex", alignItems:"center"}}><RemoveShoppingCartIcon sx={{color:warningColor}}/> Arka  che</Typography>}
+                                                <Typography style={{display:"flex", alignItems:"center"}}><AddShoppingCartIcon sx={{color: colorSuccess}}/>{t('product.available')}</Typography>
+                                                : <Typography style={{display:"flex", alignItems:"center"}}><RemoveShoppingCartIcon sx={{color:warningColor}}/>{t('product.unavailable')}</Typography>}
                                         </Typography>
                                         <Typography variant="body2" className={"description"} >
-                                            Made in {item.country} <img width={20} src={item.flag} srcSet={item.flag} alt="flag"/>
+                                            {t('product.country')} {item.country} <img width={20} src={item.flag} srcSet={item.flag} alt="flag"/>
                                         </Typography>
                                     </div>
                                 </CardContent>
                                 <CardActions sx={{display: "flex", justifyContent: "space-between"}}>
                                     <button className='primary-button' onClick={() => navigation(`/details/${item._id}`)}
                                             type={"reset"}
-                                    >Buy</button>
+                                    >{t('product.learn-more')}</button>
                                 </CardActions>
                             </Card>
                         </Grid>

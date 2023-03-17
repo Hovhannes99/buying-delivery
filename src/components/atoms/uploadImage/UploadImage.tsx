@@ -1,10 +1,14 @@
 import {Dispatch, SetStateAction, useEffect, useState} from "react";
+import {useTranslation} from "react-i18next";
+import BackupIcon from '@mui/icons-material/Backup';
+import {orangeColor} from "../../../constants/colors";
 
 
 const UploadImage = ({setFile}:{setFile:Dispatch<SetStateAction<File | undefined>>}) => {
     const [highlight, setHighlight] = useState(false);
     const [preview, setPreview] = useState("");
     const [drop, setDrop] = useState(false);
+    const {t} = useTranslation()
 
     const handleEnter = (e:Event | any) => {
         e.preventDefault();
@@ -68,7 +72,7 @@ const UploadImage = ({setFile}:{setFile:Dispatch<SetStateAction<File | undefined
                             accept="image/*"
                             onChange={(e) => handleUpload(e)}
                         />
-                        <button className="button">Upload Here</button>
+                        <button className="button"><BackupIcon style={{color: orangeColor}}/> {t("product.upload")}</button>
                     </div>
                 </form>
             </div>

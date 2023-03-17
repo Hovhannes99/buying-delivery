@@ -8,15 +8,15 @@ import Loading from "../../atoms/loading/loading";
 import {backgroundColor} from "../../../constants/colors";
 import {Card, CardActions, CardContent, Grid, Typography} from "@mui/material";
 import * as React from "react";
-import Button from "@mui/material/Button";
-import {buttonStyle} from "../../../constants/buttonStyle";
 import {useNavigate} from "react-router-dom";
+import {useTranslation} from "react-i18next";
 
 
 const UserOrdersList = ({id, role}:{id: string| undefined, role:string}) => {
     const {orders, loading}  = useAppSelector(state => state.orders);
     const dispatch = useAppDispatch();
-    const navigate = useNavigate()
+    const navigate = useNavigate();
+    const {t} = useTranslation()
 
     useEffect(()=>{
         if (id){
@@ -59,11 +59,11 @@ const UserOrdersList = ({id, role}:{id: string| undefined, role:string}) => {
                                 </Typography>
                                 <div className={"title-wrapper-subtitle"}>
                                     <Typography variant="body2" className={"description"} >
-                                        Made in {order.product.country} <img width={20} src={order.product.flag} srcSet={order.product.flag} alt={order.product.flag}/>
+                                        {t("product.country")} {order.product.country} <img width={20} src={order.product.flag} srcSet={order.product.flag} alt={order.product.flag}/>
                                     </Typography>
                                 </div>
                                 <Typography variant="body2" className={"description"} >
-                                    total price - {order.totalPrice} ֏
+                                    {t("product.total-price")} - {order.totalPrice} ֏
                                 </Typography>
                             </CardContent>
                             <CardActions sx={{display: "flex", justifyContent: "space-between"}}>
@@ -71,7 +71,7 @@ const UserOrdersList = ({id, role}:{id: string| undefined, role:string}) => {
                                         onClick={()=>navigate(`/order-details/${order._id}`)}
                                          className="primary-button"
                                         type={"reset"}
-                                >About order</button>
+                                >{t("product.about-order")}</button>
                             </CardActions>
                     </Card>
                 </Grid>)

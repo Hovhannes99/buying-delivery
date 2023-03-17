@@ -8,6 +8,7 @@ import {
 } from "react-router-dom";
 import {Provider} from "react-redux";
 import store from "./store";
+import "./i18next";
 
 const root = ReactDOM.createRoot(
     document.getElementById('root') as HTMLElement

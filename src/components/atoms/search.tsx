@@ -1,14 +1,16 @@
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import SearchIcon from '@mui/icons-material/Search';
-import { styled, alpha } from '@mui/material/styles';
-import {orangeColor, textGrayColor} from "../../constants/colors";
+import { styled, } from '@mui/material/styles';
+import { textGrayColor} from "../../constants/colors";
 import getAllProducts from "../../store/middlewares/allProducts";
 import {useAppDispatch} from "../../hooks/useAppDispatch";
 import {useNavigate} from "react-router-dom";
+import {useTranslation} from "react-i18next";
 
 
 const Search = () => {
     const [searchValue, setSearchValue] = useState<string>('');
+    const {t} = useTranslation()
     const dispatch = useAppDispatch();
     const navigate = useNavigate()
 
@@ -54,7 +56,7 @@ const Search = () => {
               <SearchIcon />
           </SearchIconWrapper>
           <input
-              placeholder="Search…"
+              placeholder={`${t("menu.search")}...`}
               value={searchValue}
               className={"search-wrapper_searchInput"}
               onChange={(e)=>{handleSearch(e.target.value)}}

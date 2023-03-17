@@ -17,6 +17,7 @@ import Select, { SelectChangeEvent } from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import {IDetails} from "../../../types/product";
 import Loading from "../../atoms/loading/loading";
+import {useTranslation} from "react-i18next";
 
 interface IEditModal {
     defaultTitle: string,
@@ -33,7 +34,8 @@ export default function EditModal({defaultTitle, defaultPrice, defaultDescriptio
     const [price, setPrice] = useState<string>(String(defaultPrice))
     const [hasProduct, setHasProduct] = useState<number>(Number(defaultIsAvailable));
     const [isAvailable, setIsAvailable] = useState<boolean>(defaultIsAvailable);
-    const [loading, setLoading] = useState<boolean>(false)
+    const [loading, setLoading] = useState<boolean>(false);
+    const {t} = useTranslation()
 
     const handleChange = (event: SelectChangeEvent) => {
         setIsAvailable(Boolean(event.target.value))
@@ -70,12 +72,12 @@ export default function EditModal({defaultTitle, defaultPrice, defaultDescriptio
 
     return (
         <>
-            <Button type={"submit"} onClick={handleClickOpen} sx={successButtonStyle}>Edit product <EditIcon/></Button>
+            <Button type={"submit"} onClick={handleClickOpen} sx={successButtonStyle}>{t('product.edit')} <EditIcon/></Button>
             <Dialog open={open} onClose={handleClose}>
                 <DialogContent style={{background: backgroundColor}}>
                     <TextField
                         id="title"
-                        label="title"
+                        label={t('product.title')}
                         type="string"
                         variant="filled"
                         fullWidth
@@ -87,7 +89,7 @@ export default function EditModal({defaultTitle, defaultPrice, defaultDescriptio
                     <TextareaAutosize
                         id="description"
                         minRows={3}
-                        placeholder="Description"
+                        placeholder={`${t("product.description")}`}
                         value={description}
                         onChange={(e) => setDescription(e.target.value)}
                         style={{
@@ -101,7 +103,7 @@ export default function EditModal({defaultTitle, defaultPrice, defaultDescriptio
                     />
                     <TextField
                         id="name"
-                        label="Price"
+                        placeholder={`${t("product.price")}`}
                         type="number"
                         variant="filled"
                         fullWidth
@@ -118,8 +120,8 @@ export default function EditModal({defaultTitle, defaultPrice, defaultDescriptio
                             onChange={handleChange}
                             style={{...inputStyle, marginTop: '10px'}}
                         >
-                            <MenuItem value={1}>Arka</MenuItem>
-                            <MenuItem value={0}>Arka che</MenuItem>
+                            <MenuItem value={1}>{t('product.available')}</MenuItem>
+                            <MenuItem value={0}>{t('product.unavailable')}</MenuItem>
                         </Select>
                     </FormControl>
                     <DialogActions>

@@ -44,12 +44,12 @@ const images = [
     },
 ];
 
-const Slider = () => {
+const SwiperWrapper = () => {
     return (
         <Box sx={{ paddingBottom: 10}}>
             <Swiper
                 loop={true}
-                autoplay={{delay: 3000}}
+                autoplay={true}
                 modules={[Pagination,Autoplay]}
                 className="mySwiper">
                 {images.map((item)=>{
@@ -61,4 +61,4 @@ const Slider = () => {
     );
 }
 
-export default Slider;
+export default SwiperWrapper;

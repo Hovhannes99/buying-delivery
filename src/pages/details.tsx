@@ -9,10 +9,13 @@ import {colorSuccess, warningColor} from "../constants/colors";
 import {IDetails} from "../types/product";
 import * as React from "react";
 import imageSpliter from "../utils/imageSpliter";
+import {useTranslation} from "react-i18next";
 
 
 const Details = () => {
-    const { id } =  useParams()
+    const { id } =  useParams();
+    const {t} = useTranslation()
+
     const [product, setProduct] = useState<IDetails>({
         title: "",
         img: "",
@@ -64,14 +67,16 @@ const Details = () => {
               <div>
                   <p className={"details__wrapper_title"}>{product?.title}</p>
                   <p className={"details__wrapper_price"}>{product?.price} ֏ </p>
-                  {product?.isAvailable ? <span><AddShoppingCartIcon sx={{color:colorSuccess}}/> Arcka e</span> : <span><RemoveShoppingCartIcon sx={{color:warningColor}}/> Arcka che</span>}
-                  <div className={"details__wrapper_country"} >
-                      <p className={"details__wrapper_price"}>made in {product.country}</p>
-                      <img width={30} src={product.flag} srcSet={product.flag} alt="flag"/></div>
+
               </div>
               <p className={"details__wrapper_description"}>{product?.description}</p>
           </div>
           <div className={"details__wrapper_order"}>
+              {product?.isAvailable ? <span><AddShoppingCartIcon sx={{color:colorSuccess}}/>{t('product.available')}</span>
+                  : <span><RemoveShoppingCartIcon sx={{color:warningColor}}/>{t('product.unavailable')}</span>}
+              <div className={"details__wrapper_country"} >
+                  <p className={"details__wrapper_price"}> {t('product.country')} {product.country}</p>
+                  <img width={30} src={product.flag} srcSet={product.flag} alt="flag"/></div>
               <Payment product={product} setProduct={setProduct}/>
           </div>
       </div>

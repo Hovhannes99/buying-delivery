@@ -11,11 +11,10 @@ import validateEmail from "../../../utils/emailValidation";
 import ValidationModal from "../../atoms/modals/ValidationMoadl";
 import SuccessAlert from "../../atoms/modals/Success";
 import {useLocalStorage} from "../../../hooks/useLocalStorage";
-import {buttonStyle} from "../../../constants/buttonStyle";
+
 import {textGrayColor} from "../../../constants/colors";
 
-
-import {useAppDispatch} from "../../../hooks/useAppDispatch";
+import {useTranslation} from "react-i18next";
 
 
 const Login = () => {
@@ -23,7 +22,7 @@ const Login = () => {
     const [error, setError] = useState<string>("")
     const [title, setTitle] = useState<string>("");
     const [email, setEmail] = useState<string>("");
-    const [newPassword, setNewPassword] = useState<string>("")
+    const [newPassword, setNewPassword] = useState<string>("");
     const [password, setPassword] = useState<string>("");
     const [userName, setUserName] = useState<string>("");
     const [isNotCorrect, setIsNotCorrect] = useState(false);
@@ -33,14 +32,14 @@ const Login = () => {
     const [,setValue,] = useLocalStorage("email", "");
     const [typeStep, setTypeStep] = useState<"signUp" | "forgotPass">("signUp");
     const [,setStoredValue] = useLocalStorage("token");
-    const dispatch = useAppDispatch()
+    const {t} = useTranslation()
 
     const navigate = useNavigate()
 
     const loginFields = useMemo(() => {
         switch (steps) {
             case 0:
-                setTitle("Sign In")
+                setTitle(`${t("menu.sign-in")}`)
                 return <SignIn
                     error={isNotCorrect}
                     email={email}
@@ -49,7 +48,7 @@ const Login = () => {
                     setPassword={setPassword}
                 />
             case 1:
-                setTitle("Sign Up")
+                setTitle(`${t("menu.sign-up")}`)
                 return <SignUp
                     error={isNotCorrect}
                     email={email}
@@ -62,7 +61,7 @@ const Login = () => {
                     setEmail={setEmail}
                 />
             case 2:
-                setTitle("Forgot Password")
+                setTitle(`${t("menu.forgot-password")}`)
                 return <ForgotPass
                         error={isNotCorrect}
                         email={email}
@@ -77,7 +76,7 @@ const Login = () => {
                     setEmail={setEmail}
                     setPassword={setPassword}/>
         }
-    }, [email, isNotCorrect, newPassword, password, steps, userName]);
+    }, [email, isNotCorrect, newPassword, password, steps, t, userName]);
 
     const onRegistration = async () => {
         switch (steps) {
@@ -156,11 +155,11 @@ const Login = () => {
             <Loading isLoading={isLoaded}/>
             <div className={"login-wrapper__fields"}>
                 {loginFields}
-                <button  className={"primary-button"} onClick={onRegistration}>Enter</button>
+                <button  className={"primary-button"} onClick={onRegistration}>{steps === 1 ? t("menu.sign-up") : t("menu.sign-in") }</button>
             </div>
             <div className={"login-wrapper__footer"}>
-                <p onClick={() => setSteps(steps !== 1 ? 1 : 0)} style={{color: textGrayColor}}>{steps !== 1 ? "Sign up" : "Sign in"}</p>
-                <p onClick={() => setSteps(2)} style={{color: textGrayColor}}>Forgot Password ?</p>
+                <p onClick={() => setSteps(steps !== 1 ? 1 : 0)} className={"text"} >{steps !== 1 ? t("menu.sign-up")  : t("menu.sign-in")}</p>
+                <p onClick={() => setSteps(2)} className={"text"}>{t("menu.forgot-password")}</p>
             </div>
         </div>
     )

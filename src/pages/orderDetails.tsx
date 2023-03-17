@@ -19,6 +19,9 @@ import CancelIcon from '@mui/icons-material/Cancel';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import ReplyIcon from '@mui/icons-material/Reply';
+import {useTranslation} from "react-i18next";
+import OrderStatus from "../components/molecules/order-status/orderStatus";
+
 
 const OrderDetails = () => {
     const {id} = useParams()
@@ -30,6 +33,7 @@ const OrderDetails = () => {
     const [openRemove, setOpenRemove] = useState<boolean>(false)
     const [status, setStatus] = useState<string>("");
     const [isRemoved, setIsRemoved] = useState<boolean>(false);
+    const {t} = useTranslation()
 
     useEffect(() => {
         (async () => {
@@ -89,13 +93,13 @@ const OrderDetails = () => {
             <ConfirmModal isOpen={open}
                           handelOk={cancelOrderOrApproved}
                           handleCancel={() => setOpen(false)}
-                          title={"Are you sure ?"}
+                          title={t("modal.sure")}
                           message={`Do  you want to ${status} order ?`}
             />
             <ConfirmModal isOpen={openRemove}
                           handelOk={removeOrder}
                           handleCancel={() => setOpenRemove(false)}
-                          title={"Are you sure ?"}
+                          title={t("modal.sure")}
                           message={"Do  you want to remove order ?"}
             />
             <SuccessAlert open={isRemoved} message={""}/>
@@ -107,9 +111,9 @@ const OrderDetails = () => {
                 }} src={`http://localhost:3001/${imageSpliter(product?.product.imagesSrc)}`} alt={"product"}/>
                 <div>
                     <p className={"details__wrapper_title"}>{product?.product.title}</p>
-                    <p className={"details__wrapper_price"}>total-{product?.totalPrice} ֏ </p>
+                    <p className={"details__wrapper_price"}>{t('product.total-price')} - {product?.totalPrice} ֏ </p>
                     <div className={"details__wrapper_country"}>
-                        <p className={"details__wrapper_price"}>made in {product?.product.country}</p>
+                        <p className={"details__wrapper_price"}>{t('product.country')} {product?.product.country}</p>
                         <img width={30} src={product?.product.flag} srcSet={product?.product.flag} alt="flag"/>
                     </div>
                 </div>
@@ -123,22 +127,21 @@ const OrderDetails = () => {
                     city={product?.city}
                     email={product?.email}
                     count={product?.count}
+                    status={product?.status}
                 />}
-                {(product?.status === PENDING && user.role === ROLE_USER) && <p className={'details__wrapper_order_status'}>your order checking from Market <AutorenewIcon className={"rotate"} color={"info"}/></p>}
-                {product?.status === CANCELED && <p className={'details__wrapper_order_status'}>order is canceled <BlockIcon style={{color:warningColor, fontSize:"30px"}}/></p>}
-                {product?.status === APPROVED && <p className={'details__wrapper_order_status'}>order is Approved, We will contact you <CheckCircleOutlineIcon style={{color:colorSuccess, fontSize:"30px"}}/></p>}
+                {user.role !== ROLE_ADMIN && <OrderStatus status={product?.status} role={user.role}/>}
                 <div className={"button-wrapper"}>
-                    <button className="primary-button" onClick={()=>navigate('/orders')}>Back <ReplyIcon/></button>
+                    <button className="primary-button" onClick={()=>navigate('/orders')}>{t('product.back')} <ReplyIcon/></button>
                     {product?.status === PENDING &&
                     <Button type={"submit"} sx={warningButtonStyle} onClick={() => {
                             setStatus(CANCELED)
                             setOpen(true)
-                        }}>Cancel Order <CancelIcon/></Button>}
-                    {(product?.status === CANCELED || product?.status === APPROVED) && <Button type={"submit"} sx={warningButtonStyle} onClick={()=>setOpenRemove(true)}>Remove Order <DeleteForeverIcon/></Button>}
+                        }}>{t('product.cancel-order')}<CancelIcon/></Button>}
+                    {(product?.status === CANCELED || product?.status === APPROVED) && <Button type={"submit"} sx={warningButtonStyle} onClick={()=>setOpenRemove(true)}>{t('product.delete')} <DeleteForeverIcon/></Button>}
                     {(user.role === ROLE_ADMIN && product?.status !== CANCELED && product?.status !== APPROVED) && <Button type={"submit"} sx={successButtonStyle} onClick={()=>{
                         setStatus(APPROVED)
                         setOpen(true)
-                    }} >Approve Order <CheckCircleOutlineIcon/></Button>}
+                    }} >{t('product.approve-order')} <CheckCircleOutlineIcon/></Button>}
                 </div>
             </div>
         </div>
