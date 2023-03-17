@@ -65,8 +65,8 @@ export const NewPassword = () => {
           sx={inputStyle}
         />
         <button className={"primary-button"}  onClick={changeNewPassword}>{t("menu.sign-in")}</button>
-        <SuccessAlert open={isChanged} message={"your password is changed"}/>
-        <CustomModal open={!!errorMessage} title={"Error"} message={errorMessage} handleClose={()=>setErrorMessage("")}/>
+        <SuccessAlert open={isChanged} message={`${t("modal.changed-password")}`}/>
+        <CustomModal open={!!errorMessage} title={`${t("modal.error")}`} message={errorMessage} handleClose={()=>setErrorMessage("")}/>
       </div>
     </div>
   );

@@ -84,7 +84,7 @@ const ShippingAddress = ({product, setProduct}: {product: IDetails, setProduct: 
                           handelOk={deleteProduct}
                           handleCancel={()=>setOpen(false)}
                           title={t("modal.sure")}
-                          message={"Do you want to remove this item ?"}
+                          message={`${t("modal.remove-item")}`}
             />
             <SuccessAlert open={success} message={""}/>
             <ConfirmModal isOpen={openAddOrder}

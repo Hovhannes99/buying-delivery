@@ -7,12 +7,9 @@ import imageSpliter from "../utils/imageSpliter";
 import OrderApi from "../api/order";
 import {Button} from "@mui/material";
 import {successButtonStyle, warningButtonStyle} from "../constants/buttonStyle";
-import AutorenewIcon from '@mui/icons-material/Autorenew';
 import {useAppSelector} from "../hooks/useAppSelector";
-import {APPROVED, CANCELED, PENDING, ROLE_ADMIN, ROLE_USER} from "../constants/user";
-import BlockIcon from '@mui/icons-material/Block';
+import {APPROVED, CANCELED, PENDING, ROLE_ADMIN,} from "../constants/user";
 import ConfirmModal from "../components/molecules/confirmModal";
-import {colorSuccess, warningColor} from "../constants/colors";
 import SuccessAlert from "../components/atoms/modals/Success";
 import UserInfo from "../components/molecules/userInfo";
 import CancelIcon from '@mui/icons-material/Cancel';
@@ -68,9 +65,7 @@ const OrderDetails = () => {
     const removeOrder = async () => {
         if (id){
             try {
-                setLoading(true)
                 const data = await OrderApi.removeOrder({id});
-                setLoading(false);
                 if (data.isRemoved){
                     setIsRemoved(true);
                     setOpenRemove(false);
@@ -94,13 +89,13 @@ const OrderDetails = () => {
                           handelOk={cancelOrderOrApproved}
                           handleCancel={() => setOpen(false)}
                           title={t("modal.sure")}
-                          message={`Do  you want to ${status} order ?`}
+                          message={status === APPROVED ? t("modal.change-status-approve"):t("modal.change-status-cancel")}
             />
             <ConfirmModal isOpen={openRemove}
                           handelOk={removeOrder}
                           handleCancel={() => setOpenRemove(false)}
                           title={t("modal.sure")}
-                          message={"Do  you want to remove order ?"}
+                          message={`${t("modal.remove-order")}`}
             />
             <SuccessAlert open={isRemoved} message={""}/>
             <div className={"details__wrapper_product"}>

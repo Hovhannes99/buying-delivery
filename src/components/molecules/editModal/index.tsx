@@ -125,8 +125,8 @@ export default function EditModal({defaultTitle, defaultPrice, defaultDescriptio
                         </Select>
                     </FormControl>
                     <DialogActions>
-                        <Button onClick={handleClose} style={{background: warningColor}}>Cancel</Button>
-                        <Button onClick={handleEditProduct} style={buttonStyle}>Ok</Button>
+                        <button className={"primary-button"} onClick={handleClose} >{t("product.cancel")}</button>
+                        <button className={"primary-button"} onClick={handleEditProduct}>{t("modal.ok")}</button>
                     </DialogActions>
                 </DialogContent>
             </Dialog>

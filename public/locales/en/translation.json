@@ -60,7 +60,12 @@
     "ok": "Ok",
     "complete": "You should be complete all fields",
     "price-message": "The price of your order is",
-    "remove-item": "Do you want to remove this item ?",
+    "remove-item": "Do you want to remove this product?",
+    "remove-order": "Do you want to remove this order?",
+    "success-user": "You have successfully registered",
+    "changed-password": "Your password is changed",
+    "change-status-cancel": "Do you want to cancel order?",
+    "change-status-approve": "Do you want to approve order?",
     "close": "Close",
     "error": "Error"
   }

@@ -2,7 +2,6 @@ import { useMemo, useState} from "react";
 import SignIn from "./signIn";
 import SignUp from "./signUp";
 import ForgotPass from "./forgotPass";
-import Button from "@mui/material/Button";
 import AuthenticationsApi from "../../../api/authApi";
 import {useNavigate} from "react-router-dom";
 import {CustomModal} from "../../atoms/modals/CustomModal";
@@ -141,8 +140,8 @@ const Login = () => {
     return (
         <div className={"login-wrapper"}>
             <p className={"login-wrapper__title"} style={{color: textGrayColor}}>{title}</p>
-            <SuccessAlert open={isRegistrated} message={"your registration is successfully"}/>
-            <CustomModal message={error} open={!!error} title={"Error"} handleClose={() => setError("")}/>
+            <SuccessAlert open={isRegistrated} message={`${t("modal.success-user")}`}/>
+            <CustomModal message={error} open={!!error} title={`${t("modal.error")}`} handleClose={() => setError("")}/>
             <ValidationModal
                 type={typeStep}
                 email={email}

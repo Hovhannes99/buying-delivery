@@ -7,6 +7,7 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Slide from '@mui/material/Slide';
 import { TransitionProps } from '@mui/material/transitions';
+import {useTranslation} from "react-i18next";
 
 interface IConfirmModal {
     title:string
@@ -27,6 +28,7 @@ const Transition = React.forwardRef(function Transition(
 });
 
 export default function ConfirmModal({isOpen=false, handelOk, handleCancel, message, title }:IConfirmModal) {
+    const {t} = useTranslation()
     return (
             <Dialog
                 open={isOpen}
@@ -42,8 +44,8 @@ export default function ConfirmModal({isOpen=false, handelOk, handleCancel, mess
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={handleCancel}>Disagree</Button>
-                    <Button onClick={handelOk}>Agree</Button>
+                    <Button onClick={handleCancel}>{t('modal.close')}</Button>
+                    <button className={"primary-button"} onClick={handelOk}>{t('modal.ok')}</button>
                 </DialogActions>
             </Dialog>
     );
