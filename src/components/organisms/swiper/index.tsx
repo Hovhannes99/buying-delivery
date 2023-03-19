@@ -50,6 +50,7 @@ const SwiperWrapper = () => {
             <Swiper
                 loop={true}
                 autoplay={true}
+                navigation
                 modules={[Pagination,Autoplay]}
                 className="mySwiper">
                 {images.map((item)=>{

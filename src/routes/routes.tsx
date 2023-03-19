@@ -19,7 +19,7 @@ const Routers = () => {
                     <Route path="/order-details/:id" element={<OrderDetails/>}/>
                     <Route path="/login" element={<Login/>}/>
                     <Route path="/new-password" element={<NewPassword/>}/>
-                    <Route path="/orders" element={<UserOrdersList id={user._id} role={user.role}/>}/>
+                    <Route path="/orders" element={<UserOrdersList id={user?._id} role={user?.role}/>}/>
                     <Route path="/add-product" element={<AddProduct/>}/>
             </Routes>
     )

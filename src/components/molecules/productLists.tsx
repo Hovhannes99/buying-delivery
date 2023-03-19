@@ -13,6 +13,7 @@ import NoData from "../atoms/noData/noData";
 import imageSpliter from "../../utils/imageSpliter";
 import SwiperWrapper from "../organisms/swiper";
 import {useTranslation} from "react-i18next";
+import WelcomeAnimation from "../atoms/animations/welcomeAnimation";
 
 const ProductLists = () => {
     const navigation = useNavigate();
@@ -31,6 +32,7 @@ const ProductLists = () => {
 
     return (
         <>
+            <WelcomeAnimation/>
             <SwiperWrapper/>
             <Grid className={"list-wrapper"} container spacing={{xs: 2, md: 3}} columns={{xs: 4, sm: 8, md: 12}}>
                 {products.data?.map((item, index) => {

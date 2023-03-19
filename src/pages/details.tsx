@@ -30,8 +30,6 @@ const Details = () => {
     const [img, setImg] = useState("")
 
 
-
-
     useEffect(()=>{
       (async ()=> {
           if (id) {
