@@ -103,7 +103,7 @@ const OrderDetails = () => {
                     opacity: 0.9,
                     width: '100%',
                     objectFit: "cover"
-                }} src={`http://localhost:3001/${imageSpliter(product?.product.imagesSrc)}`} alt={"product"}/>
+                }} src={`https://backend-bauying-delivery.vercel.app/${imageSpliter(product?.product.imagesSrc)}`} alt={"product"}/>
                 <div>
                     <p className={"details__wrapper_title"}>{product?.product.title}</p>
                     <p className={"details__wrapper_price"}>{t('product.total-price')} - {product?.totalPrice} ֏ </p>

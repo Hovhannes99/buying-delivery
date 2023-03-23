@@ -48,7 +48,7 @@ const ProductLists = () => {
                             >
                                 <img
                                     className='list-wrapper_image'
-                                    src={`http://localhost:3001/${img}`}
+                                    src={`https://backend-bauying-delivery.vercel.app/${img}`}
                                     alt={item.title}
                                     onClick={() => navigation(`/details/${item._id}`)}
                                 />

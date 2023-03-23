@@ -61,7 +61,10 @@ const Details = () => {
                   opacity: 0.9,
                   width: '100%',
                   objectFit: "cover"
-              }} src={`http://localhost:3001/${img}`} alt={"product"}/>
+              }}
+             src={`https://backend-bauying-delivery.vercel.app/${img}`}
+             alt={"product"}
+              />
               <div>
                   <p className={"details__wrapper_title"}>{product?.title}</p>
                   <p className={"details__wrapper_price"}>{product?.price} ֏ </p>

@@ -48,7 +48,7 @@ const UserOrdersList = ({id, role}:{id: string| undefined, role:string}) => {
                                 objectFit: "cover"
                             }}
                             onClick={()=>navigate(`/order-details/${order._id}`)}
-                            src={`http://localhost:3001/${imageSpliter(order.product.imagesSrc)}`}
+                            src={`https://backend-bauying-delivery.vercel.app/${imageSpliter(order.product.imagesSrc)}`}
                             alt={order.product.title}
                         />
                             <CardContent className={"card"}>
