@@ -5,18 +5,20 @@ import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import {TextareaAutosize} from '@mui/base';
-import {backgroundColor, colorSuccess, warningColor, whitForInputs} from "../../../constants/colors";
+import {backgroundColor} from "../../../constants/colors";
 import EditIcon from "@mui/icons-material/Edit";
 import {inputStyle} from "../../../constants/styleInput";
-import {primaryButtonStyle} from "../../../constants/primaryButtonStyle";
+import {successButtonStyle} from "../../../constants/buttonStyle";
 import {Dispatch, SetStateAction, useState} from "react";
 import ProductApi from "../../../api/product";
-import {useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import {IDetails} from "../../../types/product";
 import Loading from "../../atoms/loading/loading";
+import {useTranslation} from "react-i18next";
+import {CustomModal} from "../../atoms/modals/CustomModal";
 
 interface IEditModal {
     defaultTitle: string,
@@ -27,13 +29,16 @@ interface IEditModal {
 }
 export default function EditModal({defaultTitle, defaultPrice, defaultDescription, defaultIsAvailable, setProduct}:IEditModal) {
     const {id} = useParams()
+    const {t} = useTranslation()
+    const navigate = useNavigate()
     const [open, setOpen] = React.useState(false);
-    const [description, setDescription] = useState<string>(defaultDescription)
-    const [title, setTitle] = useState<string>(defaultTitle)
+    const [title, setTitle] = useState<string>(defaultTitle);
+    const [errorMessage, setErrorMessage] = useState<string>("")
     const [price, setPrice] = useState<string>(String(defaultPrice))
-    const [hasProduct, setHasProduct] = useState<number>(Number(defaultIsAvailable));
+    const [loading, setLoading] = useState<boolean>(false);
+    const [description, setDescription] = useState<string>(defaultDescription)
     const [isAvailable, setIsAvailable] = useState<boolean>(defaultIsAvailable);
-    const [loading, setLoading] = useState<boolean>(false)
+    const [hasProduct, setHasProduct] = useState<number>(Number(defaultIsAvailable));
 
     const handleChange = (event: SelectChangeEvent) => {
         setIsAvailable(Boolean(event.target.value))
@@ -52,17 +57,15 @@ export default function EditModal({defaultTitle, defaultPrice, defaultDescriptio
         if (title && description && price && id) {
             try {
                 setLoading(true)
-                console.log(id, title, description, Number(price), isAvailable)
                 const { data } = await ProductApi.editProduct({id, title, description, price: Number(price), isAvailable: isAvailable.toString()});
-
                 setLoading(false)
                 setProduct(data)
                 setOpen(false);
 
             } catch (e) {
-                alert(e);
-                setLoading(false)
-
+                setOpen(false);
+                setErrorMessage(`${t("errors.something")}`)
+                setLoading(false);
             }
         }
     }
@@ -72,14 +75,18 @@ export default function EditModal({defaultTitle, defaultPrice, defaultDescriptio
 
     return (
         <>
-            <Button type={"submit"} onClick={handleClickOpen} sx={{background: colorSuccess, color: whitForInputs}}>Edit
-                product <EditIcon/></Button>
+            <Button type={"submit"} onClick={handleClickOpen} sx={successButtonStyle}>{t('product.edit')} <EditIcon/></Button>
+            <CustomModal open={!!errorMessage} title={`${t("modal.error")}`} message={errorMessage} handleClose={()=>{
+                setErrorMessage("");
+                navigate("/")
+            }}/>
             <Dialog open={open} onClose={handleClose}>
                 <DialogContent style={{background: backgroundColor}}>
                     <TextField
                         id="title"
-                        label="title"
+                        label={t('product.title')}
                         type="string"
+                        variant="filled"
                         fullWidth
                         error={!title}
                         value={title}
@@ -89,21 +96,23 @@ export default function EditModal({defaultTitle, defaultPrice, defaultDescriptio
                     <TextareaAutosize
                         id="description"
                         minRows={3}
-                        placeholder="Description"
+                        placeholder={`${t("product.description")}`}
                         value={description}
                         onChange={(e) => setDescription(e.target.value)}
                         style={{
+                            ...inputStyle,
                             width: '100%',
                             marginTop: "10px",
-                            background: whitForInputs,
                             borderRadius: "5px",
                             marginBottom: '10px'
                         }}
+
                     />
                     <TextField
                         id="name"
-                        label="Price"
+                        placeholder={`${t("product.price")}`}
                         type="number"
+                        variant="filled"
                         fullWidth
                         error={!price}
                         value={price}
@@ -118,16 +127,15 @@ export default function EditModal({defaultTitle, defaultPrice, defaultDescriptio
                             onChange={handleChange}
                             style={{...inputStyle, marginTop: '10px'}}
                         >
-                            <MenuItem value={1}>Arka</MenuItem>
-                            <MenuItem value={0}>Arka che</MenuItem>
+                            <MenuItem value={1}>{t('product.available')}</MenuItem>
+                            <MenuItem value={0}>{t('product.unavailable')}</MenuItem>
                         </Select>
                     </FormControl>
                     <DialogActions>
-                        <Button onClick={handleClose} style={{background: warningColor}}>Cancel</Button>
-                        <Button onClick={handleEditProduct} style={primaryButtonStyle}>Ok</Button>
+                        <button className={"primary-button"} onClick={handleClose} >{t("product.cancel")}</button>
+                        <button className={"primary-button"} onClick={handleEditProduct}>{t("modal.ok")}</button>
                     </DialogActions>
                 </DialogContent>
-
             </Dialog>
         </>
     );

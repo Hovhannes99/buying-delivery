@@ -3,7 +3,7 @@ import LanguageIcon from '@mui/icons-material/Language';
 import CallIcon from '@mui/icons-material/Call';
 import {Dispatch, SetStateAction, useState} from "react";
 import {useNavigate, useParams} from "react-router-dom";
-import {primaryButtonStyle} from "../../../constants/primaryButtonStyle";
+import {buttonStyle, warningButtonStyle} from "../../../constants/buttonStyle";
 import {useAppSelector} from "../../../hooks/useAppSelector";
 import {inputStyle} from "../../../constants/styleInput";
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
@@ -13,16 +13,54 @@ import EditModal from "../editModal";
 import {IDetails} from "../../../types/product";
 import ProductApi from "../../../api/product";
 import ConfirmModal from "../confirmModal";
+import OrderApi from "../../../api/order";
+import SuccessAlert from "../../atoms/modals/Success";
+import * as React from "react";
+import {useTranslation} from "react-i18next";
 
 const ShippingAddress = ({product, setProduct}: {product: IDetails, setProduct: Dispatch<SetStateAction<IDetails>> }) => {
-    const [isLogin, setIsLogin] = useState(false);
-    const [open, setOpen] = useState(false)
+    const [open, setOpen] = useState(false);
+    const [count, setCount] = useState<string>("");
+    const [phone, setPhone] = useState<string>("")
+    const [city, setCity] = useState<string>("");
+    const [address, setAddress] = useState<string>("");
+    const [isComplete, setIsComplete] = useState<boolean>(false)
     const { id } = useParams()
     const {user} = useAppSelector(state => state.userReducer)
-    const navigate = useNavigate()
-    const handleOrder = () => {
-        if (user._id) {
+    const navigate = useNavigate();
+    const [success, setSuccess] = useState<boolean>(false);
+    const [openAddOrder, setAddOrder] = useState(false);
+    const {t} = useTranslation()
 
+
+    const addOrder = async () => {
+        try {
+            const {data} = await OrderApi.createOrder({
+                    id:user._id,
+                    address,
+                    phone,
+                    city,count:Number(count),
+                    totalPrice: Number(count)* Number(product.price),
+                    productId: product._id,
+                    email: user.email,
+                    username: user.username
+                });
+            if (data.isCreated){
+                setSuccess(true)
+                setTimeout(()=> navigate('/orders'), 1500)
+            }
+        }catch (e){
+            alert(e)
+        }
+
+    }
+    const handleOrder = async () => {
+        if (user._id) {
+            if (count && city && phone &&  count >= "0" && address && /^((\+374)|0)\d{8}$/.test(phone)) {
+                setAddOrder(true)
+            }else{
+                setIsComplete(true)
+            }
         } else {
             navigate("/login")
         }
@@ -45,69 +83,75 @@ const ShippingAddress = ({product, setProduct}: {product: IDetails, setProduct: 
             <ConfirmModal isOpen={open}
                           handelOk={deleteProduct}
                           handleCancel={()=>setOpen(false)}
-                          title={"Are you sure ?"}
-                          message={"Do  you want to remove this item ?"}
+                          title={t("modal.sure")}
+                          message={`${t("modal.remove-item")}`}
             />
-            <Box sx={{width: '100%', paddingBottom: "15px"}}>
+            <SuccessAlert open={success} message={""}/>
+            <ConfirmModal isOpen={openAddOrder}
+                          handelOk={addOrder}
+                          handleCancel={()=>setAddOrder(false)}
+                          title={t("modal.sure")}
+                          message={`${t("modal.price-message")} ${Number(count) * Number(product.price)} ֏`}
+            />
+            <Box sx={{paddingBottom: "15px"}}>
                 {(user._id && user.role !== ROLE_ADMIN) &&
-                    <Grid container spacing={{xs: 1, md: 2}} columns={{xs: 4, sm: 8, md: 12}}>
-                        <Grid item xs={4} sm={6} md={6}>
+                    <div className={"field-wrapper"}>
                             <TextField
                                 required
-                                id='name'
+                                id='city'
                                 fullWidth
-                                label="Name"
+                                label={t("order.city")}
                                 variant="filled"
                                 type='string'
-                                style={inputStyle}
-                            />
-                            <TextField
-                                required
-                                id='secoundName'
-                                fullWidth
-                                label={'Second Name'}
-                                variant="filled"
-                                type='string'
+                                value={city}
+                                error={isComplete ? !city : false}
+                                onChange={(e)=>setCity(e.target.value)}
                                 style={inputStyle}
                             />
                             <TextField
                                 required
                                 id='Address'
                                 fullWidth
-                                label='Address'
+                                label={t("order.address")}
                                 variant="filled"
                                 type='string'
+                                value={address}
+                                error={isComplete ? !address : false}
+                                onChange={(e)=> setAddress(e.target.value)}
                                 style={inputStyle}
                             />
                             <TextField
                                 required
                                 id={'Phone Number'}
                                 fullWidth
-                                label='Phone Number'
+                                label={t("order.phone")}
                                 variant="filled"
-                                type='number'
+                                value={phone}
+                                error={isComplete ? (!phone || !/^((\+374)|0)\d{8}$/.test(phone)): false}
+                                onChange={(e)=>setPhone(e.target.value)}
                                 style={inputStyle}
                             />
                             <TextField
                                 required
                                 id='count'
                                 fullWidth
-                                label='Count'
+                                label={t("order.amount")}
                                 variant="filled"
+                                value={count}
+                                error={isComplete ? (!count || count <= "0") : false}
+                                onChange={(e)=>setCount(e.target.value)}
                                 type='number'
                                 style={inputStyle}
                             />
-                        </Grid>
-                    </Grid>}
+                    </div>}
                 <>
                     {user.role === ROLE_USER || !user._id ? <div className={"button-wrapper"}>
-                            <Button type={"submit"} sx={primaryButtonStyle} onClick={handleOrder}> Order
-                                online <LanguageIcon/></Button>
-                            <Button type={"submit"} sx={primaryButtonStyle}>Order with call <CallIcon/></Button>
+                            <button className={`${!product.isAvailable ? "disabled":"primary-button"}`} onClick={handleOrder}>{t('product.order-online')} <LanguageIcon/></button>
+                            <a href={"tel:+37498284828"} className="primary-button">{t("product.call")}<CallIcon/></a>
                         </div>
                         :
                         <div className={"button-wrapper"}>
-                            <Button type={"submit"} sx={{background:warningColor, color:whitForInputs}} onClick={()=>setOpen(true)}> Delete Product <DeleteForeverIcon/></Button>
+                            <Button type={"submit"} sx={warningButtonStyle} onClick={()=>setOpen(true)}>{t('product.delete')} <DeleteForeverIcon/></Button>
                             <EditModal  defaultTitle={product.title}
                                         defaultPrice={product.price}
                                         defaultDescription={product.description}

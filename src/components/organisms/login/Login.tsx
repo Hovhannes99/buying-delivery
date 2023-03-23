@@ -2,7 +2,6 @@ import { useMemo, useState} from "react";
 import SignIn from "./signIn";
 import SignUp from "./signUp";
 import ForgotPass from "./forgotPass";
-import Button from "@mui/material/Button";
 import AuthenticationsApi from "../../../api/authApi";
 import {useNavigate} from "react-router-dom";
 import {CustomModal} from "../../atoms/modals/CustomModal";
@@ -11,35 +10,37 @@ import validateEmail from "../../../utils/emailValidation";
 import ValidationModal from "../../atoms/modals/ValidationMoadl";
 import SuccessAlert from "../../atoms/modals/Success";
 import {useLocalStorage} from "../../../hooks/useLocalStorage";
-import {primaryButtonStyle} from "../../../constants/primaryButtonStyle";
 import {textGrayColor} from "../../../constants/colors";
+import {useTranslation} from "react-i18next";
 import getUserThunk from "../../../store/middlewares/getUser";
 import {useAppDispatch} from "../../../hooks/useAppDispatch";
+import {logIn} from "../../../store/slices/userSlice";
 
 
 const Login = () => {
+    const {t} = useTranslation();
+    const dispatch = useAppDispatch()
+    const [,setStoredValue] = useLocalStorage("token");
     const [steps, setSteps] = useState<number>(0);
     const [error, setError] = useState<string>("")
     const [title, setTitle] = useState<string>("");
     const [email, setEmail] = useState<string>("");
-    const [newPassword, setNewPassword] = useState<string>("")
     const [password, setPassword] = useState<string>("");
     const [userName, setUserName] = useState<string>("");
+    const [,setValue,] = useLocalStorage("email", "");
     const [isNotCorrect, setIsNotCorrect] = useState(false);
     const [isLoaded, setIsLoaded] = useState<boolean>(false);
-    const [openValidationModal, setOpenValidationModal] = useState<boolean>(false);
+    const [newPassword, setNewPassword] = useState<string>("");
     const [isRegistrated, setIsRegistrated] = useState<boolean>(false);
-    const [,setValue,] = useLocalStorage("email", "");
     const [typeStep, setTypeStep] = useState<"signUp" | "forgotPass">("signUp");
-    const [,setStoredValue] = useLocalStorage("token");
-    const dispatch = useAppDispatch()
+    const [openValidationModal, setOpenValidationModal] = useState<boolean>(false);
 
     const navigate = useNavigate()
 
     const loginFields = useMemo(() => {
         switch (steps) {
             case 0:
-                setTitle("Sign In")
+                setTitle(`${t("menu.sign-in")}`)
                 return <SignIn
                     error={isNotCorrect}
                     email={email}
@@ -48,7 +49,7 @@ const Login = () => {
                     setPassword={setPassword}
                 />
             case 1:
-                setTitle("Sign Up")
+                setTitle(`${t("menu.sign-up")}`)
                 return <SignUp
                     error={isNotCorrect}
                     email={email}
@@ -61,7 +62,7 @@ const Login = () => {
                     setEmail={setEmail}
                 />
             case 2:
-                setTitle("Forgot Password")
+                setTitle(`${t("menu.forgot-password")}`)
                 return <ForgotPass
                         error={isNotCorrect}
                         email={email}
@@ -76,7 +77,7 @@ const Login = () => {
                     setEmail={setEmail}
                     setPassword={setPassword}/>
         }
-    }, [email, isNotCorrect, newPassword, password, steps, userName]);
+    }, [email, isNotCorrect, newPassword, password, steps, t, userName]);
 
     const onRegistration = async () => {
         switch (steps) {
@@ -87,6 +88,7 @@ const Login = () => {
                         const {data} =  await AuthenticationsApi.signIn({email, password});
                         setStoredValue(data.token)
                         setIsLoaded(false);
+                        dispatch(logIn(data.user));
                         navigate("/");
                     } else {
                         setIsNotCorrect(true)
@@ -94,7 +96,24 @@ const Login = () => {
                         setTimeout(() => setIsNotCorrect(false), 3000)
                     }
                 } catch (e: any) {
-                    setError(e.data.errors.message)
+
+                    switch (e?.data?.errors.message){
+                        case "USER_NOT_FOUND":{
+                            setError(`${t("errors.user-not-found")}`);
+                            break
+                        }
+                        case "NOT_VERIFY" :{
+                            setError(`${t("errors.not-verify")}`);
+                            break
+                        }
+                        case "INCORRECT" : {
+                            setError(`${t("errors.incorrect")}`);
+                            break
+                        }
+                        default: {
+                            setError(e?.data?.errors.message)
+                        }
+                    }
                     setIsLoaded(false)
                 }
                 break;
@@ -112,7 +131,20 @@ const Login = () => {
                         setTimeout(() => setIsNotCorrect(false), 1500)
                     }
                 } catch (e: any) {
-                    setError(e.data.message)
+
+                    switch (e.data.message){
+                        case "EMAIL_INCORRECT":{
+                            setError(`${t("errors.email-incorrect")}`)
+                            break
+                        }
+                        case "ALREADY_EXIST":{
+                            setError(`${t("errors.already-exist")}`)
+                            break
+                        }
+                        default:{
+                            setError(e.data.message)
+                        }
+                    }
                     setIsLoaded(false)
                 }
                 break;
@@ -131,7 +163,16 @@ const Login = () => {
                         setIsNotCorrect(true)
                     }
                 }catch (e:any){
-                    setError(e.data.message)
+
+                    switch (e.data.message){
+                        case "EMAIL_NOT_FOUND":{
+                             setError(`${t("errors.email-not-found")}`)
+                            break
+                        }
+                        default:{
+                            setError(e.data.message)
+                        }
+                    }
                     setIsLoaded(false)
                 }
                  break
@@ -141,8 +182,8 @@ const Login = () => {
     return (
         <div className={"login-wrapper"}>
             <p className={"login-wrapper__title"} style={{color: textGrayColor}}>{title}</p>
-            <SuccessAlert open={isRegistrated} message={"your registration is successfully"}/>
-            <CustomModal message={error} open={!!error} title={"Error"} handleClose={() => setError("")}/>
+            <SuccessAlert open={isRegistrated} message={`${t("modal.success-user")}`}/>
+            <CustomModal message={error} open={!!error} title={`${t("modal.error")}`} handleClose={() => setError("")}/>
             <ValidationModal
                 type={typeStep}
                 email={email}
@@ -150,16 +191,16 @@ const Login = () => {
                 setOpenValidationModal={setOpenValidationModal}
                 setErrorValidation={setError}
                 setStep={setSteps}
-                setIsRegistrated={setIsRegistrated}
+                setIsRegistered={setIsRegistrated}
             />
             <Loading isLoading={isLoaded}/>
             <div className={"login-wrapper__fields"}>
                 {loginFields}
-                <Button type={"submit"} sx={primaryButtonStyle} onClick={onRegistration}>Enter</Button>
+                <button  className={"primary-button"} onClick={onRegistration}>{steps === 1 ? t("menu.sign-up") : t("menu.sign-in") }</button>
             </div>
             <div className={"login-wrapper__footer"}>
-                <p onClick={() => setSteps(steps !== 1 ? 1 : 0)} style={{color: textGrayColor}}>{steps !== 1 ? "Sign up" : "Sign in"}</p>
-                <p onClick={() => setSteps(2)} style={{color: textGrayColor}}>Forgot Password ?</p>
+                <p onClick={() => setSteps(steps !== 1 ? 1 : 0)} className={"text"} >{steps !== 1 ? t("menu.sign-up")  : t("menu.sign-in")}</p>
+                <p onClick={() => setSteps(2)} className={"text"}>{t("menu.forgot-password")}</p>
             </div>
         </div>
     )

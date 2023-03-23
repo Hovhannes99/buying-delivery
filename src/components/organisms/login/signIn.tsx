@@ -1,7 +1,8 @@
 import {TextField} from "@mui/material";
 import {Dispatch, SetStateAction} from "react";
 import {inputStyle} from "../../../constants/styleInput";
-import {backgroundDescription} from "../../../constants/colors";
+import {useTranslation} from "react-i18next";
+
 
 
 interface ISignInProps {
@@ -14,6 +15,7 @@ interface ISignInProps {
 }
 
 const SignIn = ({email, setEmail, password, setPassword, error}:ISignInProps) => {
+    const {t} = useTranslation()
     return (
         <>
             <TextField
@@ -21,7 +23,7 @@ const SignIn = ({email, setEmail, password, setPassword, error}:ISignInProps) =>
                 fullWidth
                 error={error}
                 value={email}
-                label={"mail"}
+                label={t("order.mail")}
                 variant="filled"
                 onChange={(e)=>setEmail(e.target.value)}
                 style={inputStyle}
@@ -31,7 +33,7 @@ const SignIn = ({email, setEmail, password, setPassword, error}:ISignInProps) =>
                 fullWidth
                 error={error}
                 value={password}
-                label={"Password"}
+                label={t("user.password")}
                 variant="filled"
                 type={"password"}
                 onChange={(e)=>setPassword(e.target.value)}

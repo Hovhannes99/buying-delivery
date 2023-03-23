@@ -1,11 +1,21 @@
 
 
 .list-wrapper{
+  &_image{
+    cursor: pointer;
+    opacity: 0.9;
+    width: 100%;
+    height: 230px;
+    object-fit: cover;
+    transition: 1s;
+  }
+  &_image:hover{
+    transform: scale(1.1);
+  }
   .card{
     background:$backgroundDescription;
     .title-wrapper{
       width: 100%;
-      display: flex;
       &-subtitle{
         display: flex;
         justify-content: space-between;

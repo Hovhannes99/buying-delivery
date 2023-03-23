@@ -1,6 +1,7 @@
 import {TextField} from "@mui/material";
 import {Dispatch, SetStateAction} from "react";
 import {inputStyle} from "../../../constants/styleInput";
+import {useTranslation} from "react-i18next";
 
 interface IForgotPassword {
   email:string;
@@ -10,6 +11,7 @@ interface IForgotPassword {
 
 
 const ForgotPass = ({email, error, setEmail}: IForgotPassword) => {
+  const {t} = useTranslation()
   return(
       <TextField
           required
@@ -17,7 +19,7 @@ const ForgotPass = ({email, error, setEmail}: IForgotPassword) => {
           error={error}
           value={email}
           onChange={(e)=>setEmail(e.target.value)}
-          label={"Email"}
+          label={t("order.mail")}
           variant="filled"
           style={inputStyle}
       />

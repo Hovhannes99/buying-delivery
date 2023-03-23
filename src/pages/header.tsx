@@ -3,7 +3,6 @@ import Search from "../components/atoms/search";
 import Logo from "../components/atoms/logo";
 import MenuBar from "../components/molecules/menuBar";
 import SignIn from "../components/molecules/signIn";
-import WelcomeAnimation from "../components/atoms/animations/welcomeAnimation";
 
 const Header = () => {
   return (
@@ -12,7 +11,6 @@ const Header = () => {
               <MenuBar/>
               <Logo/>
           </div>
-          <WelcomeAnimation/>
           <div className={"header__search"}>
               <Search/>
               <SignIn/>

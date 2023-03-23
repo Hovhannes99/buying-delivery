@@ -8,10 +8,14 @@ import RemoveShoppingCartIcon from '@mui/icons-material/RemoveShoppingCart';
 import {colorSuccess, warningColor} from "../constants/colors";
 import {IDetails} from "../types/product";
 import * as React from "react";
+import imageSpliter from "../utils/imageSpliter";
+import {useTranslation} from "react-i18next";
 
 
 const Details = () => {
-    const { id } =  useParams()
+    const { id } =  useParams();
+    const {t} = useTranslation()
+
     const [product, setProduct] = useState<IDetails>({
         title: "",
         img: "",
@@ -26,15 +30,13 @@ const Details = () => {
     const [img, setImg] = useState("")
 
 
-
-
     useEffect(()=>{
       (async ()=> {
           if (id) {
             try {
                 setLoading(true)
                 const {data} = await ProductApi.getProductId({ _id:id});
-                const img = data?.imagesSrc?.split("assets").length > 1 ? data?.imagesSrc?.split("assets")[1] : data?.imagesSrc?.split("assets")[0]
+                const img = imageSpliter(data.imagesSrc)
                 setProduct(data);
                 setImg(img);
                 setLoading(false)
@@ -54,18 +56,25 @@ const Details = () => {
   return (
       <div className={"details__wrapper"}>
           <div className={"details__wrapper_product"}>
-              <img  src={`http://localhost:3001/${img}`} alt={"product"}/>
-              <div style={{display:"flex", justifyContent:"space-between", alignItems:"center"}}>
+              <img style={{
+                  cursor: "pointer",
+                  opacity: 0.9,
+                  width: '100%',
+                  objectFit: "cover"
+              }} src={`http://localhost:3001/${img}`} alt={"product"}/>
+              <div>
                   <p className={"details__wrapper_title"}>{product?.title}</p>
                   <p className={"details__wrapper_price"}>{product?.price} ֏ </p>
-                  {product?.isAvailable ? <span><AddShoppingCartIcon sx={{color:colorSuccess}}/> Arcka e</span> : <span><RemoveShoppingCartIcon sx={{color:warningColor}}/> Arcka che</span>}
-                  <div className={"details__wrapper_country"} >
-                      <p className={"details__wrapper_price"}>made in {product.country}</p>
-                      <img width={30} src={product.flag} srcSet={product.flag} alt="flag"/></div>
+
               </div>
               <p className={"details__wrapper_description"}>{product?.description}</p>
           </div>
           <div className={"details__wrapper_order"}>
+              {product?.isAvailable ? <span><AddShoppingCartIcon sx={{color:colorSuccess}}/>{t('product.available')}</span>
+                  : <span><RemoveShoppingCartIcon sx={{color:warningColor}}/>{t('product.unavailable')}</span>}
+              <div className={"details__wrapper_country"} >
+                  <p className={"details__wrapper_price"}> {t('product.country')} {product.country}</p>
+                  <img width={30} src={product.flag} srcSet={product.flag} alt="flag"/></div>
               <Payment product={product} setProduct={setProduct}/>
           </div>
       </div>

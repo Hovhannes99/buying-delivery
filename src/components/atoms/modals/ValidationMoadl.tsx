@@ -1,5 +1,4 @@
 import * as React from 'react';
-import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -9,10 +8,13 @@ import DialogTitle from '@mui/material/DialogTitle';
 import {Dispatch, SetStateAction, useState} from "react";
 import AuthenticationsApi from "../../../api/authApi";
 import {useNavigate} from "react-router-dom";
-import {backgroundColor} from "../../../constants/colors";
+import {backgroundColor, textGrayColor} from "../../../constants/colors";
+import {useTranslation} from "react-i18next";
+import {inputStyle} from "../../../constants/styleInput";
 
 const style = {
-    background:backgroundColor
+    background:backgroundColor,
+    color: textGrayColor
 }
 
 interface IValidation {
@@ -22,12 +24,13 @@ interface IValidation {
     setOpenValidationModal: Dispatch<SetStateAction<boolean>>
     setErrorValidation:Dispatch<SetStateAction<string>>
     setStep: Dispatch<SetStateAction<number>>
-    setIsRegistrated: Dispatch<SetStateAction<boolean>>
+    setIsRegistered: Dispatch<SetStateAction<boolean>>
 }
-const ValidationModal =({open, email, setOpenValidationModal, setErrorValidation, setStep, setIsRegistrated, type}:IValidation)=> {
+const ValidationModal =({open, email, setOpenValidationModal, setErrorValidation, setStep, setIsRegistered, type}:IValidation)=> {
+    const navigate = useNavigate();
+    const {t} = useTranslation()
     const [verifyNumber, setVerifyNumber] = useState<string>("");
     const [errorField, setErrorField] = useState<boolean>(false)
-    const navigate = useNavigate()
 
     const handleValidation = async () => {
         try {
@@ -41,13 +44,25 @@ const ValidationModal =({open, email, setOpenValidationModal, setErrorValidation
                     navigate("/new-password")
                 }
                 setStep(0)
-                setIsRegistrated(true)
-                setTimeout(()=>setIsRegistrated(false), 1500)
+                setIsRegistered(true)
+                setTimeout(()=>setIsRegistered(false), 1500)
             }else {
                 setErrorField(true)
             }
         }catch (e:any | Error){
-           setErrorValidation(e.data.errors.token)
+            switch (e.data.errors.token){
+                case "TOKEN_NOT_VALID":{
+                    setErrorValidation(`${t("errors.token-not-valid")}`)
+                    break
+                }
+                case "USER_NOT_FOUND":{
+                    setErrorValidation(`${t("errors.user-not-found")}`);
+                    break
+                }
+                default:{
+                    setErrorValidation(e.data.errors.token)
+                }
+            }
             setOpenValidationModal(false)
         }
     };
@@ -56,26 +71,27 @@ const ValidationModal =({open, email, setOpenValidationModal, setErrorValidation
         <>
             <Dialog  open={open}>
             <div style={style}>
-                <DialogTitle>Verification</DialogTitle>
+                <DialogTitle>{t("modal.validation")}</DialogTitle>
                 <DialogContent>
-                    <DialogContentText>
-                        Check your email and complete verification code
+                    <DialogContentText sx={{ color: textGrayColor}}>
+                        {t("modal.validation-message")}
                     </DialogContentText>
                     <TextField
+                        style={inputStyle}
                         autoFocus
                         value={verifyNumber}
                         margin="normal"
                         id="email"
-                        label="Validation Number"
+                        label={t("modal.validation-number")}
                         type="number"
                         fullWidth
                         error={errorField}
-                        variant="standard"
+                        variant="filled"
                         onChange={(e)=>setVerifyNumber(e.target.value)}
                     />
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={handleValidation}>Submit</Button>
+                    <button className={"primary-button"} onClick={handleValidation}>{t("modal.ok")}</button>
                 </DialogActions>
             </div>
         </Dialog>

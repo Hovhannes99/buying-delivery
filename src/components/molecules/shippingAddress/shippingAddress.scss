@@ -9,5 +9,26 @@
   &__button{
     color: black;
   }
+  &__button:hover{
+    color: white;
+  }
+}
+.field-wrapper{
+  width: 100%;
+  display: grid;
+  grid-template-columns: auto auto;
+  column-gap: 5px;
+  row-gap: 5px;
+}
+
+
+@media screen and (max-width: $mobileSize){
+  .field-wrapper{
+    width: 100%;
+    display: grid;
+    grid-template-columns: auto;
+    column-gap: 5px;
+    margin: 0 auto;
+  }
 }
 

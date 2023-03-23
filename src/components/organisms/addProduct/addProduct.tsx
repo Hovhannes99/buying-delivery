@@ -1,10 +1,9 @@
-import {Box, Button, Grid, TextField, FormControl,InputLabel,MenuItem,Select} from "@mui/material";
+import {Box,    Grid, TextField, FormControl,InputLabel,MenuItem,Select} from "@mui/material";
 import AddBusinessIcon from '@mui/icons-material/AddBusiness';
 import CancelIcon from '@mui/icons-material/Cancel';
 import UploadImage from "../../atoms/uploadImage/UploadImage";
 import {useNavigate} from "react-router-dom";
 import {inputStyle} from "../../../constants/styleInput";
-import {primaryButtonStyle} from "../../../constants/primaryButtonStyle";
 import {whitForInputs} from "../../../constants/colors";
 import {TextareaAutosize} from "@mui/base";
 import {useEffect, useState} from "react";
@@ -16,9 +15,11 @@ import {AxiosError} from "axios";
 import SuccessAlert from "../../atoms/modals/Success";
 import Autocomplete from '@mui/material/Autocomplete';
 import axios from "../../../axios";
+import {useTranslation} from "react-i18next";
 
 const AddProduct = () => {
     const navigate = useNavigate();
+    const {t} = useTranslation()
     const [title, setTitle] = useState<string>('');
     const [description, setDescription] = useState<string>('');
     const [hasProduct, setHasProduct] = useState<number>(0);
@@ -60,7 +61,7 @@ const AddProduct = () => {
                  setError(e.data.errors.message)
              }
         }else {
-            setError("You should be complate all Imputs")
+            setError(`${t("modal.complete")}`)
         }
     }
 
@@ -68,8 +69,7 @@ const AddProduct = () => {
     return(
       <div className={"product-wrapper"}>
           <SuccessAlert open={open} message={""}/>
-          <CustomModal message={error} open={!!error} title={"Error"} handleClose={() => setError("")}/>
-          <p className={"product-wrapper_title"}>Add product</p>
+          <CustomModal message={error} open={!!error} title={`${t("modal.error")}`} handleClose={() => setError("")}/>
           <div className={"product-wrapper_fields"}>
               <Box sx={{width: '100%', paddingBottom: "15px"}}>
                    <Grid container spacing={{xs: 1, md: 2}} columns={{xs: 4, sm: 8, md: 12}}>
@@ -78,7 +78,7 @@ const AddProduct = () => {
                                   required
                                   id={'name'}
                                   fullWidth
-                                  label={"Title"}
+                                  label={t("product.title")}
                                   variant="filled"
                                   value={title}
                                   onChange={(e)=>setTitle(e.target.value)}
@@ -88,7 +88,7 @@ const AddProduct = () => {
                               <TextareaAutosize
                                   id="description"
                                   minRows={3}
-                                  placeholder="Description"
+                                  placeholder={t("product.description") || "..."}
                                   value={description}
                                   onChange={(e) => setDescription(e.target.value)}
                                   style={{
@@ -96,14 +96,14 @@ const AddProduct = () => {
                                       marginTop: "10px",
                                       background: whitForInputs,
                                       borderRadius: "5px",
-                                      marginBottom: '10px'
+                                      marginBottom: '10px',
                                   }}
                               />
                               <TextField
                                   required
                                   id={'price'}
                                   fullWidth
-                                  label={"Price"}
+                                  label={t("product.price")}
                                   variant="filled"
                                   value={price}
                                   onChange={(e) => setPrice(e.target.value)}
@@ -134,7 +134,8 @@ const AddProduct = () => {
                                       return (
                                           <TextField
                                               {...params}
-                                              label="Choose a country"
+                                              variant="filled"
+                                              label={t("product.choose-country")}
                                               inputProps={{
                                                   ...params.inputProps,
                                                   autoComplete: 'new-password', // disable autocomplete and autofill
@@ -151,24 +152,24 @@ const AddProduct = () => {
                                       onChange={handleChange}
                                       style={{...inputStyle, marginTop: '10px'}}
                                   >
-                                      <MenuItem value={1}>Arka</MenuItem>
-                                      <MenuItem value={0}>Arka che</MenuItem>
+                                      <MenuItem  value={1}>{t('product.available')}</MenuItem>
+                                      <MenuItem  value={0}>{t('product.unavailable')}</MenuItem>
                                   </Select>
                               </FormControl>
 
                           </Grid>
                        <Grid item xs={4} sm={6} md={6}>
                            <FormControl fullWidth style={inputStyle}>
-                               <InputLabel id="demo-simple-select-label">Type</InputLabel>
+                               <InputLabel id="demo-simple-select-label">{t("menu.categories")}</InputLabel>
                                <Select
                                    labelId="demo-simple-select-label"
                                    id="demo-simple-select"
-                                   label="Type"
+                                   label={t("product.description")}
                                    value={variant}
                                    onChange={(e)=>setVariant(e.target.value)}
                                >
-                                   <MenuItem value={"POQR"}>Manracax</MenuItem>
-                                   <MenuItem value={"MEC"}>Mecacax</MenuItem>
+                                   <MenuItem value={"POQR"}>{t("menu.retail")}</MenuItem>
+                                   <MenuItem value={"MEC"}>{t("menu.wholesale")}</MenuItem>
                                </Select>
                            </FormControl>
                        </Grid>
@@ -177,8 +178,8 @@ const AddProduct = () => {
                        </Grid>
                    </Grid>
                   <div className={"button-wrapper"}>
-                      <Button type={"submit"}  sx={primaryButtonStyle} onClick={onSaveProduct}>add Order<AddBusinessIcon /></Button>
-                      <Button type={"submit"} sx={primaryButtonStyle}>Cancel<CancelIcon/></Button>
+                      <button className={"primary-button"} onClick={onSaveProduct}>{t("product.add-product")} <AddBusinessIcon /></button>
+                      <button className={"primary-button"} onClick={()=>navigate("/")}>{t("product.cancel")} <CancelIcon/></button>
                   </div>
               </Box>
           </div>

@@ -32,7 +32,14 @@ const getUser = async ()=>{
     }catch (e){
         return e
     }
-
+}
+const removeUser = async (id:string)=>{
+    try {
+        const { data } = await axios.delete("/remove-user", {headers:{id}});
+        return data
+    }catch (e){
+        return e
+    }
 }
 
 const AuthenticationsApi = {
@@ -41,7 +48,8 @@ const AuthenticationsApi = {
     verification,
     forgotPass,
     changePassword,
-    getUser
+    getUser,
+    removeUser
 }
 
 export default AuthenticationsApi

@@ -17,7 +17,9 @@
 @import "src/components/molecules/menuBar";
 @import "src/components/atoms/search";
 @import "src/components/atoms/noData/noData";
-
+@import "components/molecules/userInfo/index";
+@import "components/organisms/swiper/index.scss";
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@1,700&display=swap');
 
 * {
   margin: 0;
@@ -25,19 +27,31 @@
 }
 body{
   background: rgb(0, 0, 0);
-}
-body::-webkit-scrollbar {
-  width: 11px;
-}
-body {
   scrollbar-width: thin;
   scrollbar-color: black;
+}
+
+.MuiFilledInput-root.MuiFilledInput-underline:after {
+  border-bottom:3px solid $orangeColor !important;
+}
+.MuiFormLabel-root.MuiInputLabel-root.Mui-focused {
+  color: $labelColor !important;
+}
+.MuiButtonBase-root.MuiMenuItem-root.Mui-selected{
+  background-color: rgba($orangeColor, 0.5) !important;
+}
+.MuiOutlinedInput-notchedOutline{
+  border-color: $inputBackground !important;
+}
+
+body::-webkit-scrollbar {
+  width: 11px;
 }
 body::-webkit-scrollbar-track {
   background:  black;
 }
 body::-webkit-scrollbar-thumb {
-  background-color: $backgroundColor;
+  background-color: $orangeColor;
   border-radius: 3px;
 }
 
@@ -46,13 +60,13 @@ body .order-wrapper::-webkit-scrollbar {
 }
 body .order-wrapper{
   scrollbar-width: thin;
-  scrollbar-color:  black;
+  scrollbar-color: black;
 }
 body .order-wrapper::-webkit-scrollbar-track {
   background:  black;
 }
 body .order-wrapper::-webkit-scrollbar-thumb {
-  background-color: $backgroundColor;
+  background-color: $orangeColor;
   border-radius: 3px;
 }
 
