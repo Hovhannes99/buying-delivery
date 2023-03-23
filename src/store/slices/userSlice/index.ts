@@ -13,7 +13,14 @@ const initialState : CountriesState = {
 const userSlice = createSlice({
   name: "userSlice/slice",
   initialState,
-  reducers: {},
+  reducers: {
+    logOut(state,action){
+      state.user = action.payload
+    },
+    logIn(state,action){
+      state.user = action.payload
+    }
+  },
   extraReducers: {
     [getUserThunk.pending.type] : (state) => {
       state.loading = true
@@ -29,5 +36,6 @@ const userSlice = createSlice({
   }
 })
 
+export const  {logOut, logIn} = userSlice.actions
 
 export default userSlice.reducer

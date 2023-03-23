@@ -8,6 +8,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import Slide from '@mui/material/Slide';
 import { TransitionProps } from '@mui/material/transitions';
 import {useTranslation} from "react-i18next";
+import {backgroundColor, backgroundDescription} from "../../../constants/colors";
 
 interface IConfirmModal {
     title:string
@@ -37,16 +38,21 @@ export default function ConfirmModal({isOpen=false, handelOk, handleCancel, mess
                 onClose={handleCancel}
                 aria-describedby="alert-dialog-slide-description"
             >
-                <DialogTitle>{title}</DialogTitle>
-                <DialogContent>
-                    <DialogContentText id="alert-dialog-slide-description">
-                        {message}
-                    </DialogContentText>
+                <DialogContent   sx={{
+                    background:backgroundColor,
+                    color: "white"
+                }}>
+                    <DialogTitle>{title}</DialogTitle>
+                    <DialogContent>
+                        <DialogContentText id="alert-dialog-slide-description" sx={{ color: "white"}}>
+                            {message}
+                        </DialogContentText>
+                    </DialogContent>
+                    <DialogActions>
+                        <Button onClick={handleCancel}>{t('modal.close')}</Button>
+                        <button className={"primary-button"} onClick={handelOk}>{t('modal.ok')}</button>
+                    </DialogActions>
                 </DialogContent>
-                <DialogActions>
-                    <Button onClick={handleCancel}>{t('modal.close')}</Button>
-                    <button className={"primary-button"} onClick={handelOk}>{t('modal.ok')}</button>
-                </DialogActions>
             </Dialog>
     );
 }

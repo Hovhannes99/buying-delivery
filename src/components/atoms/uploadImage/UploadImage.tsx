@@ -64,7 +64,6 @@ const UploadImage = ({setFile}:{setFile:Dispatch<SetStateAction<File | undefined
                 style={{ backgroundImage: `url(${preview})` }}
             >
                 <form className="my-form">
-                    <p>Drop image here</p>
                     <div className="upload-button">
                         <input
                             type="file"

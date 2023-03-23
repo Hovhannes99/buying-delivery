@@ -5,19 +5,20 @@ import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import {TextareaAutosize} from '@mui/base';
-import {backgroundColor, colorSuccess, warningColor, whitForInputs} from "../../../constants/colors";
+import {backgroundColor} from "../../../constants/colors";
 import EditIcon from "@mui/icons-material/Edit";
 import {inputStyle} from "../../../constants/styleInput";
-import {buttonStyle, successButtonStyle} from "../../../constants/buttonStyle";
+import {successButtonStyle} from "../../../constants/buttonStyle";
 import {Dispatch, SetStateAction, useState} from "react";
 import ProductApi from "../../../api/product";
-import {useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import {IDetails} from "../../../types/product";
 import Loading from "../../atoms/loading/loading";
 import {useTranslation} from "react-i18next";
+import {CustomModal} from "../../atoms/modals/CustomModal";
 
 interface IEditModal {
     defaultTitle: string,
@@ -28,14 +29,16 @@ interface IEditModal {
 }
 export default function EditModal({defaultTitle, defaultPrice, defaultDescription, defaultIsAvailable, setProduct}:IEditModal) {
     const {id} = useParams()
-    const [open, setOpen] = React.useState(false);
-    const [description, setDescription] = useState<string>(defaultDescription)
-    const [title, setTitle] = useState<string>(defaultTitle)
-    const [price, setPrice] = useState<string>(String(defaultPrice))
-    const [hasProduct, setHasProduct] = useState<number>(Number(defaultIsAvailable));
-    const [isAvailable, setIsAvailable] = useState<boolean>(defaultIsAvailable);
-    const [loading, setLoading] = useState<boolean>(false);
     const {t} = useTranslation()
+    const navigate = useNavigate()
+    const [open, setOpen] = React.useState(false);
+    const [title, setTitle] = useState<string>(defaultTitle);
+    const [errorMessage, setErrorMessage] = useState<string>("")
+    const [price, setPrice] = useState<string>(String(defaultPrice))
+    const [loading, setLoading] = useState<boolean>(false);
+    const [description, setDescription] = useState<string>(defaultDescription)
+    const [isAvailable, setIsAvailable] = useState<boolean>(defaultIsAvailable);
+    const [hasProduct, setHasProduct] = useState<number>(Number(defaultIsAvailable));
 
     const handleChange = (event: SelectChangeEvent) => {
         setIsAvailable(Boolean(event.target.value))
@@ -60,9 +63,9 @@ export default function EditModal({defaultTitle, defaultPrice, defaultDescriptio
                 setOpen(false);
 
             } catch (e) {
-                alert(e);
-                setLoading(false)
-
+                setOpen(false);
+                setErrorMessage(`${t("errors.something")}`)
+                setLoading(false);
             }
         }
     }
@@ -73,6 +76,10 @@ export default function EditModal({defaultTitle, defaultPrice, defaultDescriptio
     return (
         <>
             <Button type={"submit"} onClick={handleClickOpen} sx={successButtonStyle}>{t('product.edit')} <EditIcon/></Button>
+            <CustomModal open={!!errorMessage} title={`${t("modal.error")}`} message={errorMessage} handleClose={()=>{
+                setErrorMessage("");
+                navigate("/")
+            }}/>
             <Dialog open={open} onClose={handleClose}>
                 <DialogContent style={{background: backgroundColor}}>
                     <TextField

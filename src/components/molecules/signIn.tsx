@@ -18,22 +18,27 @@ import {ROLE_ADMIN, ROLE_USER} from "../../constants/user";
 import {useEffect, useState} from "react";
 import {backgroundColor, orangeColor} from "../../constants/colors";
 import {useTranslation} from "react-i18next";
+import {useAppDispatch} from "../../hooks/useAppDispatch";
+import {logOut} from "../../store/slices/userSlice";
 
 const SignIn = () => {
+    const {t} = useTranslation()
+    const navigation = useNavigate();
+    const dispatch =useAppDispatch()
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const {user, error, loading} = useAppSelector(store => store.userReducer);
-    const [userName, setUserName] = useState<string>();
-    const {t} = useTranslation()
     const open = Boolean(anchorEl);
-    const navigation = useNavigate()
+    const [userName, setUserName] = useState<string>();
+
     const handleClick = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorEl(event.currentTarget);
     };
     const handleClose = () => {
         setAnchorEl(null);
     };
-    const logOut = ()=>{
+    const onLogOut = ()=>{
         localStorage.removeItem('token')
+        dispatch(logOut({}))
         navigation('/')
     }
     useEffect(()=>{
@@ -123,7 +128,7 @@ const SignIn = () => {
                         </ListItemIcon>
                        <p className={"menu-item"}>{t("menu.sign-in")}</p>
                     </MenuItem> :
-                    <MenuItem  onClick={logOut}>
+                    <MenuItem  onClick={onLogOut}>
                         <ListItemIcon className={"menu-item"}>
                             <Logout className={"icon"} fontSize="small"/>
                         </ListItemIcon>

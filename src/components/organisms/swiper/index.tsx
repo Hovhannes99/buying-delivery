@@ -12,7 +12,7 @@ import img6  from "../../../assets/images/delivery.jpg"
 import img7  from "../../../assets/images/materials.jpg"
 import img8 from "../../../assets/images/materials3.jpg"
 import {  Pagination } from 'swiper';
-import SwiperCore, { Autoplay } from 'swiper';
+import { Autoplay, Navigation } from 'swiper';
 
 
 
@@ -46,15 +46,15 @@ const images = [
 
 const SwiperWrapper = () => {
     return (
-        <Box sx={{ paddingBottom: 10}}>
+        <Box sx={{ paddingBottom: 2}}>
             <Swiper
                 loop={true}
                 autoplay={true}
                 navigation
-                modules={[Pagination,Autoplay]}
+                modules={[Pagination, Autoplay, Navigation]}
                 className="mySwiper">
                 {images.map((item)=>{
-                    return  <SwiperSlide><img src={item.imgPath} alt=""/></SwiperSlide>
+                    return  <SwiperSlide><img src={item.imgPath} alt={item.imgPath}/></SwiperSlide>
                 })}
 
             </Swiper>

@@ -53,7 +53,9 @@
     "new-password": "New Password",
     "password": "Password",
     "confirm-password": "Confirm password",
-    "name": "Name"
+    "name": "Name",
+    "setting": "Settings Account",
+    "remove-user": "Remove profile"
   },
   "modal": {
     "sure": "Are you sure ?",
@@ -67,6 +69,21 @@
     "change-status-cancel": "Do you want to cancel order?",
     "change-status-approve": "Do you want to approve order?",
     "close": "Close",
-    "error": "Error"
-  }
+    "error": "Error",
+    "validation": "Validation",
+    "validation-message": "Check your email and complete verification code",
+    "validation-number": "Validation Number",
+    "remove-user-message": "If you will remove your profile, all of your orders and data will remove and we can't refund data"
+  },
+  "errors": {
+    "something": "Something went wrong, try to later",
+    "user-not-found": "User not found",
+    "not-verify": "User is not verified",
+    "incorrect": "Password or email is incorrect",
+    "email-incorrect": "Email is not correct",
+    "already-exist": "User already exists",
+    "token-not-valid": "Validation number is not correct",
+    "email-not-found": "Email is unavailable"
+  },
+  "welcome": "Welcome to G-group 1001 builder store, Where you can find is a construction tools and construction products"
 }

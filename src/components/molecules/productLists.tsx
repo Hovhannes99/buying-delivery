@@ -32,8 +32,8 @@ const ProductLists = () => {
 
     return (
         <>
-            <WelcomeAnimation/>
             <SwiperWrapper/>
+            <WelcomeAnimation/>
             <Grid className={"list-wrapper"} container spacing={{xs: 2, md: 3}} columns={{xs: 4, sm: 8, md: 12}}>
                 {products.data?.map((item, index) => {
                     const img = imageSpliter(item?.imagesSrc)
